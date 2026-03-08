@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'apps.sponsors',
     'apps.analytics',
     'apps.cms',
+    'apps.nextjs',
 ]
 
 MIDDLEWARE = [
@@ -86,20 +87,20 @@ TEMPLATES = [
 WSGI_APPLICATION = 'api.wsgi.application'
 
 # Database - Using Neon PostgreSQL
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'neondb',
-        'USER': 'neondb_owner',
-        'PASSWORD': 'npg_7lQqDYL2XkUB',
-        'HOST': 'ep-delicate-shadow-aix1bnef-pooler.c-4.us-east-1.aws.neon.tech',
-        'PORT': '5432',
-        'OPTIONS': {
-            'sslmode': 'require',
-        },
-    }
-}
-# Database - Using environment variables for cPanel PostgreSQL
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'neondb',
+#         'USER': 'neondb_owner',
+#         'PASSWORD': 'npg_7lQqDYL2XkUB',
+#         'HOST': 'ep-delicate-shadow-aix1bnef-pooler.c-4.us-east-1.aws.neon.tech',
+#         'PORT': '5432',
+#         'OPTIONS': {
+#             'sslmode': 'require',
+#         },
+#     }
+# }
+
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.postgresql_psycopg2',
@@ -107,11 +108,16 @@ DATABASES = {
 #         'USER': os.environ.get('DB_USER', 'budgetnd_user'),
 #         'PASSWORD': os.environ.get('DB_PASSWORD', 'budgetndiostory'),
 #         'HOST': os.environ.get('DB_HOST', '127.0.0.1'),
-#         'PORT': os.environ.get('DB_PORT', '5432'),
+#         'PORT': os.environ.get('DB_PORT', '3306'),
 #     }
 # }
 
-
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -145,15 +151,38 @@ STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'public' / 'static'
 STATICFILES_DIRS = [
     BASE_DIR / 'templates' / 'out' / '_next',
+    BASE_DIR / 'templates' / 'out',
     BASE_DIR / 'public',
+]
+
+# Next.js export template directories
+NEXTJS_EXPORT_DIR = BASE_DIR / 'templates' / 'out'
+
+# Add Next.js templates to Django templates
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [
+            BASE_DIR / 'templates',
+            BASE_DIR / 'templates' / 'out',
+        ],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+                'apps.core.context_processors.theme',
+                'apps.core.context_processors.api_info',
+            ],
+        },
+    },
 ]
 
 # Media files
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
-
-# Default primary key field type
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Django REST Framework
 REST_FRAMEWORK = {

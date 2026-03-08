@@ -6,15 +6,20 @@ from django.conf.urls.static import static
 from django.http import HttpResponse, FileResponse
 from pathlib import Path
 import mimetypes
-from apps.core.views import api_docs, home, config_page, index
+from apps.core.views import api_docs
 from apps.core import views_api
 
-# Serve Next.js static files from public folder
+
+# Serve Next.js static files from templates/out/_next or public/_next
 def serve_next_static(request, path_info):
     base_dir = Path(__file__).resolve().parent.parent
     
-    # Check in public/_next first
-    file_path = base_dir / 'public' / '_next' / path_info
+    # Check in templates/out/_next first (Next.js export)
+    file_path = base_dir / 'templates' / 'out' / '_next' / path_info
+    
+    if not file_path.exists() or not file_path.is_file():
+        # Fall back to public/_next
+        file_path = base_dir / 'public' / '_next' / path_info
     
     if file_path.exists() and file_path.is_file():
         content_type, _ = mimetypes.guess_type(str(file_path))
@@ -22,33 +27,45 @@ def serve_next_static(request, path_info):
             content_type = 'application/octet-stream'
         
         response = FileResponse(open(file_path, 'rb'), content_type=content_type)
-        response['Cache-Control'] = 'public, max-age=31536000'
+        # Cache static files for 1 year in production
+        response['Cache-Control'] = 'public, max-age=31536000, immutable'
         return response
     
     return HttpResponse('Not Found', status=404)
+
 
 # Serve other static files from public folder
 def serve_public_file(request, filename):
     base_dir = Path(__file__).resolve().parent.parent
     
-    # Check in public folder
+    # Check in public folder first
     file_path = base_dir / 'public' / filename
+    
+    if not file_path.exists() or not file_path.is_file():
+        # Fall back to templates/out folder
+        file_path = base_dir / 'templates' / 'out' / filename
+    
     if file_path.exists() and file_path.is_file():
         content_type, _ = mimetypes.guess_type(str(file_path))
         if content_type is None:
             content_type = 'application/octet-stream'
         
         response = FileResponse(open(file_path, 'rb'), content_type=content_type)
-        response['Cache-Control'] = 'public, max-age=31536000'
+        response['Cache-Control'] = 'public, max-age=31536000, immutable'
         return response
+    
     return HttpResponse('Not Found', status=404)
+
 
 urlpatterns = [
     # Admin - must come first to avoid conflicts
     path('admin/', admin.site.urls),
     
-    # Next.js static files - serve from public/_next folder
+    # Next.js static files - serve from _next folder
     re_path(r'^_next/(?P<path_info>.*)$', serve_next_static, name='next_static'),
+    
+    # Next.js pages - include the Next.js URL patterns (before core urls to take precedence)
+    path('', include('apps.nextjs.urls')),
     
     # Static files from public folder
     re_path(r'^(?P<filename>favicon\.ico)$', serve_public_file, name='favicon'),
@@ -59,11 +76,6 @@ urlpatterns = [
     
     # Core app - serves all pages and CRUD operations
     path('', include('apps.core.urls')),
-    
-    # Main pages - serve from templates/
-    path('home/', home, name='home'),
-    path('index/', index, name='index'),
-    path('config/', config_page, name='config'),
     
     # API Documentation
     path('api/docs/', api_docs, name='api_docs'),

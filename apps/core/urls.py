@@ -154,8 +154,7 @@ urlpatterns = [
     
     # Existing API documentation and main pages
     path('api/docs/', views.api_docs, name='api_docs'),
-    path('', views.home, name='home'),
-    path('home/', views.home, name='home_alt'),
+    path('home/', views.home, name='home'),
     path('index/', views.index, name='index'),
     path('config/', views.config_page, name='config'),
     path('v2/', views.v2_page, name='v2'),
