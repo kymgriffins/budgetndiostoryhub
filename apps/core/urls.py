@@ -4,52 +4,89 @@ from . import views_crud
 from . import views
 from . import views_profile
 from django.views.decorators.csrf import csrf_exempt
+from django.http import JsonResponse
+from django.middleware.csrf import get_token
+from django.contrib.auth import authenticate, login, logout
+from django.views.decorators.http import require_POST
+import json
+import re
 
-# CSRF token view
+# CSRF token view - Enhanced with proper CORS headers
 def csrf_token_view(request):
+    """Get CSRF token for authenticated requests"""
     from django.middleware.csrf import get_token
-    from django.http import JsonResponse
-    return JsonResponse({'csrfToken': get_token(request)})
+    token = get_token(request)
+    response = JsonResponse({'csrfToken': token})
+    response['Access-Control-Allow-Origin'] = '*'
+    return response
 
-# Login view (JSON API)
-@csrf_exempt
+# Login view - SECURED with proper CSRF protection
 def api_login_view(request):
-    from django.contrib.auth import authenticate, login
-    from django.http import JsonResponse
-    from django.views.decorators.http import require_POST
-    import json
-    
+    """Secure login endpoint with CSRF protection"""
     if request.method == 'POST':
-        data = json.loads(request.body)
+        # Get CSRF token from header
+        csrf_token = request.headers.get('X-CSRFToken')
+        if not csrf_token:
+            return JsonResponse({'error': 'CSRF token required'}, status=403)
+        
+        try:
+            data = json.loads(request.body)
+        except json.JSONDecodeError:
+            return JsonResponse({'error': 'Invalid JSON'}, status=400)
+        
         username = data.get('username')
         password = data.get('password')
         
+        if not username or not password:
+            return JsonResponse({'error': 'Username and password required'}, status=400)
+        
         user = authenticate(request, username=username, password=password)
         if user is not None:
-            login(request, user)
-            return JsonResponse({'success': True, 'user': {
-                'id': user.id,
-                'username': user.username,
-                'email': user.email,
-            }})
+            if user.is_active:
+                login(request, user)
+                return JsonResponse({
+                    'success': True, 
+                    'user': {
+                        'id': user.id,
+                        'username': user.username,
+                        'email': user.email,
+                        'first_name': user.first_name,
+                        'last_name': user.last_name,
+                        'is_staff': user.is_staff,
+                    },
+                    'message': 'Login successful'
+                })
+            else:
+                return JsonResponse({'error': 'Account is disabled'}, status=403)
         return JsonResponse({'error': 'Invalid credentials'}, status=401)
+    elif request.method == 'OPTIONS':
+        # Handle CORS preflight
+        response = JsonResponse({})
+        response['Access-Control-Allow-Methods'] = 'POST, OPTIONS'
+        response['Access-Control-Allow-Headers'] = 'Content-Type, X-CSRFToken'
+        return response
     return JsonResponse({'error': 'Method not allowed'}, status=405)
 
-# Logout view (JSON API)
+# Logout view - Enhanced with CSRF protection
 def api_logout_view(request):
-    from django.contrib.auth import logout
-    from django.http import JsonResponse
-    from django.views.decorators.http import require_POST
-    
+    """Secure logout endpoint"""
     if request.method == 'POST':
+        csrf_token = request.headers.get('X-CSRFToken')
+        if not csrf_token:
+            return JsonResponse({'error': 'CSRF token required'}, status=403)
+        
         logout(request)
-        return JsonResponse({'success': True})
+        return JsonResponse({'success': True, 'message': 'Logged out successfully'})
+    elif request.method == 'OPTIONS':
+        response = JsonResponse({})
+        response['Access-Control-Allow-Methods'] = 'POST, OPTIONS'
+        response['Access-Control-Allow-Headers'] = 'Content-Type, X-CSRFToken'
+        return response
     return JsonResponse({'error': 'Method not allowed'}, status=405)
 
-# Current user view
+# Current user view - Enhanced with more user data
 def current_user_view(request):
-    from django.http import JsonResponse
-    
+    """Get current authenticated user"""
     if request.user.is_authenticated:
         return JsonResponse({
             'id': request.user.id,
@@ -57,8 +94,11 @@ def current_user_view(request):
             'email': request.user.email,
             'first_name': request.user.first_name,
             'last_name': request.user.last_name,
+            'is_staff': request.user.is_staff,
+            'is_superuser': request.user.is_superuser,
+            'date_joined': request.user.date_joined.isoformat() if request.user.date_joined else None,
         })
-    return JsonResponse({'error': 'Not authenticated'}, status=401)
+    return JsonResponse({'error': 'Not authenticated', 'authenticated': False}, status=401)
 
 urlpatterns = [
     # CSRF and Auth API

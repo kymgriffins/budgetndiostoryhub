@@ -5,19 +5,43 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Budget Ndio Story - Financial Empowerment Platform{% endblock %}</title>
-    <meta name="description" content="Budget Ndio Story - Your journey to financial freedom. Access financial education, budgeting tools, and community support.">
-    <meta name="keywords" content="budget, finance, money management, financial education, Kenya, Africa">
+    
+    <!-- Primary Meta Tags -->
+    <meta name="title" content="{% block meta_title %}Budget Ndio Story - Financial Empowerment Platform{% endblock %}">
+    <meta name="description" content="{% block meta_description %}Your journey to financial freedom starts here. Access budgeting tools, financial education, and community support.{% endblock %}">
+    <meta name="keywords" content="{% block meta_keywords %}budget, finance, money management, financial education, Kenya, Africa, civic education, budget transparency{% endblock %}">
     <meta name="author" content="Budget Ndio Story">
     <meta name="robots" content="index, follow">
-    
-    <!-- Open Graph / Social Media -->
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="Budget Ndio Story - Financial Empowerment Platform">
-    <meta property="og:description" content="Your journey to financial freedom starts here. Access budgeting tools, financial education, and community support.">
-    <meta property="og:image" content="/static/images/og-image.jpg">
+    <meta name="googlebot" content="index, follow, max-video-preview:-1, max-image-preview:large, max-snippet:-1">
+    <meta name="theme-color" content="#0066CC">
     
     <!-- Canonical URL -->
-    <link rel="canonical" href="{{ request.build_absolute_uri }}">
+    <link rel="canonical" href="{% block canonical_url %}{{ request.build_absolute_uri }}{% endblock %}">
+    
+    <!-- Language and Localization -->
+    <meta property="og:locale" content="en_KE">
+    <meta property="og:locale:alternate" content="en_US">
+    <link rel="alternate" hrefLang="en" href="{{ request.build_absolute_uri }}">
+    
+    <!-- Open Graph / Social Media -->
+    <meta property="og:type" content="{% block og_type %}website{% endblock %}">
+    <meta property="og:title" content="{% block og_title %}Budget Ndio Story - Financial Empowerment Platform{% endblock %}">
+    <meta property="og:description" content="{% block og_description %}Your journey to financial freedom starts here.{% endblock %}">
+    <meta property="og:url" content="{% block og_url %}{{ request.build_absolute_uri }}{% endblock %}">
+    <meta property="og:site_name" content="Budget Ndio Story">
+    <meta property="og:image" content="{% block og_image %}{{ request.scheme }}://{{ request.get_host }}{% static 'images/og-image.jpg' %}{% endblock %}">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="{% block og_image_alt %}Budget Ndio Story{% endblock %}">
+    
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@BudgetNdioStory">
+    <meta name="twitter:creator" content="@BudgetNdioStory">
+    <meta name="twitter:title" content="{% block twitter_title %}Budget Ndio Story - Financial Empowerment Platform{% endblock %}">
+    <meta name="twitter:description" content="{% block twitter_description %}Your journey to financial freedom starts here.{% endblock %}">
+    <meta name="twitter:image" content="{% block twitter_image %}{{ request.scheme }}://{{ request.get_host }}{% static 'images/og-image.jpg' %}{% endblock %}">
+    <meta name="twitter:image:alt" content="{% block twitter_image_alt %}Budget Ndio Story{% endblock %}">
     
     <!-- Preconnect for Performance -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -167,20 +191,56 @@
     
     {% block extra_css %}{% endblock %}
     
-    <!-- Structured Data -->
+    <!-- Structured Data - Organization -->
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
         "@type": "Organization",
         "name": "Budget Ndio Story",
-        "url": "https://budgetndiostory.com",
-        "logo": "https://budgetndiostory.com/static/images/logo.png",
-        "description": "Financial empowerment platform for budgeting and money management",
+        "url": "https://budgetndiostory.org",
+        "logo": "https://budgetndiostory.org/static/images/logo.png",
+        "description": "Kenyan budget transparency platform for young citizens. We turn national and county budgets into clear insights, practical analysis, and trackable evidence.",
+        "foundingDate": "2020",
+        "address": {
+            "@type": "PostalAddress",
+            "addressCountry": "KE",
+            "addressLocality": "Nairobi"
+        },
+        "contactPoint": {
+            "@type": "ContactPoint",
+            "contactType": "Customer Service",
+            "email": "info@budgetndiostory.org"
+        },
         "sameAs": [
             "https://facebook.com/budgetndiostory",
-            "https://twitter.com/budgetndiostory",
-            "https://instagram.com/budgetndiostory"
-        ]
+            "https://twitter.com/BudgetNdioStory",
+            "https://instagram.com/budgetndiostory",
+            "https://linkedin.com/company/budgetndiostory",
+            "https://youtube.com/@budgetndiostory"
+        ],
+        "potentialAction": {
+            "@type": "SearchAction",
+            "target": "https://budgetndiostory.org/search?q={search_term_string}",
+            "query-input": "required name=search_term_string"
+        }
+    }
+    </script>
+    
+    <!-- Structured Data - WebSite -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "Budget Ndio Story",
+        "url": "https://budgetndiostory.org",
+        "potentialAction": {
+            "@type": "SearchAction",
+            "target": {
+                "@type": "EntryPoint",
+                "urlTemplate": "https://budgetndiostory.org/search?q={search_term_string}"
+            },
+            "query-input": "required name=search_term_string"
+        }
     }
     </script>
 </head>

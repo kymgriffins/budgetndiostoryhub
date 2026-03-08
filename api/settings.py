@@ -212,7 +212,7 @@ REST_FRAMEWORK = {
 }
 
 # CORS settings - Use environment variables
-_cors_origins = os.environ.get('CORS_ALLOWED_ORIGINS', 'http://localhost:3000,http://127.0.0.1:3000,https://bns.vercel.app,https://*.vercel.app,https://www.budgetndiostory.org,https://budgetndiostory.org,https://www.backend.budgetndiostory.org,https://backend.budgetndiostory.org')
+_cors_origins = os.environ.get('CORS_ALLOWED_ORIGINS', 'http://localhost:3000,http://127.0.0.1:3000,https://bns.vercel.app,https://*.vercel.app,https://www.budgetndiostory.org,https://budgetndiostory.org,https://www.backend.budgetndiostory.org,https://backend.budgetndiostory.org,https://bnskit.vercel.app')
 CORS_ALLOWED_ORIGINS = [origin.strip() for origin in _cors_origins.split(',')]
 
 # Allow credentials for cross-origin requests
@@ -228,5 +228,5 @@ CSRF_COOKIE_SAMESITE = 'Lax'
 CSRF_USE_SESSIONS = False
 
 # CSRF Trusted Origins - Required for CSRF verification - Use environment variables
-_csrf_origins = os.environ.get('CSRF_TRUSTED_ORIGINS', 'http://localhost:3000,http://127.0.0.1:3000,https://bns.vercel.app,https://*.vercel.app,https://www.budgetndiostory.org,https://budgetndiostory.org,https://www.backend.budgetndiostory.org,https://backend.budgetndiostory.org')
+_csrf_origins = os.environ.get('CSRF_TRUSTED_ORIGINS', 'http://localhost:3000,http://127.0.0.1:3000,https://bns.vercel.app,https://*.vercel.app,https://www.budgetndiostory.org,https://budgetndiostory.org,https://www.backend.budgetndiostory.org,https://backend.budgetndiostory.org,https://bnskit.vercel.app')
 CSRF_TRUSTED_ORIGINS = [origin.strip() for origin in _csrf_origins.split(',')]
