@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Budget Ndio Story - Tracker</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#30e87a",
+                        "background-light": "#f6f8f7",
+                        "background-dark": "#0b120e", // Deep neutral derived from primary hue
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Manrope', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .ios-blur {
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        .progress-line {
+            height: 2px;
+            background: rgba(48, 232, 122, 0.2);
+            position: absolute;
+            top: 12px;
+            left: 0;
+            right: 0;
+            z-index: 0;
+        }
+        .progress-line-active {
+            height: 2px;
+            background: #30e87a;
+            position: absolute;
+            top: 12px;
+            left: 0;
+            z-index: 1;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white font-display selection:bg-primary/30">
+<!-- Mobile Screen Container (iOS Form Factor) -->
+<div class="max-w-[430px] mx-auto min-h-screen relative flex flex-col shadow-2xl bg-background-light dark:bg-background-dark overflow-hidden">
+<!-- Status Bar Placeholder -->
+<div class="h-12 w-full flex justify-between items-end px-8 pb-2">
+<span class="text-sm font-bold">9:41</span>
+<div class="flex gap-1.5 items-center">
+<span class="material-icons text-[18px]">signal_cellular_alt</span>
+<span class="material-icons text-[18px]">wifi</span>
+<span class="material-icons text-[18px]">battery_full</span>
+</div>
+</div>
+<!-- Header -->
+<header class="px-6 pt-4 pb-6">
+<div class="flex justify-between items-center mb-6">
+<div class="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center">
+<span class="material-icons text-primary">person</span>
+</div>
+<div class="flex gap-4">
+<button class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+<span class="material-icons text-primary">notifications</span>
+</button>
+<button class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+<span class="material-icons text-primary">search</span>
+</button>
+</div>
+</div>
+<h1 class="text-3xl font-extrabold leading-tight tracking-tight">
+                Track delivery,<br/>
+<span class="text-primary">not promises.</span>
+</h1>
+</header>
+<!-- Category Filter Chips -->
+<div class="flex gap-3 overflow-x-auto px-6 pb-6 no-scrollbar">
+<button class="px-5 py-2.5 rounded-full bg-primary text-background-dark font-bold whitespace-nowrap text-sm">
+                All Sectors
+            </button>
+<button class="px-5 py-2.5 rounded-full bg-primary/10 border border-primary/20 text-white font-medium whitespace-nowrap text-sm">
+                Youth Livelihoods
+            </button>
+<button class="px-5 py-2.5 rounded-full bg-primary/10 border border-primary/20 text-white font-medium whitespace-nowrap text-sm">
+                Health
+            </button>
+<button class="px-5 py-2.5 rounded-full bg-primary/10 border border-primary/20 text-white font-medium whitespace-nowrap text-sm">
+                Climate
+            </button>
+</div>
+<!-- Budget Tracking List -->
+<main class="flex-1 px-6 space-y-6 pb-32 overflow-y-auto">
+<!-- Card 1: Youth Livelihoods -->
+<div class="p-5 rounded-xl bg-primary/5 border border-primary/10 space-y-5">
+<div class="flex justify-between items-start">
+<div>
+<span class="text-[10px] uppercase tracking-widest text-primary font-bold">Youth Livelihoods</span>
+<h3 class="text-lg font-bold mt-1">Youth Fund Distribution</h3>
+</div>
+<span class="bg-primary/20 text-primary text-[10px] font-bold px-2 py-1 rounded">ON TRACK</span>
+</div>
+<!-- Progress Tracker -->
+<div class="relative px-2">
+<div class="progress-line"></div>
+<div class="progress-line-active w-[50%]"></div>
+<div class="relative flex justify-between z-10">
+<div class="flex flex-col items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-primary flex items-center justify-center border-4 border-background-dark">
+<span class="material-icons text-[12px] text-background-dark font-bold">check</span>
+</div>
+<span class="text-[10px] font-bold text-primary">ALLOCATED</span>
+</div>
+<div class="flex flex-col items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-primary flex items-center justify-center border-4 border-background-dark">
+<span class="material-icons text-[12px] text-background-dark font-bold">check</span>
+</div>
+<span class="text-[10px] font-bold text-primary">RELEASED</span>
+</div>
+<div class="flex flex-col items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-background-dark border-2 border-primary/30"></div>
+<span class="text-[10px] font-bold text-white/40">DELIVERED</span>
+</div>
+</div>
+</div>
+<!-- Evidence Section -->
+<div class="bg-background-dark/50 rounded-lg p-3 border border-white/5">
+<div class="flex items-center gap-2 mb-2">
+<span class="material-icons text-primary text-sm">verified</span>
+<span class="text-xs font-bold text-white/80">Evidence Notes</span>
+</div>
+<p class="text-[11px] leading-relaxed text-white/60 italic">
+                        "M-Pesa disbursement confirmed by 500+ recipients in Nairobi County. Project ID #KF-992."
+                    </p>
+</div>
+</div>
+<!-- Card 2: Health -->
+<div class="p-5 rounded-xl bg-primary/5 border border-primary/10 space-y-5 opacity-90">
+<div class="flex justify-between items-start">
+<div>
+<span class="text-[10px] uppercase tracking-widest text-primary font-bold">Health</span>
+<h3 class="text-lg font-bold mt-1">Level 4 Hospital Upgrade</h3>
+</div>
+<span class="bg-orange-500/20 text-orange-400 text-[10px] font-bold px-2 py-1 rounded uppercase">Delayed</span>
+</div>
+<!-- Progress Tracker -->
+<div class="relative px-2">
+<div class="progress-line"></div>
+<div class="progress-line-active w-[5%]"></div>
+<div class="relative flex justify-between z-10">
+<div class="flex flex-col items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-primary flex items-center justify-center border-4 border-background-dark">
+<span class="material-icons text-[12px] text-background-dark font-bold">check</span>
+</div>
+<span class="text-[10px] font-bold text-primary">ALLOCATED</span>
+</div>
+<div class="flex flex-col items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-background-dark border-2 border-primary/30"></div>
+<span class="text-[10px] font-bold text-white/40">RELEASED</span>
+</div>
+<div class="flex flex-col items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-background-dark border-2 border-primary/30"></div>
+<span class="text-[10px] font-bold text-white/40">DELIVERED</span>
+</div>
+</div>
+</div>
+<!-- Evidence Section -->
+<div class="bg-background-dark/50 rounded-lg p-3 border border-white/5">
+<div class="flex items-center gap-2 mb-2">
+<span class="material-icons text-orange-400 text-sm">error_outline</span>
+<span class="text-xs font-bold text-white/80">Pending Action</span>
+</div>
+<p class="text-[11px] leading-relaxed text-white/60">
+                        Awaiting Treasury clearance. Site gazettement completed but construction hasn't started.
+                    </p>
+</div>
+</div>
+<!-- Card 3: Climate Resilience -->
+<div class="p-5 rounded-xl bg-primary/5 border border-primary/10 space-y-5">
+<div class="flex justify-between items-start">
+<div>
+<span class="text-[10px] uppercase tracking-widest text-primary font-bold">Climate Resilience</span>
+<h3 class="text-lg font-bold mt-1">Tree Planting Initiative</h3>
+</div>
+<span class="bg-primary/20 text-primary text-[10px] font-bold px-2 py-1 rounded uppercase">Completed</span>
+</div>
+<!-- Progress Tracker -->
+<div class="relative px-2">
+<div class="progress-line-active w-full"></div>
+<div class="relative flex justify-between z-10">
+<div class="flex flex-col items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-primary flex items-center justify-center border-4 border-background-dark">
+<span class="material-icons text-[12px] text-background-dark font-bold">check</span>
+</div>
+<span class="text-[10px] font-bold text-primary">ALLOCATED</span>
+</div>
+<div class="flex flex-col items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-primary flex items-center justify-center border-4 border-background-dark">
+<span class="material-icons text-[12px] text-background-dark font-bold">check</span>
+</div>
+<span class="text-[10px] font-bold text-primary">RELEASED</span>
+</div>
+<div class="flex flex-col items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-primary flex items-center justify-center border-4 border-background-dark">
+<span class="material-icons text-[12px] text-background-dark font-bold">check</span>
+</div>
+<span class="text-[10px] font-bold text-primary">DELIVERED</span>
+</div>
+</div>
+</div>
+<div class="flex gap-2">
+<div class="w-16 h-12 rounded bg-white/10 overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Field of newly planted tree saplings" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB4XY0q9eaai7-wlZyTItdFp0wIyvClFJDq4HztmpkxEjf56iQUaXPSkfMnT-p-b_LYObLT39gybsksk6j23aHn1dfICXJw7x1eU_j7GlsuhV0SdUVOINZFyudkI1cnvdzgb055RlX81WNcr8_VdXwvY-IlB1xbIeMtrJQu8ZrKjcfLGKRUStsly3Qo_0ztx-8XMZIr2EH0U56B5ysde5Oo4eW82N5s23vUng-X1vS9TyqTvAB9f1mOSb37jnH9Aqo7MHNOQwxX4jE"/>
+</div>
+<div class="w-16 h-12 rounded bg-white/10 overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Community members planting indigenous trees together" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBRkM4ex2J8Mp9wnWugG0_warO9K9dw7Dye0Rog7gLfZbpUv788yuZzl65M-wZF74ad-MaxK10iuyK_ScViHq1eY4am4yhhf7kGfIXuMdQOW8rDKFLhE1rgh1Ne2GrmHkMZ_SGcs7FPgSyKLG_r2YBr6wiwZnHsZ0REZJkQQ2RHofp8qTnUCv-PqUWgR5tm5PlEWi-mF39YyToTbID4eaIk67cNzwJqwrpe55A0P_tJQAuDuafvaRbFh4LYaK2kGvv5Suv_0Iz3QUw"/>
+</div>
+<div class="flex-1 flex flex-col justify-center">
+<span class="text-[10px] text-white/50">Site photo uploaded 2h ago</span>
+</div>
+</div>
+</div>
+</main>
+<!-- Fixed Bottom Action & Navigation -->
+<div class="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-background-dark via-background-dark to-transparent pt-12">
+<button class="w-full bg-primary hover:bg-primary/90 text-background-dark font-black py-4 rounded-xl flex items-center justify-center gap-3 transition-all active:scale-95 shadow-[0_8px_30px_rgb(48,232,122,0.3)]">
+<span class="material-icons">add_a_photo</span>
+                SUBMIT A TIP
+            </button>
+<!-- iOS Tab Bar Style -->
+<nav class="flex justify-around items-center mt-6 pt-2 pb-2">
+<div class="flex flex-col items-center gap-1 text-primary">
+<span class="material-icons">dashboard</span>
+<span class="text-[10px] font-bold">Home</span>
+</div>
+<div class="flex flex-col items-center gap-1 text-white/40">
+<span class="material-icons text-white/40">track_changes</span>
+<span class="text-[10px] font-bold">Tracker</span>
+</div>
+<div class="flex flex-col items-center gap-1 text-white/40">
+<span class="material-icons">map</span>
+<span class="text-[10px] font-bold">Explore</span>
+</div>
+<div class="flex flex-col items-center gap-1 text-white/40">
+<span class="material-icons">groups</span>
+<span class="text-[10px] font-bold">Community</span>
+</div>
+</nav>
+<!-- Home Indicator -->
+<div class="w-32 h-1 bg-white/20 mx-auto mt-4 rounded-full"></div>
+</div>
+</div>
+</body></html>

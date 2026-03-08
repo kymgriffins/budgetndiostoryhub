@@ -1,0 +1,6 @@
+1:"$Sreact.fragment"
+2:I[20630,["/_next/static/chunks/4216081d9472c05b.js","/_next/static/chunks/adda82831925e726.js","/_next/static/chunks/0b71d4b4a81d5dee.js","/_next/static/chunks/ce8d62692c78f23b.js","/_next/static/chunks/7504c08bb39605c8.js","/_next/static/chunks/4142bcb141d18032.js","/_next/static/chunks/853c7e857927bc93.js"],"SignUpForm"]
+3:I[35417,["/_next/static/chunks/26ca110782d86623.js","/_next/static/chunks/0c0282fecd4c2f65.js"],"OutletBoundary"]
+4:"$Sreact.suspense"
+0:{"buildId":"rtXGJtev0gX3o0AQ3JzIq","rsc":["$","$1","c",{"children":[["$","div",null,{"className":"flex min-h-svh w-full items-center justify-center p-6 md:p-10","children":["$","div",null,{"className":"w-full max-w-sm","children":["$","$L2",null,{}]}]}],[["$","script","script-0",{"src":"/_next/static/chunks/853c7e857927bc93.js","async":true}]],["$","$L3",null,{"children":["$","$4",null,{"name":"Next.MetadataOutlet","children":"$@5"}]}]]}],"loading":null,"isPartial":false}
+5:null

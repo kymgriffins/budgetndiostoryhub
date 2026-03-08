@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Budget Ndio Story - Follow the Budget. Find the Story.</title>
+    
+    <!-- Fonts - NeueMontreal -->
+    <style>
+        @font-face {
+            font-family: 'NeueMontreal';
+            src: url('NeueMontreal.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+    </style>
+    
+    <style>
+        :root {
+            --primary: #0066CC;
+            --secondary: #0066CC;
+            --blue: #0066CC;
+            --white: #ffffff;
+            --black: #000000;
+            --gray: #666666;
+            --gray-light: #a0a0a0;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'NeueMontreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            line-height: 1.6;
+            color: var(--white);
+            background-color: var(--black);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .container {
+            text-align: center;
+            color: white;
+            padding: 2rem;
+            max-width: 800px;
+        }
+        
+        h1 {
+            font-size: 4rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            color: var(--white);
+        }
+        
+        .tagline {
+            font-size: 1.5rem;
+            color: var(--blue);
+            margin-bottom: 1rem;
+            font-weight: 500;
+        }
+        
+        p {
+            font-size: 1.125rem;
+            color: var(--gray-light);
+            margin-bottom: 2rem;
+        }
+        
+        .links {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+        
+        .link {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: white;
+            color: var(--black);
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(255,255,255,0.1);
+        }
+        
+        .link.primary {
+            background: var(--blue);
+            color: white;
+        }
+        
+        .link.primary:hover {
+            background: #0052a3;
+        }
+        
+        .link.secondary {
+            background: transparent;
+            border: 2px solid var(--blue);
+            color: var(--blue);
+        }
+        
+        .link.secondary:hover {
+            background: var(--blue);
+            color: white;
+        }
+        
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin: 3rem 0;
+            flex-wrap: wrap;
+        }
+        
+        .stat {
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-family: 'NeueMontreal', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--blue);
+        }
+        
+        .stat-label {
+            font-size: 0.875rem;
+            color: var(--gray-light);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Budget Ndio Story</h1>
+        <p class="tagline">Follow the Budget. Find the Story.</p>
+        <p>Civic Education Platform - Empowering citizens to understand and engage with Kenya's national and county budgets</p>
+        
+        <div class="stats">
+            <div class="stat">
+                <div class="stat-value">47+</div>
+                <div class="stat-label">Countries</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value">15K+</div>
+                <div class="stat-label">Citizens Engaged</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value">200+</div>
+                <div class="stat-label">Partners</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value">120+</div>
+                <div class="stat-label">Programs</div>
+            </div>
+        </div>
+        
+        <div class="links">
+            <a href="/v2/" class="link primary">New Landing Page</a>
+            <a href="/index/" class="link primary">Main App</a>
+            <a href="/videos/" class="link">Videos</a>
+            <a href="/blog/" class="link">Blog</a>
+            <a href="/donate/" class="link">Donate</a>
+            <a href="/newsletter/" class="link">Newsletter</a>
+            <a href="/about/" class="link">About</a>
+            <a href="/contact/" class="link">Contact</a>
+            <a href="/api/docs/" class="link secondary">API Docs</a>
+            <a href="/admin/" class="link secondary">Admin</a>
+        </div>
+    </div>
+</body>
+</html>

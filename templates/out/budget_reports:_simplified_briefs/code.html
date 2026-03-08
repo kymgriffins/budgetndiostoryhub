@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Budget Ndio Story - Simplified Reports</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#30e87a",
+                        "background-light": "#f6f8f7",
+                        "background-dark": "#112117",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Manrope', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display min-h-screen flex justify-center">
+<!-- Mobile Container (Simulating iOS) -->
+<div class="w-full max-w-md bg-background-light dark:bg-background-dark min-h-screen relative shadow-2xl overflow-hidden pb-24">
+<!-- iOS Status Bar Placeholder -->
+<div class="h-12 w-full flex justify-between items-center px-8 pt-4">
+<span class="text-xs font-bold">9:41</span>
+<div class="flex gap-1.5">
+<span class="material-icons-round text-xs">signal_cellular_alt</span>
+<span class="material-icons-round text-xs">wifi</span>
+<span class="material-icons-round text-xs rotate-90">battery_full</span>
+</div>
+</div>
+<!-- Header -->
+<header class="px-6 pt-6 pb-4">
+<div class="flex items-center justify-between mb-2">
+<button class="w-10 h-10 rounded-full bg-slate-200 dark:bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-icons-round">chevron_left</span>
+</button>
+<div class="text-center">
+<h1 class="text-xl font-800 tracking-tight">Budget Ndio Story</h1>
+</div>
+<button class="w-10 h-10 rounded-full bg-slate-200 dark:bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-icons-round text-sm">notifications</span>
+</button>
+</div>
+<div class="mt-6">
+<h2 class="text-3xl font-800 tracking-tight leading-tight">Simplified Reports</h2>
+<p class="text-slate-500 dark:text-slate-400 mt-1 text-sm">The budget, minus the jargon. 🇰🇪</p>
+</div>
+</header>
+<!-- Search Bar -->
+<div class="px-6 mb-6">
+<div class="relative group">
+<span class="material-icons-round absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-primary transition-colors">search</span>
+<input class="w-full bg-slate-200 dark:bg-primary/5 border-0 rounded-xl py-4 pl-12 pr-4 text-sm focus:ring-2 focus:ring-primary/50 transition-all placeholder:text-slate-500" placeholder="Search by county or keyword..." type="text"/>
+</div>
+</div>
+<!-- Filters -->
+<div class="mb-8">
+<div class="flex overflow-x-auto hide-scrollbar px-6 gap-3 pb-2">
+<button class="flex-shrink-0 bg-primary text-background-dark font-bold px-5 py-2.5 rounded-full text-xs transition-all">All</button>
+<button class="flex-shrink-0 bg-slate-200 dark:bg-primary/10 text-slate-700 dark:text-slate-300 font-bold px-5 py-2.5 rounded-full text-xs border border-transparent hover:border-primary/30 transition-all">Finance Bill</button>
+<button class="flex-shrink-0 bg-slate-200 dark:bg-primary/10 text-slate-700 dark:text-slate-300 font-bold px-5 py-2.5 rounded-full text-xs border border-transparent hover:border-primary/30 transition-all">County Estimates</button>
+<button class="flex-shrink-0 bg-slate-200 dark:bg-primary/10 text-slate-700 dark:text-slate-300 font-bold px-5 py-2.5 rounded-full text-xs border border-transparent hover:border-primary/30 transition-all">Policy Statement</button>
+</div>
+<div class="flex overflow-x-auto hide-scrollbar px-6 gap-3 mt-3">
+<button class="flex-shrink-0 border border-slate-300 dark:border-primary/20 text-slate-600 dark:text-slate-400 font-medium px-4 py-1.5 rounded-lg text-[11px] flex items-center gap-1">Year: 2024 <span class="material-icons-round text-[14px]">expand_more</span></button>
+<button class="flex-shrink-0 border border-slate-300 dark:border-primary/20 text-slate-600 dark:text-slate-400 font-medium px-4 py-1.5 rounded-lg text-[11px] flex items-center gap-1">Sector: All <span class="material-icons-round text-[14px]">expand_more</span></button>
+</div>
+</div>
+<!-- Report Cards Section -->
+<main class="px-6 space-y-6">
+<!-- Card 1: Finance Bill -->
+<article class="bg-white dark:bg-black/40 border border-slate-200 dark:border-primary/10 rounded-xl overflow-hidden shadow-sm relative group">
+<div class="absolute top-0 right-0 p-4">
+<span class="bg-primary/20 text-primary text-[10px] font-900 px-2 py-1 rounded tracking-widest uppercase">Finance Bill</span>
+</div>
+<div class="p-5">
+<div class="flex items-center gap-2 mb-3">
+<span class="material-icons-round text-primary text-sm">schedule</span>
+<span class="text-[11px] font-bold text-slate-400 uppercase tracking-tighter">5 min read</span>
+</div>
+<h3 class="text-xl font-800 mb-4 leading-snug pr-20">National Finance Bill 2024 (Revised)</h3>
+<div class="space-y-4">
+<div>
+<p class="text-[10px] font-900 text-slate-500 uppercase tracking-widest mb-2 flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 bg-primary rounded-full"></span> Key Takeaways
+                            </p>
+<ul class="space-y-2">
+<li class="text-sm text-slate-600 dark:text-slate-400 flex items-start gap-2">
+<span class="text-primary mt-0.5">•</span>
+<span>Proposed removal of VAT on bread and basic sugar.</span>
+</li>
+<li class="text-sm text-slate-600 dark:text-slate-400 flex items-start gap-2">
+<span class="text-primary mt-0.5">•</span>
+<span>Introduction of Eco-Tax on electronic waste.</span>
+</li>
+</ul>
+</div>
+<div class="bg-primary/10 border-l-4 border-primary p-4 rounded-r-lg">
+<p class="text-[10px] font-900 text-primary uppercase tracking-widest mb-1">What Changed?</p>
+<p class="text-sm font-semibold text-slate-200">The 2.5% Motor Vehicle Tax has been completely dropped from this draft.</p>
+</div>
+</div>
+<div class="mt-6 flex gap-3">
+<button class="flex-1 bg-primary text-background-dark font-800 text-sm py-3 rounded-lg flex items-center justify-center gap-2">
+                            View Summary <span class="material-icons-round text-sm">arrow_forward</span>
+</button>
+<button class="w-12 h-12 border border-slate-200 dark:border-primary/20 rounded-lg flex items-center justify-center text-slate-400">
+<span class="material-icons-round">bookmark_border</span>
+</button>
+</div>
+</div>
+</article>
+<!-- Card 2: County Budget -->
+<article class="bg-white dark:bg-black/40 border border-slate-200 dark:border-primary/10 rounded-xl overflow-hidden shadow-sm relative">
+<div class="absolute top-0 right-0 p-4">
+<span class="bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400 text-[10px] font-900 px-2 py-1 rounded tracking-widest uppercase">County Estimates</span>
+</div>
+<div class="p-5">
+<div class="flex items-center gap-2 mb-3">
+<span class="material-icons-round text-primary text-sm">location_on</span>
+<span class="text-[11px] font-bold text-slate-400 uppercase tracking-tighter">Nairobi City County</span>
+</div>
+<h3 class="text-xl font-800 mb-4 leading-snug pr-20">FY 2024/25 Budget Estimates</h3>
+<div class="space-y-4">
+<div>
+<p class="text-[10px] font-900 text-slate-500 uppercase tracking-widest mb-2 flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 bg-primary rounded-full"></span> Key Takeaways
+                            </p>
+<ul class="space-y-2">
+<li class="text-sm text-slate-600 dark:text-slate-400 flex items-start gap-2">
+<span class="text-primary mt-0.5">•</span>
+<span>KES 4.2B allocated for school feeding (Dishi na County).</span>
+</li>
+<li class="text-sm text-slate-600 dark:text-slate-400 flex items-start gap-2">
+<span class="text-primary mt-0.5">•</span>
+<span>Increased budget for modern market construction.</span>
+</li>
+</ul>
+</div>
+<div class="bg-slate-100 dark:bg-primary/5 border-l-4 border-slate-400 dark:border-slate-600 p-4 rounded-r-lg">
+<p class="text-[10px] font-900 text-slate-500 dark:text-slate-400 uppercase tracking-widest mb-1">Impact</p>
+<p class="text-sm font-semibold text-slate-700 dark:text-slate-300">New parking zones established; expect higher fees in CBD zones.</p>
+</div>
+</div>
+<div class="mt-6 flex gap-3">
+<button class="flex-1 bg-slate-200 dark:bg-primary/10 text-slate-800 dark:text-primary font-800 text-sm py-3 rounded-lg flex items-center justify-center gap-2">
+                            Browse Reports <span class="material-icons-round text-sm">open_in_new</span>
+</button>
+</div>
+</div>
+</article>
+<!-- Card 3: Budget Policy -->
+<article class="bg-white dark:bg-black/40 border border-slate-200 dark:border-primary/10 rounded-xl overflow-hidden shadow-sm relative">
+<div class="absolute top-0 right-0 p-4">
+<span class="bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400 text-[10px] font-900 px-2 py-1 rounded tracking-widest uppercase">Policy Statement</span>
+</div>
+<div class="p-5">
+<div class="flex items-center gap-2 mb-3">
+<span class="material-icons-round text-primary text-sm">description</span>
+<span class="text-[11px] font-bold text-slate-400 uppercase tracking-tighter">8 min read</span>
+</div>
+<h3 class="text-xl font-800 mb-4 leading-snug pr-20">2024 Budget Policy Statement</h3>
+<p class="text-sm text-slate-500 mb-6 italic">Summary of the national economic framework for the upcoming year.</p>
+<div class="mt-6 flex gap-3">
+<button class="flex-1 bg-slate-200 dark:bg-primary/10 text-slate-800 dark:text-primary font-800 text-sm py-3 rounded-lg flex items-center justify-center gap-2">
+                            View Summary <span class="material-icons-round text-sm">arrow_forward</span>
+</button>
+</div>
+</div>
+</article>
+</main>
+<!-- Fixed Bottom Navigation (iOS Style) -->
+<nav class="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-md bg-white/80 dark:bg-background-dark/80 backdrop-blur-xl border-t border-slate-200 dark:border-primary/10 px-8 pt-3 pb-8 flex justify-between items-center z-50">
+<button class="flex flex-col items-center gap-1 text-slate-400 transition-colors">
+<span class="material-icons-round">grid_view</span>
+<span class="text-[10px] font-bold uppercase tracking-tighter">Home</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-primary transition-colors">
+<span class="material-icons-round">analytics</span>
+<span class="text-[10px] font-bold uppercase tracking-tighter">Reports</span>
+</button>
+<div class="relative -top-8">
+<button class="w-14 h-14 bg-primary rounded-full shadow-lg shadow-primary/40 flex items-center justify-center text-background-dark border-4 border-background-light dark:border-background-dark">
+<span class="material-icons-round text-3xl font-bold">add</span>
+</button>
+</div>
+<button class="flex flex-col items-center gap-1 text-slate-400 transition-colors">
+<span class="material-icons-round">forum</span>
+<span class="text-[10px] font-bold uppercase tracking-tighter">Talk</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-slate-400 transition-colors">
+<span class="material-icons-round">person</span>
+<span class="text-[10px] font-bold uppercase tracking-tighter">Profile</span>
+</button>
+</nav>
+<!-- Home Indicator (iOS) -->
+<div class="fixed bottom-1.5 left-1/2 -translate-x-1/2 w-32 h-1.5 bg-slate-300 dark:bg-slate-700 rounded-full z-[60]"></div>
+</div>
+</body></html>

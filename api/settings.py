@@ -1,0 +1,194 @@
+"""
+Django settings for api project.
+"""
+import os
+from pathlib import Path
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
+
+# Build paths inside the project like this: BASE_DIR / 'subdir'.
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Quick-start development settings - unsuitable for production
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-=cldztbc4jg&xl0!x673!*v2_=p$eu)=7*f#d0#zs$44xx-h^')
+
+DEBUG = os.environ.get('DEBUG', 'True').lower() in ('true', '1', 'yes')
+
+# Parse ALLOWED_HOSTS from comma-separated string
+_allowed_hosts = os.environ.get('ALLOWED_HOSTS', '')
+ALLOWED_HOSTS = [h.strip() for h in _allowed_hosts.split(',')] if _allowed_hosts else ['127.0.0.1', 'localhost']
+
+# Application definition
+INSTALLED_APPS = [
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    
+    # Third party apps
+    'rest_framework',
+    'corsheaders',
+    'django_filters',
+    
+    # Local apps
+    'apps.core',
+    'apps.accounts',
+    'apps.content',
+    'apps.newsletter',
+    'apps.sponsors',
+    'apps.analytics',
+    'apps.cms',
+]
+
+MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.security.SecurityMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+]
+
+ROOT_URLCONF = 'api.urls'
+
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [BASE_DIR / 'templates'],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+                'apps.core.context_processors.theme',
+                'apps.core.context_processors.api_info',
+            ],
+        },
+    },
+]
+
+WSGI_APPLICATION = 'api.wsgi.application'
+
+# Database - Using Neon PostgreSQL
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'neondb',
+        'USER': 'neondb_owner',
+        'PASSWORD': 'npg_7lQqDYL2XkUB',
+        'HOST': 'ep-delicate-shadow-aix1bnef-pooler.c-4.us-east-1.aws.neon.tech',
+        'PORT': '5432',
+        'OPTIONS': {
+            'sslmode': 'require',
+        },
+    }
+}
+# Database - Using environment variables for cPanel PostgreSQL
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': os.environ.get('DB_NAME', 'budgetnd_budgetndiostory'),
+#         'USER': os.environ.get('DB_USER', 'budgetnd_user'),
+#         'PASSWORD': os.environ.get('DB_PASSWORD', 'budgetndiostory'),
+#         'HOST': os.environ.get('DB_HOST', '127.0.0.1'),
+#         'PORT': os.environ.get('DB_PORT', '5432'),
+#     }
+# }
+
+
+# Password validation
+AUTH_PASSWORD_VALIDATORS = [
+    {
+        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+    },
+]
+
+# Custom User Model
+AUTH_USER_MODEL = 'accounts.User'
+
+# Internationalization
+LANGUAGE_CODE = 'en-us'
+
+TIME_ZONE = 'Africa/Nairobi'
+
+USE_I18N = True
+
+USE_TZ = True
+
+# Static files
+STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / 'public' / 'static'
+STATICFILES_DIRS = [
+    BASE_DIR / 'templates' / 'out' / '_next',
+]
+
+# Media files
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
+
+# Default primary key field type
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Django REST Framework
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.SessionAuthentication',
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticatedOrReadOnly',
+    ],
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 20,
+    'DEFAULT_FILTER_BACKENDS': [
+        'django_filters.rest_framework.DjangoFilterBackend',
+        'rest_framework.filters.SearchFilter',
+        'rest_framework.filters.OrderingFilter',
+    ],
+    # Use custom HTML renderer instead of default browsable API
+    'DEFAULT_RENDERER_CLASSES': [
+        'rest_framework.renderers.JSONRenderer',
+        'apps.core.renderers.DashboardHTMLRenderer',
+    ],
+    'DEFAULT_PARSER_CLASSES': [
+        'rest_framework.parsers.JSONParser',
+        'rest_framework.parsers.FormParser',
+        'rest_framework.parsers.MultiPartParser',
+    ],
+}
+
+# CORS settings - Use environment variables
+_cors_origins = os.environ.get('CORS_ALLOWED_ORIGINS', 'http://localhost:3000,http://127.0.0.1:3000,https://bns.vercel.app,https://*.vercel.app,https://www.budgetndiostory.org,https://budgetndiostory.org,https://www.backend.budgetndiostory.org,https://backend.budgetndiostory.org')
+CORS_ALLOWED_ORIGINS = [origin.strip() for origin in _cors_origins.split(',')]
+
+# Allow credentials for cross-origin requests
+CORS_ALLOW_CREDENTIALS = True
+
+# Cache CORS preflight requests for 1 hour
+CORS_PREFLIGHT_CACHE = 3600
+
+# CSRF Settings - Use cookie for Next.js compatibility
+CSRF_COOKIE_NAME = 'csrftoken'
+CSRF_COOKIE_HTTPONLY = False
+CSRF_COOKIE_SAMESITE = 'Lax'
+CSRF_USE_SESSIONS = False
+
+# CSRF Trusted Origins - Required for CSRF verification - Use environment variables
+_csrf_origins = os.environ.get('CSRF_TRUSTED_ORIGINS', 'http://localhost:3000,http://127.0.0.1:3000,https://bns.vercel.app,https://*.vercel.app,https://www.budgetndiostory.org,https://budgetndiostory.org,https://www.backend.budgetndiostory.org,https://backend.budgetndiostory.org')
+CSRF_TRUSTED_ORIGINS = [origin.strip() for origin in _csrf_origins.split(',')]

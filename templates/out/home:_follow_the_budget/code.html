@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Budget Ndio Story - Home</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#30e87a",
+                        "background-light": "#f6f8f7",
+                        "background-dark": "#112117",
+                        "neutral-900": "#0a130e",
+                        "neutral-800": "#1a2e22",
+                        "neutral-700": "#243d2e",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Manrope', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .ios-status-bar {
+            height: 44px;
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-neutral-900 dark:text-white antialiased">
+<!-- iOS Status Bar Spacer -->
+<div class="ios-status-bar w-full bg-background-light dark:bg-background-dark"></div>
+<!-- Main Container (Phone Form Factor) -->
+<main class="max-w-[430px] mx-auto min-h-screen relative flex flex-col pb-24">
+<!-- Header -->
+<header class="px-6 py-4 flex justify-between items-center sticky top-0 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md z-50">
+<div class="flex items-center gap-2">
+<div class="w-8 h-8 bg-primary rounded flex items-center justify-center">
+<span class="material-icons-round text-background-dark text-xl">account_balance_wallet</span>
+</div>
+<h1 class="font-display font-extrabold text-lg tracking-tight uppercase italic">Budget Ndio Story</h1>
+</div>
+<button class="w-10 h-10 rounded-full flex items-center justify-center bg-primary/10 text-primary">
+<span class="material-icons-round">notifications_none</span>
+</button>
+</header>
+<!-- Hero Section -->
+<section class="px-6 py-8 relative overflow-hidden">
+<!-- Background Accent -->
+<div class="absolute -top-24 -right-24 w-64 h-64 bg-primary/10 blur-[100px] rounded-full"></div>
+<h2 class="text-4xl font-display font-extrabold leading-tight mb-4 relative">
+                Follow the <span class="text-primary">Budget</span>.<br/>Find the <span class="italic">Story</span>.
+            </h2>
+<p class="text-neutral-600 dark:text-primary/60 text-lg font-medium mb-8 max-w-[90%]">
+                Turning complex Kenyan government budgets into clear, actionable insights for every citizen.
+            </p>
+<div class="flex flex-col gap-3">
+<button class="bg-primary hover:bg-primary/90 text-background-dark font-display font-extrabold py-4 px-6 rounded-xl flex items-center justify-center gap-2 transition-all active:scale-95 shadow-lg shadow-primary/20">
+                    VIEW LATEST REPORT
+                    <span class="material-icons-round">arrow_forward</span>
+</button>
+<button class="border-2 border-primary/30 hover:border-primary/60 text-primary font-display font-bold py-4 px-6 rounded-xl flex items-center justify-center gap-2 transition-all active:scale-95">
+                    TAKE ACTION
+                </button>
+</div>
+</section>
+<!-- Start Here Section -->
+<section class="px-6 py-6">
+<h3 class="font-display font-extrabold text-xs uppercase tracking-[0.2em] text-primary mb-4">Start Here</h3>
+<div class="grid grid-cols-2 gap-4">
+<div class="bg-white dark:bg-neutral-800 p-5 rounded-2xl border border-neutral-200 dark:border-primary/10 shadow-sm relative overflow-hidden group">
+<div class="absolute -bottom-4 -right-4 text-primary/5 group-hover:text-primary/10 transition-colors">
+<span class="material-icons-round text-7xl">menu_book</span>
+</div>
+<div class="w-10 h-10 bg-primary/20 rounded-lg flex items-center justify-center text-primary mb-3">
+<span class="material-icons-round text-xl">menu_book</span>
+</div>
+<h4 class="font-display font-bold text-base mb-1">Budget Basics</h4>
+<p class="text-xs text-neutral-500 dark:text-neutral-400">Learn how the money flows.</p>
+</div>
+<div class="bg-white dark:bg-neutral-800 p-5 rounded-2xl border border-neutral-200 dark:border-primary/10 shadow-sm relative overflow-hidden group">
+<div class="absolute -bottom-4 -right-4 text-primary/5 group-hover:text-primary/10 transition-colors">
+<span class="material-icons-round text-7xl">event_note</span>
+</div>
+<div class="w-10 h-10 bg-primary/20 rounded-lg flex items-center justify-center text-primary mb-3">
+<span class="material-icons-round text-xl">event_note</span>
+</div>
+<h4 class="font-display font-bold text-base mb-1">Budget Calendar</h4>
+<p class="text-xs text-neutral-500 dark:text-neutral-400">Key dates for oversight.</p>
+</div>
+</div>
+</section>
+<!-- Latest Section -->
+<section class="px-6 py-6 flex-grow">
+<div class="flex justify-between items-end mb-6">
+<h3 class="font-display font-extrabold text-xs uppercase tracking-[0.2em] text-primary">Latest Updates</h3>
+<span class="text-[10px] bg-primary/20 text-primary px-2 py-1 rounded font-bold uppercase">Live Tracking</span>
+</div>
+<!-- Custom Tabs -->
+<div class="flex gap-2 mb-6 overflow-x-auto hide-scrollbar">
+<button class="bg-primary text-background-dark px-5 py-2 rounded-full font-display font-bold text-sm whitespace-nowrap">Stories</button>
+<button class="bg-neutral-200 dark:bg-neutral-800 text-neutral-600 dark:text-neutral-400 px-5 py-2 rounded-full font-display font-bold text-sm whitespace-nowrap">Videos</button>
+<button class="bg-neutral-200 dark:bg-neutral-800 text-neutral-600 dark:text-neutral-400 px-5 py-2 rounded-full font-display font-bold text-sm whitespace-nowrap">Updates</button>
+</div>
+<!-- Story Cards -->
+<div class="space-y-6">
+<article class="group">
+<div class="relative w-full h-48 rounded-2xl overflow-hidden mb-4 border border-white/10">
+<img alt="Financial graphs and data visualization" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Close up of digital financial graphs and data" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBuYA9rwvm-C6f0BGTLxmyzv_FfcGqaWBCWWxgRx2157LLNrvIG3APK-LdnZ_n7ca8jQnoLi0lgSzkz8EC8qcnMbO3tnILIjPVUs4oyqbY2WpOzKB-qHwPczLu-gXVkBwI_OGFGJW-aqOLIYJ8rQ95HTpvXKysN0SK3fGx3kIxor8hoD-A8qZ9vMH1ZeMF3lZCDPOQXcGIFK-3jdBx8sHxCxnD_7LVjDyOAeBFsiBOEA2q2AETot0ol0Jdbsw8GK2q8lzT1XkS_wlI"/>
+<div class="absolute top-4 left-4">
+<span class="bg-black/60 backdrop-blur-md text-white text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider">County Budget</span>
+</div>
+</div>
+<h4 class="font-display font-extrabold text-xl leading-snug mb-2 group-hover:text-primary transition-colors">The Nairobi Health Fund: Where did the 2 Billion go?</h4>
+<div class="flex items-center gap-4 text-xs text-neutral-500 dark:text-neutral-400">
+<span class="flex items-center gap-1"><span class="material-icons-round text-sm">schedule</span> 2 hours ago</span>
+<span class="flex items-center gap-1"><span class="material-icons-round text-sm">visibility</span> 1.2k reads</span>
+</div>
+</article>
+<article class="flex gap-4 p-3 bg-white dark:bg-neutral-900/50 rounded-xl border border-neutral-100 dark:border-white/5">
+<div class="w-24 h-24 flex-shrink-0 rounded-lg overflow-hidden">
+<img alt="Cash flow concept image" class="w-full h-full object-cover" data-alt="Abstract image of stacks of coins and cash" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCn9qPL7QhEUrQhiC9yRROMrIVfkU87IwYpt90J67hMuojBNztx-6sCAfOLoiB9ENvAaOG1d_JNdesMcnIP2m0_jmR5GfHpggqwNKi2g0CnwHlR_-P5RlnI_pTs4ByKHiOptnrodBzuQA69RniszRpCV_uaXnqGH7TpXtti0BEpT6rrvIlDBdav77_rFsTPHSM0S5aDgUa_fJuuBNPozdWU6Y1gEwQ_6neK4KUVhpMUIDaYztxzxyMjUqPbelus9qLTzjQ_46ObzyE"/>
+</div>
+<div class="flex flex-col justify-center">
+<span class="text-primary text-[10px] font-bold uppercase mb-1">National Level</span>
+<h4 class="font-display font-bold text-base leading-tight mb-2">School Feeding Program: A detailed breakdown of allocated funds.</h4>
+<span class="text-[10px] text-neutral-400 italic font-medium">Read more...</span>
+</div>
+</article>
+</div>
+</section>
+<!-- Bottom Navigation -->
+<nav class="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[430px] bg-background-light dark:bg-background-dark/95 backdrop-blur-xl border-t border-neutral-200 dark:border-primary/10 px-8 py-4 flex justify-between items-center z-[100]">
+<a class="flex flex-col items-center gap-1 text-primary" href="#">
+<span class="material-icons-round">home</span>
+<span class="text-[10px] font-bold uppercase">Home</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-neutral-400 hover:text-primary transition-colors" href="#">
+<span class="material-icons-round">analytics</span>
+<span class="text-[10px] font-bold uppercase">Budgets</span>
+</a>
+<div class="relative -top-8">
+<div class="absolute -inset-2 bg-primary blur-lg opacity-20 animate-pulse"></div>
+<button class="bg-primary text-background-dark w-14 h-14 rounded-full flex items-center justify-center shadow-lg shadow-primary/40 relative">
+<span class="material-icons-round text-3xl font-bold">add</span>
+</button>
+</div>
+<a class="flex flex-col items-center gap-1 text-neutral-400 hover:text-primary transition-colors" href="#">
+<span class="material-icons-round">campaign</span>
+<span class="text-[10px] font-bold uppercase">Voice</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-neutral-400 hover:text-primary transition-colors" href="#">
+<span class="material-icons-round">person</span>
+<span class="text-[10px] font-bold uppercase">Profile</span>
+</a>
+</nav>
+<!-- iOS Home Indicator -->
+<div class="fixed bottom-1 left-1/2 -translate-x-1/2 w-32 h-1 bg-neutral-300 dark:bg-neutral-800 rounded-full z-[110]"></div>
+</main>
+</body></html>

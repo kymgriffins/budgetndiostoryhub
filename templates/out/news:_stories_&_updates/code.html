@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Budget Ndio Story - News &amp; Updates</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#30e87a",
+                        "background-light": "#f6f8f7",
+                        "background-dark": "#112117",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Manrope', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .glass-card {
+            background: rgba(48, 232, 122, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(48, 232, 122, 0.1);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen">
+<!-- Top Navigation Bar (iOS Style) -->
+<header class="sticky top-0 z-50 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md px-4 py-4 flex flex-col gap-4 border-b border-primary/10">
+<div class="flex items-center justify-between">
+<span class="text-xs font-bold text-primary uppercase tracking-widest">Sema Na Sisi</span>
+<div class="flex gap-4">
+<button class="w-10 h-10 rounded-full flex items-center justify-center bg-primary/10 text-primary">
+<span class="material-icons-round">search</span>
+</button>
+<button class="w-10 h-10 rounded-full flex items-center justify-center bg-primary/10 text-primary">
+<span class="material-icons-round">notifications_none</span>
+</button>
+</div>
+</div>
+<div>
+<h1 class="text-3xl font-extrabold tracking-tight">Budget Ndio Story</h1>
+</div>
+<!-- Segmented Control Tabs -->
+<div class="flex p-1 bg-primary/10 rounded-xl">
+<button class="flex-1 py-2 text-sm font-bold rounded-lg bg-primary text-background-dark shadow-sm">Stories</button>
+<button class="flex-1 py-2 text-sm font-semibold text-primary/70">Videos</button>
+<button class="flex-1 py-2 text-sm font-semibold text-primary/70">Updates</button>
+</div>
+</header>
+<main class="pb-24">
+<!-- Emerging Stories Section -->
+<section class="mt-6 px-4">
+<div class="flex items-center justify-between mb-4">
+<h2 class="text-xl font-bold">Emerging Stories</h2>
+<button class="text-primary text-sm font-semibold">View All</button>
+</div>
+<!-- Filters -->
+<div class="flex gap-2 overflow-x-auto hide-scrollbar mb-6">
+<button class="px-4 py-1.5 rounded-full border border-primary bg-primary text-background-dark text-xs font-bold whitespace-nowrap">All Topics</button>
+<button class="px-4 py-1.5 rounded-full border border-primary/20 bg-primary/5 text-primary text-xs font-semibold whitespace-nowrap">Investigations</button>
+<button class="px-4 py-1.5 rounded-full border border-primary/20 bg-primary/5 text-primary text-xs font-semibold whitespace-nowrap">Youth Voices</button>
+<button class="px-4 py-1.5 rounded-full border border-primary/20 bg-primary/5 text-primary text-xs font-semibold whitespace-nowrap">County Budgets</button>
+</div>
+<!-- Featured Story Card -->
+<div class="relative group overflow-hidden rounded-xl mb-6 shadow-2xl">
+<div class="aspect-[16/10] overflow-hidden">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="People protesting at a construction site with placards" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBXrhvcZKjBsOkVRyQhBalmQnHCbh7B3KHuB5TwXkGYvwOiYaZ86Ljd5mFUl8j6rLy5HppViRZ-Q0SAJompOZA3MfgbfukCTlG61JSKTiTOgsLa0zuNRwiJdG1d1sTT_VrVCgwqnYgsBjwrZgNUnwYcrbP3PvBZy6pVSWmEYLMHlhHzDE1dvQHbU4BJRRucSG5bmOa_3AQJOVru0GsKEeCCLopcotX2qZW9Bj9o04_q_qFXRZnHxVuwdATXry54YI-zQPnr4n_OtwY"/>
+</div>
+<div class="absolute inset-0 bg-gradient-to-t from-background-dark via-background-dark/40 to-transparent"></div>
+<div class="absolute bottom-0 left-0 p-5 w-full">
+<div class="flex gap-2 mb-2">
+<span class="bg-primary px-2 py-0.5 rounded text-[10px] font-black text-background-dark uppercase">Breaking</span>
+<span class="bg-white/20 backdrop-blur-md px-2 py-0.5 rounded text-[10px] font-bold text-white uppercase italic">8 min read</span>
+</div>
+<h3 class="text-xl font-bold text-white leading-tight mb-2">The 500M Road to Nowhere: Where did the Nakuru infrastructure fund go?</h3>
+<div class="flex items-center gap-2 text-primary/80 text-xs">
+<span class="font-semibold">Investigative Team</span>
+<span>•</span>
+<span>2h ago</span>
+</div>
+</div>
+</div>
+<!-- Story Grid -->
+<div class="grid grid-cols-1 gap-4">
+<div class="flex gap-4 glass-card p-3 rounded-xl border-primary/10">
+<div class="w-24 h-24 rounded-lg overflow-hidden shrink-0">
+<img class="w-full h-full object-cover" data-alt="Close up of a young person speaking into a megaphone" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCe1lA-Zl2_ExZYKTLEVgok_QkpV9eE7rcuHO8r4ZjyGrncjp-uKdZRbRdLjx-l64IgRKAxFq7Uml209yNzptxXB5zdP6YHae4c-GRjid97_wVbvQK4Cc3jHvXZS2pQ8GnbXg9eD2gm9XE7hrXE9RtHXrMLhVkUPWcmaHjagerot8zMNg1n50hN3mQspT9kqITb52sabGcawwVbvXpvq7ERRa_D8xKs3l4E57iy6iAor_mevQl0Iz4J1CflpCou9pkI73uiOLySmFE"/>
+</div>
+<div class="flex flex-col justify-between py-1">
+<span class="text-[10px] font-bold text-primary uppercase">Youth Voices</span>
+<h4 class="font-bold text-sm leading-snug line-clamp-2">Nairobi youth demand audit of the Green Spaces project ahead of CIDP review.</h4>
+<span class="text-[10px] opacity-60">4h ago • 5 min read</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Video Hub Section -->
+<section class="mt-10">
+<div class="px-4 flex items-center justify-between mb-4">
+<div class="flex flex-col">
+<h2 class="text-xl font-bold leading-none">Budget Explainers</h2>
+<span class="text-xs text-primary font-medium">Quick clips for the TikTok gen</span>
+</div>
+<button class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-icons-round text-sm">arrow_forward_ios</span>
+</button>
+</div>
+<div class="flex gap-4 overflow-x-auto hide-scrollbar px-4">
+<!-- Video Item 1 -->
+<div class="w-40 shrink-0">
+<div class="relative aspect-[9/16] rounded-xl overflow-hidden mb-2 ring-1 ring-primary/20">
+<img class="w-full h-full object-cover" data-alt="Person holding Kenyan currency notes" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBV1O-MxQqFR-kr1q_gDhKs8RLNBp6QIbrOTI_7x3_PO2foySjc4I4jINAuKA4b52Zim9nSeWcNvl0hAEWn0_vyoAJyXTJcSPVhvadtnvF0G7Ef0CIX97JnuQXG2q90sFIztMEjn4pIwuG6ybx_uFD0lx9ZYFxDB3F72OfEk5oPHL7qSYmyK3gJc7UyIJc8wjCtOa3S1cZ7QwEkBlRhqsdHCVK6pjthF4W1IIhbOcBU4IM6YgoRMv13vgL_ckBVrCpbV_3gY0fp_rk"/>
+<div class="absolute inset-0 bg-black/20"></div>
+<div class="absolute inset-0 flex items-center justify-center">
+<span class="material-icons-round text-white text-4xl drop-shadow-lg">play_circle</span>
+</div>
+<div class="absolute bottom-2 left-2 flex items-center gap-1 bg-black/60 px-2 py-0.5 rounded-full">
+<span class="material-icons-round text-[10px] text-primary">visibility</span>
+<span class="text-[10px] font-bold text-white">12.4k</span>
+</div>
+</div>
+<p class="text-xs font-bold leading-tight">Finance Bill 2024: What it means for your pocket</p>
+</div>
+<!-- Video Item 2 -->
+<div class="w-40 shrink-0">
+<div class="relative aspect-[9/16] rounded-xl overflow-hidden mb-2 ring-1 ring-primary/20">
+<img class="w-full h-full object-cover" data-alt="Digital graphs showing financial data" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCc-RouduoVeHV5PuLE9fB1TVHwvLzQsrmD4n_D_AONesQd6aEOC1oGrVOgoqAD18tPeKVwZN7_pK_tLADUagj-FJGGLd_82MVV8ogkRLjU7KgtnR-oV9JMO4tajiN3f0gFN2WfThfUuB3wtTFEXdlo0Q68rLC01d1_TZjXmwrA5F4FTQZzqK_ex5ZhmF8j-eZ0NtiVrtfu1Q6wRKH1PelJ3RNVh91a6JCKFeTMk_F596SX3TdJjXvZslQiZ-Mii9lUTtl1J9DdISM"/>
+<div class="absolute inset-0 bg-black/20"></div>
+<div class="absolute inset-0 flex items-center justify-center">
+<span class="material-icons-round text-white text-4xl drop-shadow-lg">play_circle</span>
+</div>
+<div class="absolute bottom-2 left-2 flex items-center gap-1 bg-black/60 px-2 py-0.5 rounded-full">
+<span class="material-icons-round text-[10px] text-primary">visibility</span>
+<span class="text-[10px] font-bold text-white">8.1k</span>
+</div>
+</div>
+<p class="text-xs font-bold leading-tight">How to track your County's spending in 3 steps</p>
+</div>
+<!-- Video Item 3 -->
+<div class="w-40 shrink-0">
+<div class="relative aspect-[9/16] rounded-xl overflow-hidden mb-2 ring-1 ring-primary/20">
+<img class="w-full h-full object-cover" data-alt="Abstract green digital art" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC_mYhSihXn0zkBhkBZvbvp4OvAv0jT12spjtbuBwtnqIeNvgQAXdf_XLiaw5HRTVd1QWc2JKVRPoc0_ww3-zukohNBEidtFT_U8ibiCPB3rQkWhG3bwjwAy_L7Ds7AAdY4NrvcKFNTaAiFAZi8Vm_moRYltx-op4mcoqID24rYWS79iHtZ6WDcqvuLNfPpHmMNKDNo1A3pEbGNy561mqcQ47TNgEdbvOf09UHQWaTPHCgaNwVkSECZUL8XH_B81tVfuN0YkATBKOE"/>
+<div class="absolute inset-0 bg-black/20"></div>
+<div class="absolute inset-0 flex items-center justify-center">
+<span class="material-icons-round text-white text-4xl drop-shadow-lg">play_circle</span>
+</div>
+<div class="absolute bottom-2 left-2 flex items-center gap-1 bg-black/60 px-2 py-0.5 rounded-full">
+<span class="material-icons-round text-[10px] text-primary">visibility</span>
+<span class="text-[10px] font-bold text-white">5.9k</span>
+</div>
+</div>
+<p class="text-xs font-bold leading-tight">Mbona hii barabara haijaisha? The Audit Report</p>
+</div>
+</div>
+</section>
+<!-- Updates Feed Section -->
+<section class="mt-10 px-4">
+<h2 class="text-xl font-bold mb-4">Latest Updates</h2>
+<div class="space-y-4">
+<!-- Update Card 1 -->
+<div class="bg-primary/5 border border-primary/10 rounded-xl p-4">
+<div class="flex items-start justify-between mb-3">
+<div class="flex items-center gap-3">
+<div class="bg-primary flex flex-col items-center justify-center w-12 h-12 rounded-lg text-background-dark">
+<span class="text-[10px] font-black uppercase">Oct</span>
+<span class="text-xl font-black leading-none">12</span>
+</div>
+<div>
+<span class="inline-block bg-primary/20 text-primary px-2 py-0.5 rounded text-[10px] font-bold uppercase mb-1">Public Participation</span>
+<h5 class="font-bold text-sm">Mombasa County Budget Estimates Review</h5>
+</div>
+</div>
+<span class="material-icons-round text-primary/40">more_vert</span>
+</div>
+<p class="text-xs text-slate-400 mb-4">The Governor's office has released the draft estimates. You have 3 days to submit your oral or written views at the County Hall.</p>
+<div class="flex gap-2">
+<button class="flex-1 bg-primary text-background-dark py-2 rounded-lg text-xs font-bold flex items-center justify-center gap-2">
+<span class="material-icons-round text-sm">edit_calendar</span> Add to Calendar
+                        </button>
+<button class="flex-1 border border-primary/30 text-primary py-2 rounded-lg text-xs font-bold">Download Draft</button>
+</div>
+</div>
+<!-- Update Card 2 -->
+<div class="bg-background-light dark:bg-background-dark/40 border border-primary/5 rounded-xl p-4">
+<div class="flex items-start justify-between mb-3">
+<div class="flex items-center gap-3">
+<div class="bg-slate-800 flex flex-col items-center justify-center w-12 h-12 rounded-lg text-white">
+<span class="text-[10px] font-black uppercase">Oct</span>
+<span class="text-xl font-black leading-none">08</span>
+</div>
+<div>
+<span class="inline-block bg-slate-800 text-slate-300 px-2 py-0.5 rounded text-[10px] font-bold uppercase mb-1">Document Release</span>
+<h5 class="font-bold text-sm">Auditor General's Special Health Report</h5>
+</div>
+</div>
+</div>
+<p class="text-xs text-slate-400 mb-4">New report highlights procurement discrepancies in the distribution of medical supplies to Level 4 hospitals.</p>
+<div class="flex items-center justify-between">
+<div class="flex -space-x-2">
+<div class="w-6 h-6 rounded-full border-2 border-background-dark overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="User avatar 1" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCEWH25_GhR6GExs24azzR-0TLNczBcCXEPkkX8AFXNFgl5iMvLehdkyyhuKJYAUFq-tSU7QtSDNq-aS8GDDG-8nAlWmcTUZltcsWQ5c4rzrgb8wdtvziyOcH-I0TWBlAKK-__zEzZFRM9nY-_q8-2i0Cxl9cKH-tXPhOHp5fwZAVWj3-cJ4Fa3iR6YU-kJ30WtzqbQNOemHFocg0s2FhUdvpDDF4i1D2ynwPJ90nZ2QgqFP2J1vrnBkvDYKgbCIRiSD9T2pyBA5_Y"/>
+</div>
+<div class="w-6 h-6 rounded-full border-2 border-background-dark overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="User avatar 2" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDMxLySaqbAMeetj0y4RzzAN0Ubs1xBNImVb5sV81GamjJRZCflBt3JI_OvgUe2e3VKIslvAP3zd-w-z2E-JAakisNXSi3_B0m-rQbz9FS4wM_3wTh8OgQ3l59SBYmWmA02WTZeRz7WkP5j5-5I7Zgs5_lhQjObJMWY1j3-cn_MxBhfCHMiWz32K4Vg5xIjalTQvlpyjQsjVgEOSvXT7t7oCXGVs1xzWLkEILjAyCKEnIH2GrIADipdgNbpsrJOGVCgVhh9XrLmZKI"/>
+</div>
+<div class="w-6 h-6 rounded-full bg-primary flex items-center justify-center text-[8px] font-bold text-background-dark border-2 border-background-dark">
+                                +24
+                            </div>
+</div>
+<span class="text-[10px] font-medium text-primary underline">Join Discussion</span>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Floating Action Button -->
+<button class="fixed bottom-24 right-6 w-14 h-14 bg-primary rounded-full shadow-lg shadow-primary/20 flex items-center justify-center text-background-dark z-50 transition-transform active:scale-90">
+<span class="material-icons-round text-3xl">add_photo_alternate</span>
+</button>
+<!-- Navigation Bar (iOS Tab Bar) -->
+<nav class="fixed bottom-0 left-0 right-0 h-20 bg-background-light/95 dark:bg-background-dark/95 backdrop-blur-xl border-t border-primary/10 flex items-center justify-around px-6 pb-4 z-50">
+<div class="flex flex-col items-center gap-1 opacity-40">
+<span class="material-icons-round">home</span>
+<span class="text-[10px] font-bold">Dashboard</span>
+</div>
+<div class="flex flex-col items-center gap-1 text-primary">
+<span class="material-icons-round">newspaper</span>
+<span class="text-[10px] font-bold">News</span>
+</div>
+<div class="flex flex-col items-center gap-1 opacity-40">
+<span class="material-icons-round">analytics</span>
+<span class="text-[10px] font-bold">Budget</span>
+</div>
+<div class="flex flex-col items-center gap-1 opacity-40">
+<span class="material-icons-round">campaign</span>
+<span class="text-[10px] font-bold">Action</span>
+</div>
+<div class="flex flex-col items-center gap-1 opacity-40">
+<span class="material-icons-round">person</span>
+<span class="text-[10px] font-bold">Profile</span>
+</div>
+</nav>
+</body></html>
