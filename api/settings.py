@@ -18,7 +18,15 @@ DEBUG = os.environ.get('DEBUG', 'True').lower() in ('true', '1', 'yes')
 
 # Parse ALLOWED_HOSTS from comma-separated string
 _allowed_hosts = os.environ.get('ALLOWED_HOSTS', '')
-ALLOWED_HOSTS = [h.strip() for h in _allowed_hosts.split(',')] if _allowed_hosts else ['127.0.0.1', 'localhost']
+ALLOWED_HOSTS = [h.strip() for h in _allowed_hosts.split(',')] if _allowed_hosts else [
+    '127.0.0.1', 
+    'localhost',
+    '.vercel.app',
+    'www.budgetndiostory.org',
+    'budgetndiostory.org',
+    'www.backend.budgetndiostory.org',
+    'backend.budgetndiostory.org',
+]
 
 # Application definition
 INSTALLED_APPS = [
