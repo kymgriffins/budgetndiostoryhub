@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}Subscribers - Budget Ndio Story{% endblock %}
 
@@ -8,7 +9,7 @@
         <h1 class="text-3xl font-bold text-dark">Subscribers</h1>
         <p class="text-gray-500 mt-1">Manage your newsletter subscribers</p>
     </div>
-    <a href="{% url 'subscriber-create' %}" class="px-6 py-3 bg-bns text-white rounded-lg hover:bg-bns-dark transition-colors flex items-center gap-2">
+    <a href="{% url 'subscriber-create' %}" class="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2">
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
         </svg>
@@ -18,7 +19,24 @@
 
 <!-- Subscribers Table -->
 <div class="bg-white rounded-xl shadow-sm overflow-hidden">
-    <div class="overflow-x-auto">
+    <!-- Loading State -->
+    <div id="subscribers-loading" class="hidden">
+        <div class="flex items-center justify-center p-12">
+            <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+        </div>
+    </div>
+    
+    <!-- Error State -->
+    <div id="subscribers-error" class="hidden">
+        <div class="p-12 text-center">
+            <div class="text-red-500 mb-4">
+                <i data-lucide="alert-circle" class="w-12 h-12 mx-auto"></i>
+            </div>
+            <p class="text-gray-600">Failed to load subscribers. Please try again.</p>
+        </div>
+    </div>
+    
+    <div class="overflow-x-auto" id="subscribers-content">
     <table class="w-full">
         <thead class="bg-gray-50">
             <tr>
@@ -29,9 +47,9 @@
                 <th class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase">Actions</th>
             </tr>
         </thead>
-        <tbody class="divide-y divide-gray-100">
+        <tbody class="divide-y divide-gray-100" id="subscribers-tbody">
             {% for subscriber in subscribers %}
-            <tr class="hover:bg-gray-50">
+            <tr class="hover:bg-gray-50" data-subscriber-id="{{ subscriber.pk }}">
                 <td class="px-6 py-4">
                     <div class="font-medium text-dark">{{ subscriber.email }}</div>
                 </td>
@@ -50,23 +68,27 @@
                 </td>
                 <td class="px-6 py-4">
                     <div class="flex items-center gap-2">
-                        <a href="{% url 'subscriber-update' subscriber.pk %}" class="p-2 text-gray-500 hover:text-bns transition-colors" title="Edit">
+                        <a href="{% url 'subscriber-update' subscriber.pk %}" class="p-2 text-gray-500 hover:text-blue-600 transition-colors" title="Edit">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
                             </svg>
                         </a>
-                        <a href="{% url 'subscriber-delete' subscriber.pk %}" class="p-2 text-gray-500 hover:text-red-600 transition-colors" title="Delete">
+                        <button 
+                            data-delete-confirm="Are you sure you want to delete subscriber '{{ subscriber.email }}'?"
+                            data-delete-url="/api/v1/newsletter/subscribers/{{ subscriber.pk }}/"
+                            class="p-2 text-gray-500 hover:text-red-600 transition-colors delete-btn" 
+                            title="Delete">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
                             </svg>
-                        </a>
+                        </button>
                     </div>
                 </td>
             </tr>
             {% empty %}
-            <tr>
+            <tr id="no-subscribers-row">
                 <td colspan="5" class="px-6 py-12 text-center text-gray-500">
-                    No subscribers found. <a href="{% url 'subscriber-create' %}" class="text-bns hover:underline">Add your first subscriber</a>
+                    No subscribers found. <a href="{% url 'subscriber-create' %}" class="text-blue-600 hover:underline">Add your first subscriber</a>
                 </td>
             </tr>
             {% endfor %}
@@ -74,4 +96,35 @@
     </table>
     </div>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Handle delete buttons
+    document.querySelectorAll('.delete-btn').forEach(btn => {
+        btn.addEventListener('click', async function(e) {
+            e.preventDefault();
+            const message = btn.dataset.deleteConfirm;
+            if (confirm(message)) {
+                const url = btn.dataset.deleteUrl;
+                try {
+                    const result = await API.delete(url);
+                    if (result.success) {
+                        UI.showToast('Subscriber deleted successfully!', 'success');
+                        btn.closest('tr').remove();
+                    } else {
+                        UI.showToast(result.error || 'Delete failed', 'error');
+                    }
+                } catch (error) {
+                    UI.showToast('Delete failed: ' + error.message, 'error');
+                }
+            }
+        });
+    });
+    
+    // Initialize Lucide icons
+    if (typeof lucide !== 'undefined') {
+        lucide.createIcons();
+    }
+});
+</script>
 {% endblock %}

@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}{% if object %}Edit Playlist{% else %}Create Playlist{% endif %} - Budget Ndio Story{% endblock %}
 
@@ -8,6 +9,21 @@
         <h1 class="text-3xl font-bold text-dark">{% if object %}Edit Playlist{% else %}Create New Playlist{% endif %}</h1>
         <p class="text-gray-500 mt-1">{% if object %}Update playlist information{% else %}Create a new playlist for your videos{% endif %}</p>
     </div>
+
+    <!-- Error Display -->
+    {% if form.non_field_errors %}
+    <div class="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
+        <div class="flex items-center gap-2 text-red-700">
+            <i data-lucide="alert-circle" class="w-5 h-5"></i>
+            <span class="font-medium">Please fix the errors below</span>
+        </div>
+        <ul class="mt-2 list-disc list-inside text-sm text-red-600">
+            {% for error in form.non_field_errors %}
+            <li>{{ error }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
 
     <form method="post" enctype="multipart/form-data" class="bg-white rounded-xl shadow-sm p-8">
         {% csrf_token %}
@@ -60,12 +76,20 @@
             <a href="{% url 'playlist-list' %}" class="px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors">
                 Cancel
             </a>
-            <button type="submit" class="px-6 py-3 bg-bns text-white rounded-lg hover:bg-bns-dark transition-colors">
+            <button type="submit" class="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
                 {% if object %}Update Playlist{% else %}Create Playlist{% endif %}
             </button>
         </div>
     </form>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    if (typeof lucide !== 'undefined') {
+        lucide.createIcons();
+    }
+});
+</script>
 
 <style>
     input[type="text"],

@@ -1,7 +1,7 @@
 """
 Django views for serving Next.js static export pages.
 """
-from django.http import Http404, FileResponse, HttpResponse
+from django.http import Http404, FileResponse, HttpResponse, HttpResponseRedirect
 from django.views.generic import TemplateView
 from django.conf import settings
 from pathlib import Path
@@ -105,6 +105,23 @@ class NextJSPageView(TemplateView):
         """
         # Get the path from kwargs
         path = kwargs.get('path', '')
+        
+        # Strip .txt extension and redirect to clean URL for scalability
+        # This handles cases like /home/index.txt/ -> /home/
+        if path.endswith('.txt'):
+            clean_path = path[:-4]  # Remove '.txt'
+            # Check if the filename was 'index' (e.g., /home/index.txt -> /home/)
+            # This provides cleaner URLs for index pages
+            if clean_path.endswith('index'):
+                clean_path = clean_path[:-5]  # Remove '/index'
+            # Ensure path ends with / for directory-style URLs
+            if not clean_path.endswith('/'):
+                clean_path += '/'
+            # Ensure leading slash for absolute URL
+            if not clean_path.startswith('/'):
+                clean_path = '/' + clean_path
+            # Redirect to clean URL
+            return HttpResponseRedirect(clean_path)
         
         # Determine the template path - only use .html files
         if path == '' or path == '/':

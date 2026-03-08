@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}Campaigns - Budget Ndio Story{% endblock %}
 
@@ -8,7 +9,7 @@
         <h1 class="text-3xl font-bold text-dark">Campaigns</h1>
         <p class="text-gray-500 mt-1">Manage your newsletter campaigns</p>
     </div>
-    <a href="{% url 'campaign-create' %}" class="px-6 py-3 bg-bns text-white rounded-lg hover:bg-bns-dark transition-colors flex items-center gap-2">
+    <a href="{% url 'campaign-create' %}" class="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2">
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
         </svg>
@@ -18,7 +19,24 @@
 
 <!-- Campaigns Table -->
 <div class="bg-white rounded-xl shadow-sm overflow-hidden">
-    <div class="overflow-x-auto">
+    <!-- Loading State -->
+    <div id="campaigns-loading" class="hidden">
+        <div class="flex items-center justify-center p-12">
+            <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+        </div>
+    </div>
+    
+    <!-- Error State -->
+    <div id="campaigns-error" class="hidden">
+        <div class="p-12 text-center">
+            <div class="text-red-500 mb-4">
+                <i data-lucide="alert-circle" class="w-12 h-12 mx-auto"></i>
+            </div>
+            <p class="text-gray-600">Failed to load campaigns. Please try again.</p>
+        </div>
+    </div>
+    
+    <div class="overflow-x-auto" id="campaigns-content">
     <table class="w-full">
         <thead class="bg-gray-50">
             <tr>
@@ -29,9 +47,9 @@
                 <th class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase">Actions</th>
             </tr>
         </thead>
-        <tbody class="divide-y divide-gray-100">
+        <tbody class="divide-y divide-gray-100" id="campaigns-tbody">
             {% for campaign in campaigns %}
-            <tr class="hover:bg-gray-50">
+            <tr class="hover:bg-gray-50" data-campaign-id="{{ campaign.pk }}">
                 <td class="px-6 py-4">
                     <div class="font-medium text-dark">{{ campaign.subject }}</div>
                     <div class="text-sm text-gray-500">{{ campaign.preview_text|truncatechars:50 }}</div>
@@ -55,23 +73,27 @@
                 </td>
                 <td class="px-6 py-4">
                     <div class="flex items-center gap-2">
-                        <a href="{% url 'campaign-update' campaign.pk %}" class="p-2 text-gray-500 hover:text-bns transition-colors" title="Edit">
+                        <a href="{% url 'campaign-update' campaign.pk %}" class="p-2 text-gray-500 hover:text-blue-600 transition-colors" title="Edit">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
                             </svg>
                         </a>
-                        <a href="{% url 'campaign-delete' campaign.pk %}" class="p-2 text-gray-500 hover:text-red-600 transition-colors" title="Delete">
+                        <button 
+                            data-delete-confirm="Are you sure you want to delete campaign '{{ campaign.subject }}'?"
+                            data-delete-url="/api/v1/newsletter/campaigns/{{ campaign.pk }}/"
+                            class="p-2 text-gray-500 hover:text-red-600 transition-colors delete-btn" 
+                            title="Delete">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
                             </svg>
-                        </a>
+                        </button>
                     </div>
                 </td>
             </tr>
             {% empty %}
-            <tr>
+            <tr id="no-campaigns-row">
                 <td colspan="5" class="px-6 py-12 text-center text-gray-500">
-                    No campaigns found. <a href="{% url 'campaign-create' %}" class="text-bns hover:underline">Create your first campaign</a>
+                    No campaigns found. <a href="{% url 'campaign-create' %}" class="text-blue-600 hover:underline">Create your first campaign</a>
                 </td>
             </tr>
             {% endfor %}
@@ -79,4 +101,35 @@
     </table>
     </div>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Handle delete buttons
+    document.querySelectorAll('.delete-btn').forEach(btn => {
+        btn.addEventListener('click', async function(e) {
+            e.preventDefault();
+            const message = btn.dataset.deleteConfirm;
+            if (confirm(message)) {
+                const url = btn.dataset.deleteUrl;
+                try {
+                    const result = await API.delete(url);
+                    if (result.success) {
+                        UI.showToast('Campaign deleted successfully!', 'success');
+                        btn.closest('tr').remove();
+                    } else {
+                        UI.showToast(result.error || 'Delete failed', 'error');
+                    }
+                } catch (error) {
+                    UI.showToast('Delete failed: ' + error.message, 'error');
+                }
+            }
+        });
+    });
+    
+    // Initialize Lucide icons
+    if (typeof lucide !== 'undefined') {
+        lucide.createIcons();
+    }
+});
+</script>
 {% endblock %}

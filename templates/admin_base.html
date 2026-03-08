@@ -589,6 +589,84 @@
         });
     </script>
     
+    <!-- API Client -->
+    <script src="{% static 'js/api-client.js' %}"></script>
+    
+    <script>
+        // Initialize API client
+        document.addEventListener('DOMContentLoaded', function() {
+            // Handle logout button
+            const logoutBtn = document.querySelector('[data-logout]');
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', async function(e) {
+                    e.preventDefault();
+                    try {
+                        await AuthAPI.logout();
+                        window.location.href = '/accounts/login/';
+                    } catch (error) {
+                        UI.showToast('Logout failed: ' + error.message, 'error');
+                    }
+                });
+            }
+            
+            // Handle form submissions with API
+            document.querySelectorAll('[data-api-form]').forEach(form => {
+                form.addEventListener('submit', async function(e) {
+                    e.preventDefault();
+                    const formData = new FormData(form);
+                    const endpoint = form.dataset.apiEndpoint;
+                    const method = form.dataset.apiMethod || 'POST';
+                    
+                    // Convert form data to object
+                    const data = {};
+                    formData.forEach((value, key) => {
+                        data[key] = value;
+                    });
+                    
+                    UI.showLoading(form.dataset.loadingTarget || 'content');
+                    
+                    let result;
+                    if (method === 'PUT') {
+                        result = await API.put(endpoint, data);
+                    } else if (method === 'PATCH') {
+                        result = await API.patch(endpoint, data);
+                    } else if (method === 'DELETE') {
+                        result = await API.delete(endpoint);
+                    } else {
+                        result = await API.post(endpoint, data);
+                    }
+                    
+                    if (result.success) {
+                        UI.showToast(form.dataset.successMessage || 'Operation successful!', 'success');
+                        if (form.dataset.redirectOnSuccess) {
+                            window.location.href = form.dataset.redirectOnSuccess;
+                        }
+                    } else {
+                        UI.showToast(result.error || 'Operation failed', 'error');
+                    }
+                });
+            });
+            
+            // Handle delete confirmations
+            document.querySelectorAll('[data-delete-confirm]').forEach(btn => {
+                btn.addEventListener('click', async function(e) {
+                    e.preventDefault();
+                    const message = btn.dataset.deleteConfirm || 'Are you sure you want to delete this item?';
+                    if (confirm(message)) {
+                        const endpoint = btn.href;
+                        const result = await API.delete(endpoint);
+                        if (result.success) {
+                            UI.showToast('Item deleted successfully!', 'success');
+                            btn.closest('tr').remove();
+                        } else {
+                            UI.showToast(result.error || 'Delete failed', 'error');
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+    
     {% block extra_js %}{% endblock %}
 </body>
 </html>
