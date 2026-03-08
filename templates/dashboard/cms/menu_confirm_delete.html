@@ -1,0 +1,19 @@
+{% extends 'admin_base.html' %}
+{% load static %}
+{% block title %}Delete Menu{% endblock %}
+{% block content %}
+<div class="mb-8"><h1 class="text-3xl font-bold tracking-tight">Delete Menu</h1></div>
+<div class="rounded-xl border bg-card p-6 max-w-lg">
+    <div class="text-center">
+        <i class="ph ph-warning text-4xl text-yellow-500"></i>
+        <p class="mt-4 text-lg">Delete "{{ object.name }}"?</p>
+    </div>
+    <form method="post" class="mt-6">
+        {% csrf_token %}
+        <div class="flex items-center gap-4 justify-center">
+            <button type="submit" class="inline-flex items-center justify-center rounded-lg bg-red-600 px-6 py-2 text-sm font-medium text-white hover:bg-red-700">Delete</button>
+            <a href="{% url 'menu-list' %}" class="inline-flex items-center justify-center rounded-lg border bg-background px-6 py-2 text-sm font-medium hover:bg-accent">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

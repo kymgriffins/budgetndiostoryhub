@@ -5,6 +5,7 @@ from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
+from django.db import models
 
 # Accounts models
 from apps.accounts.models import User, DonorProfile, SponsorProfile, ConsortiumPartner, OrganizationProfile
@@ -32,6 +33,13 @@ from apps.sponsors.models import Donation, SponsorshipDeliverable, SponsorAsset
 from apps.sponsors.forms import (
     DonationForm, DonationPublicForm,
     SponsorshipDeliverableForm, SponsorAssetForm
+)
+
+# CMS models
+from apps.cms.models import Page, Menu, MenuItem, SiteSetting, Widget, MediaLibrary
+from apps.cms.forms import (
+    PageForm, MenuForm, MenuItemForm, 
+    SiteSettingForm, WidgetForm, MediaLibraryForm
 )
 
 
@@ -473,6 +481,290 @@ class SponsorAssetDeleteView(AdminRequiredMixin, DeleteView):
     def form_valid(self, form):
         messages.success(self.request, 'Asset deleted successfully!')
         return super().form_valid(form)
+
+
+# ==================== CMS VIEWS ====================
+
+class PageListView(AdminRequiredMixin, ListView):
+    model = Page
+    template_name = 'dashboard/cms/page_list.html'
+    context_object_name = 'pages'
+    ordering = ['-created_at']
+
+
+class PageCreateView(AdminRequiredMixin, CreateView):
+    model = Page
+    form_class = PageForm
+    template_name = 'dashboard/cms/page_form.html'
+    success_url = reverse_lazy('page-list')
+    
+    def form_valid(self, form):
+        messages.success(self.request, 'Page created successfully!')
+        return super().form_valid(form)
+
+
+class PageUpdateView(AdminRequiredMixin, UpdateView):
+    model = Page
+    form_class = PageForm
+    template_name = 'dashboard/cms/page_form.html'
+    success_url = reverse_lazy('page-list')
+    
+    def form_valid(self, form):
+        messages.success(self.request, 'Page updated successfully!')
+        return super().form_valid(form)
+
+
+class PageDeleteView(AdminRequiredMixin, DeleteView):
+    model = Page
+    template_name = 'dashboard/cms/page_confirm_delete.html'
+    success_url = reverse_lazy('page-list')
+    
+    def form_valid(self, form):
+        messages.success(self.request, 'Page deleted successfully!')
+        return super().form_valid(form)
+
+
+class MenuListView(AdminRequiredMixin, ListView):
+    model = Menu
+    template_name = 'dashboard/cms/menu_list.html'
+    context_object_name = 'menus'
+    ordering = ['name']
+
+
+class MenuCreateView(AdminRequiredMixin, CreateView):
+    model = Menu
+    form_class = MenuForm
+    template_name = 'dashboard/cms/menu_form.html'
+    success_url = reverse_lazy('menu-list')
+    
+    def form_valid(self, form):
+        messages.success(self.request, 'Menu created successfully!')
+        return super().form_valid(form)
+
+
+class MenuUpdateView(AdminRequiredMixin, UpdateView):
+    model = Menu
+    form_class = MenuForm
+    template_name = 'dashboard/cms/menu_form.html'
+    success_url = reverse_lazy('menu-list')
+    
+    def form_valid(self, form):
+        messages.success(self.request, 'Menu updated successfully!')
+        return super().form_valid(form)
+
+
+class MenuDeleteView(AdminRequiredMixin, DeleteView):
+    model = Menu
+    template_name = 'dashboard/cms/menu_confirm_delete.html'
+    success_url = reverse_lazy('menu-list')
+    
+    def form_valid(self, form):
+        messages.success(self.request, 'Menu deleted successfully!')
+        return super().form_valid(form)
+
+
+class MenuItemListView(AdminRequiredMixin, ListView):
+    model = MenuItem
+    template_name = 'dashboard/cms/menuitem_list.html'
+    context_object_name = 'menu_items'
+    ordering = ['menu', 'order']
+    
+    def get_queryset(self):
+        return MenuItem.objects.all().select_related('menu', 'parent', 'page')
+
+
+class MenuItemCreateView(AdminRequiredMixin, CreateView):
+    model = MenuItem
+    form_class = MenuItemForm
+    template_name = 'dashboard/cms/menuitem_form.html'
+    success_url = reverse_lazy('menuitem-list')
+    
+    def form_valid(self, form):
+        messages.success(self.request, 'Menu item created successfully!')
+        return super().form_valid(form)
+
+
+class MenuItemUpdateView(AdminRequiredMixin, UpdateView):
+    model = MenuItem
+    form_class = MenuItemForm
+    template_name = 'dashboard/cms/menuitem_form.html'
+    success_url = reverse_lazy('menuitem-list')
+    
+    def form_valid(self, form):
+        messages.success(self.request, 'Menu item updated successfully!')
+        return super().form_valid(form)
+
+
+class MenuItemDeleteView(AdminRequiredMixin, DeleteView):
+    model = MenuItem
+    template_name = 'dashboard/cms/menuitem_confirm_delete.html'
+    success_url = reverse_lazy('menuitem-list')
+    
+    def form_valid(self, form):
+        messages.success(self.request, 'Menu item deleted successfully!')
+        return super().form_valid(form)
+
+
+class SiteSettingListView(AdminRequiredMixin, ListView):
+    model = SiteSetting
+    template_name = 'dashboard/cms/setting_list.html'
+    context_object_name = 'settings'
+    ordering = ['category', 'key']
+
+
+class SiteSettingCreateView(AdminRequiredMixin, CreateView):
+    model = SiteSetting
+    form_class = SiteSettingForm
+    template_name = 'dashboard/cms/setting_form.html'
+    success_url = reverse_lazy('setting-list')
+    
+    def form_valid(self, form):
+        messages.success(self.request, 'Setting created successfully!')
+        return super().form_valid(form)
+
+
+class SiteSettingUpdateView(AdminRequiredMixin, UpdateView):
+    model = SiteSetting
+    form_class = SiteSettingForm
+    template_name = 'dashboard/cms/setting_form.html'
+    success_url = reverse_lazy('setting-list')
+    
+    def form_valid(self, form):
+        messages.success(self.request, 'Setting updated successfully!')
+        return super().form_valid(form)
+
+
+class SiteSettingDeleteView(AdminRequiredMixin, DeleteView):
+    model = SiteSetting
+    template_name = 'dashboard/cms/setting_confirm_delete.html'
+    success_url = reverse_lazy('setting-list')
+    
+    def form_valid(self, form):
+        messages.success(self.request, 'Setting deleted successfully!')
+        return super().form_valid(form)
+
+
+class WidgetListView(AdminRequiredMixin, ListView):
+    model = Widget
+    template_name = 'dashboard/cms/widget_list.html'
+    context_object_name = 'widgets'
+    ordering = ['order']
+
+
+class WidgetCreateView(AdminRequiredMixin, CreateView):
+    model = Widget
+    form_class = WidgetForm
+    template_name = 'dashboard/cms/widget_form.html'
+    success_url = reverse_lazy('widget-list')
+    
+    def form_valid(self, form):
+        messages.success(self.request, 'Widget created successfully!')
+        return super().form_valid(form)
+
+
+class WidgetUpdateView(AdminRequiredMixin, UpdateView):
+    model = Widget
+    form_class = WidgetForm
+    template_name = 'dashboard/cms/widget_form.html'
+    success_url = reverse_lazy('widget-list')
+    
+    def form_valid(self, form):
+        messages.success(self.request, 'Widget updated successfully!')
+        return super().form_valid(form)
+
+
+class WidgetDeleteView(AdminRequiredMixin, DeleteView):
+    model = Widget
+    template_name = 'dashboard/cms/widget_confirm_delete.html'
+    success_url = reverse_lazy('widget-list')
+    
+    def form_valid(self, form):
+        messages.success(self.request, 'Widget deleted successfully!')
+        return super().form_valid(form)
+
+
+class MediaLibraryListView(AdminRequiredMixin, ListView):
+    model = MediaLibrary
+    template_name = 'dashboard/cms/media_list.html'
+    context_object_name = 'media_items'
+    ordering = ['-created_at']
+    
+    def get_queryset(self):
+        return MediaLibrary.objects.all().select_related('uploaded_by')
+
+
+class MediaLibraryCreateView(AdminRequiredMixin, CreateView):
+    model = MediaLibrary
+    form_class = MediaLibraryForm
+    template_name = 'dashboard/cms/media_form.html'
+    success_url = reverse_lazy('media-list')
+    
+    def form_valid(self, form):
+        # Set uploaded_by to current user
+        form.instance.uploaded_by = self.request.user
+        messages.success(self.request, 'Media uploaded successfully!')
+        return super().form_valid(form)
+
+
+class MediaLibraryDeleteView(AdminRequiredMixin, DeleteView):
+    model = MediaLibrary
+    template_name = 'dashboard/cms/media_confirm_delete.html'
+    success_url = reverse_lazy('media-list')
+    
+    def form_valid(self, form):
+        messages.success(self.request, 'Media deleted successfully!')
+        return super().form_valid(form)
+
+
+# ==================== ORGANIZATION PROFILE VIEWS ====================
+
+
+class OrganizationProfileUpdateView(AdminRequiredMixin, UpdateView):
+    """Single object edit view for organization profile"""
+    model = OrganizationProfile
+    form_class = OrganizationProfileForm
+    template_name = 'dashboard/accounts/organization_form.html'
+    success_url = reverse_lazy('organization-edit')
+    
+    def get_object(self, queryset=None):
+        """Get or create the organization profile"""
+        obj, created = OrganizationProfile.objects.get_or_create(pk=1)
+        return obj
+    
+    def form_valid(self, form):
+        messages.success(self.request, 'Organization profile updated successfully!')
+        return super().form_valid(form)
+
+
+# ==================== ANALYTICS VIEWS ====================
+
+
+class AnalyticsDashboardView(AdminRequiredMixin, ListView):
+    """Analytics dashboard - overview of all analytics"""
+    template_name = 'dashboard/analytics/index.html'
+    context_object_name = 'analytics_data'
+    
+    def get_queryset(self):
+        return []
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        
+        # Page views
+        from apps.analytics.models import PageView
+        context['total_page_views'] = PageView.objects.count()
+        context['unique_visitors'] = PageView.objects.values('session_id').distinct().count()
+        
+        # Video engagement
+        from apps.analytics.models import VideoEngagement
+        context['video_plays'] = VideoEngagement.objects.filter(event_type='play').count()
+        context['video_completes'] = VideoEngagement.objects.filter(event_type='complete').count()
+        
+        # Donor funnel
+        from apps.analytics.models import DonorFunnel
+        context['donor_stages'] = DonorFunnel.objects.values('stage').annotate(count=models.Count('id'))
+        
+        return context
 
 
 # ==================== PUBLIC VIEWS ====================

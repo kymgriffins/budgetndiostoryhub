@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - Budget Ndio Story</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../static/css/frontend.css">
+    
+    <style>
+        :root {
+            --color-primary: #0066CC;
+            --color-primary-dark: #004c99;
+            --color-secondary: #6366f1;
+            --color-success: #10b981;
+            --color-warning: #f59e0b;
+            --color-error: #ef4444;
+            --bg-primary: #000000;
+            --bg-secondary: #111827;
+            --bg-tertiary: #1f2937;
+            --text-primary: #ffffff;
+            --text-secondary: #9ca3af;
+            --text-muted: #6b7280;
+            --border-color: #374151;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+        }
+        
+        .profile-layout {
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        /* Sidebar (same as dashboard) */
+        .sidebar {
+            width: 280px;
+            background-color: var(--bg-secondary);
+            border-right: 1px solid var(--border-color);
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            z-index: 100;
+        }
+        
+        .sidebar-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .sidebar-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: var(--text-primary);
+        }
+        
+        .sidebar-brand-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .sidebar-brand-text {
+            font-size: 18px;
+            font-weight: 700;
+        }
+        
+        .sidebar-nav {
+            padding: 16px;
+        }
+        
+        .sidebar-section {
+            margin-bottom: 24px;
+        }
+        
+        .sidebar-section-title {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding: 8px 16px;
+        }
+        
+        .sidebar-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+        
+        .sidebar-link:hover {
+            background-color: var(--bg-tertiary);
+            color: var(--text-primary);
+        }
+        
+        .sidebar-link.active {
+            background-color: rgba(0, 102, 204, 0.15);
+            color: var(--color-primary);
+        }
+        
+        .sidebar-link i {
+            width: 20px;
+            height: 20px;
+        }
+        
+        /* Main Content */
+        .profile-content {
+            flex: 1;
+            margin-left: 280px;
+            padding: 24px;
+        }
+        
+        /* Profile Header */
+        .profile-header {
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 32px;
+            margin-bottom: 24px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .profile-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 100px;
+            background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+            opacity: 0.3;
+        }
+        
+        .profile-info {
+            display: flex;
+            gap: 24px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .profile-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            font-weight: 700;
+            border: 4px solid var(--bg-secondary);
+            flex-shrink: 0;
+            position: relative;
+        }
+        
+        .profile-avatar-edit {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 36px;
+            height: 36px;
+            background-color: var(--color-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border: 3px solid var(--bg-secondary);
+        }
+        
+        .profile-details {
+            flex: 1;
+            padding-top: 60px;
+        }
+        
+        .profile-name {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+        
+        .profile-email {
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+        }
+        
+        .profile-meta {
+            display: flex;
+            gap: 24px;
+        }
+        
+        .profile-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+        
+        .profile-meta-item i {
+            width: 16px;
+            height: 16px;
+        }
+        
+        .profile-actions {
+            position: absolute;
+            top: 24px;
+            right: 24px;
+            display: flex;
+            gap: 12px;
+        }
+        
+        /* Tabs */
+        .profile-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 24px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 8px;
+        }
+        
+        .profile-tab {
+            padding: 12px 20px;
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .profile-tab:hover {
+            background-color: var(--bg-tertiary);
+            color: var(--text-primary);
+        }
+        
+        .profile-tab.active {
+            background-color: rgba(0, 102, 204, 0.15);
+            color: var(--color-primary);
+        }
+        
+        /* Form Sections */
+        .settings-section {
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            margin-bottom: 24px;
+        }
+        
+        .settings-section-header {
+            padding: 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .settings-section-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        
+        .settings-section-desc {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+        
+        .settings-section-body {
+            padding: 20px;
+        }
+        
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 0;
+        }
+        
+        .form-label {
+            display: block;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 12px 16px;
+            background-color: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 14px;
+            transition: all 0.2s ease;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: var(--color-primary);
+            box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1);
+        }
+        
+        .form-input::placeholder {
+            color: var(--text-muted);
+        }
+        
+        .form-hint {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-top: 6px;
+        }
+        
+        .form-textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        
+        .form-select {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+            background-position: right 12px center;
+            background-repeat: no-repeat;
+            background-size: 20px;
+            padding-right: 40px;
+        }
+        
+        /* Toggle Switch */
+        .toggle-group {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .toggle-group:last-child {
+            border-bottom: none;
+        }
+        
+        .toggle-label {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        
+        .toggle-title {
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        .toggle-desc {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+        
+        .toggle-switch {
+            position: relative;
+            width: 48px;
+            height: 26px;
+            flex-shrink: 0;
+        }
+        
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: var(--bg-tertiary);
+            border-radius: 26px;
+            transition: 0.3s;
+        }
+        
+        .toggle-slider::before {
+            position: absolute;
+            content: "";
+            height: 20px;
+            width: 20px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            border-radius: 50%;
+            transition: 0.3s;
+        }
+        
+        .toggle-switch input:checked + .toggle-slider {
+            background-color: var(--color-primary);
+        }
+        
+        .toggle-switch input:checked + .toggle-slider::before {
+            transform: translateX(22px);
+        }
+        
+        /* Buttons */
+        .btn {
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            border: none;
+        }
+        
+        .btn-primary {
+            background-color: var(--color-primary);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--color-primary-dark);
+        }
+        
+        .btn-secondary {
+            background-color: var(--bg-tertiary);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+        
+        .btn-secondary:hover {
+            border-color: var(--text-muted);
+        }
+        
+        .btn-danger {
+            background-color: var(--color-error);
+            color: white;
+        }
+        
+        .btn-danger:hover {
+            background-color: #dc2626;
+        }
+        
+        .btn-ghost {
+            background: none;
+            color: var(--text-secondary);
+            padding: 8px 16px;
+        }
+        
+        .btn-ghost:hover {
+            background-color: var(--bg-tertiary);
+            color: var(--text-primary);
+        }
+        
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
+            margin-top: 20px;
+        }
+        
+        /* Danger Zone */
+        .danger-zone {
+            border-color: rgba(239, 68, 68, 0.3);
+        }
+        
+        .danger-zone .settings-section-header {
+            border-bottom-color: rgba(239, 68, 68, 0.2);
+        }
+        
+        .danger-zone .settings-section-title {
+            color: var(--color-error);
+        }
+        
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .sidebar {
+                display: none;
+            }
+            
+            .profile-content {
+                margin-left: 0;
+            }
+            
+            .profile-info {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+            
+            .profile-details {
+                padding-top: 16px;
+            }
+            
+            .profile-meta {
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+            
+            .profile-actions {
+                position: static;
+                margin-top: 16px;
+                justify-content: center;
+            }
+            
+            .profile-tabs {
+                overflow-x: auto;
+                flex-wrap: nowrap;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="profile-layout">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <a href="/" class="sidebar-brand">
+                    <div class="sidebar-brand-icon">
+                        <i data-lucide="layers" style="color: white; width: 20px; height: 20px;"></i>
+                    </div>
+                    <span class="sidebar-brand-text">Budget Ndio</span>
+                </a>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <div class="sidebar-section">
+                    <span class="sidebar-section-title">Main</span>
+                    <a href="dashboard.html" class="sidebar-link">
+                        <i data-lucide="layout-dashboard"></i>
+                        Dashboard
+                    </a>
+                </div>
+                
+                <div class="sidebar-section">
+                    <span class="sidebar-section-title">Account</span>
+                    <a href="#" class="sidebar-link active">
+                        <i data-lucide="user"></i>
+                        Profile
+                    </a>
+                    <a href="#" class="sidebar-link">
+                        <i data-lucide="settings"></i>
+                        Settings
+                    </a>
+                </div>
+                
+                <div class="sidebar-section">
+                    <span class="sidebar-section-title">Actions</span>
+                    <a href="#" class="sidebar-link">
+                        <i data-lucide="log-out"></i>
+                        Logout
+                    </a>
+                </div>
+            </nav>
+        </aside>
+        
+        <!-- Main Content -->
+        <main class="profile-content">
+            <!-- Profile Header -->
+            <div class="profile-header">
+                <div class="profile-actions">
+                    <button class="btn btn-secondary">
+                        <i data-lucide="edit" style="width: 16px; height: 16px;"></i>
+                        Edit Profile
+                    </button>
+                </div>
+                
+                <div class="profile-info">
+                    <div class="profile-avatar">
+                        JD
+                        <div class="profile-avatar-edit">
+                            <i data-lucide="camera" style="width: 16px; height: 16px; color: white;"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="profile-details">
+                        <h1 class="profile-name">John Doe</h1>
+                        <p class="profile-email">john.doe@example.com</p>
+                        
+                        <div class="profile-meta">
+                            <div class="profile-meta-item">
+                                <i data-lucide="calendar"></i>
+                                Joined January 2024
+                            </div>
+                            <div class="profile-meta-item">
+                                <i data-lucide="map-pin"></i>
+                                Nairobi, Kenya
+                            </div>
+                            <div class="profile-meta-item">
+                                <i data-lucide="briefcase"></i>
+                                Administrator
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Profile Tabs -->
+            <div class="profile-tabs">
+                <button class="profile-tab active">
+                    <i data-lucide="user"></i>
+                    Personal Info
+                </button>
+                <button class="profile-tab">
+                    <i data-lucide="bell"></i>
+                    Notifications
+                </button>
+                <button class="profile-tab">
+                    <i data-lucide="shield"></i>
+                    Security
+                </button>
+                <button class="profile-tab">
+                    <i data-lucide="link"></i>
+                    Connected Apps
+                </button>
+            </div>
+            
+            <!-- Personal Information -->
+            <form id="profile-form">
+                <!-- Basic Info -->
+                <div class="settings-section">
+                    <div class="settings-section-header">
+                        <h2 class="settings-section-title">Basic Information</h2>
+                        <p class="settings-section-desc">Update your personal details and contact information.</p>
+                    </div>
+                    
+                    <div class="settings-section-body">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label class="form-label" for="first_name">First Name</label>
+                                <input type="text" id="first_name" class="form-input" value="John">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label" for="last_name">Last Name</label>
+                                <input type="text" id="last_name" class="form-input" value="Doe">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label" for="username">Username</label>
+                                <input type="text" id="username" class="form-input" value="johndoe">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label" for="email">Email Address</label>
+                                <input type="email" id="email" class="form-input" value="john.doe@example.com">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label" for="phone">Phone Number</label>
+                                <input type="tel" id="phone" class="form-input" value="+254 712 345 678">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label" for="location">Location</label>
+                                <input type="text" id="location" class="form-input" value="Nairobi, Kenya">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group" style="margin-top: 20px;">
+                            <label class="form-label" for="bio">Bio</label>
+                            <textarea id="bio" class="form-input form-textarea" placeholder="Tell us about yourself...">Passionate about budget transparency and civic education in Kenya.</textarea>
+                        </div>
+                        
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-ghost">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Social Links -->
+                <div class="settings-section">
+                    <div class="settings-section-header">
+                        <h2 class="settings-section-title">Social Links</h2>
+                        <p class="settings-section-desc">Add your social media profiles to your account.</p>
+                    </div>
+                    
+                    <div class="settings-section-body">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label class="form-label" for="twitter">Twitter</label>
+                                <input type="url" id="twitter" class="form-input" placeholder="https://twitter.com/username">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label" for="facebook">Facebook</label>
+                                <input type="url" id="facebook" class="form-input" placeholder="https://facebook.com/username">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label" for="linkedin">LinkedIn</label>
+                                <input type="url" id="linkedin" class="form-input" placeholder="https://linkedin.com/in/username">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label" for="website">Website</label>
+                                <input type="url" id="website" class="form-input" placeholder="https://yourwebsite.com">
+                            </div>
+                        </div>
+                        
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-ghost">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Notification Settings -->
+                <div class="settings-section">
+                    <div class="settings-section-header">
+                        <h2 class="settings-section-title">Email Notifications</h2>
+                        <p class="settings-section-desc">Choose what notifications you want to receive.</p>
+                    </div>
+                    
+                    <div class="settings-section-body" style="padding: 0 20px;">
+                        <div class="toggle-group">
+                            <div class="toggle-label">
+                                <span class="toggle-title">Marketing Emails</span>
+                                <span class="toggle-desc">Receive emails about new content and updates</span>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                        
+                        <div class="toggle-group">
+                            <div class="toggle-label">
+                                <span class="toggle-title">Security Alerts</span>
+                                <span class="toggle-desc">Get notified about security-related events</span>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                        
+                        <div class="toggle-group">
+                            <div class="toggle-label">
+                                <span class="toggle-title">Weekly Digest</span>
+                                <span class="toggle-desc">Receive a weekly summary of activity</span>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox">
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                        
+                        <div class="toggle-group">
+                            <div class="toggle-label">
+                                <span class="toggle-title">Comment Replies</span>
+                                <span class="toggle-desc">Get notified when someone replies to your comments</span>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Danger Zone -->
+                <div class="settings-section danger-zone">
+                    <div class="settings-section-header">
+                        <h2 class="settings-section-title">Danger Zone</h2>
+                        <p class="settings-section-desc">Irreversible actions for your account.</p>
+                    </div>
+                    
+                    <div class="settings-section-body">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <div>
+                                <h4 style="font-size: 14px; font-weight: 500; margin-bottom: 4px;">Delete Account</h4>
+                                <p style="font-size: 13px; color: var(--text-muted);">Permanently delete your account and all associated data.</p>
+                            </div>
+                            <button type="button" class="btn btn-danger">Delete Account</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </main>
+    </div>
+    
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+        
+        // Tab switching
+        document.querySelectorAll('.profile-tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                document.querySelectorAll('.profile-tab').forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+        
+        // Form submission
+        document.getElementById('profile-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            // Show success notification
+            alert('Profile updated successfully!');
+        });
+    </script>
+</body>
+</html>

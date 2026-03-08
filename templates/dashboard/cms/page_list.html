@@ -1,0 +1,80 @@
+{% extends 'admin_base.html' %}
+{% load static %}
+
+{% block title %}Pages - CMS{% endblock %}
+
+{% block content %}
+<div class="mb-8 flex items-center justify-between">
+    <div>
+        <h1 class="text-3xl font-bold tracking-tight">Pages</h1>
+        <p class="text-muted-foreground mt-1">Manage your CMS pages</p>
+    </div>
+    <a href="{% url 'page-create' %}" class="inline-flex items-center justify-center rounded-lg bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90">
+        <i class="ph ph-plus mr-2"></i>
+        Add Page
+    </a>
+</div>
+
+<div class="rounded-xl border bg-card">
+    <div class="p-6">
+        {% if pages %}
+        <div class="overflow-x-auto">
+            <table class="w-full">
+                <thead>
+                    <tr class="border-b">
+                        <th class="pb-3 text-left text-sm font-medium">Title</th>
+                        <th class="pb-3 text-left text-sm font-medium">Slug</th>
+                        <th class="pb-3 text-left text-sm font-medium">Template</th>
+                        <th class="pb-3 text-left text-sm font-medium">Status</th>
+                        <th class="pb-3 text-left text-sm font-medium">In Nav</th>
+                        <th class="pb-3 text-right text-sm font-medium">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for page in pages %}
+                    <tr class="border-b last:border-0">
+                        <td class="py-4">
+                            <div class="font-medium">{{ page.title }}</div>
+                            {% if page.subtitle %}
+                            <div class="text-sm text-muted-foreground">{{ page.subtitle }}</div>
+                            {% endif %}
+                        </td>
+                        <td class="py-4 text-sm">{{ page.slug }}</td>
+                        <td class="py-4 text-sm">{{ page.get_template_display }}</td>
+                        <td class="py-4">
+                            <span class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium {% if page.status == 'published' %}bg-green-100 text-green-800{% elif page.status == 'draft' %}bg-yellow-100 text-yellow-800{% else %}bg-gray-100 text-gray-800{% endif %}">
+                                {{ page.get_status_display }}
+                            </span>
+                        </td>
+                        <td class="py-4">
+                            {% if page.show_in_nav %}
+                            <i class="ph ph-check text-green-600"></i>
+                            {% else %}
+                            <i class="ph ph-x text-gray-400"></i>
+                            {% endif %}
+                        </td>
+                        <td class="py-4 text-right">
+                            <a href="{% url 'page-update' page.pk %}" class="inline-flex items-center justify-center rounded-md p-2 hover:bg-accent">
+                                <i class="ph ph-pencil-simple"></i>
+                            </a>
+                            <a href="{% url 'page-delete' page.pk %}" class="inline-flex items-center justify-center rounded-md p-2 hover:bg-accent text-red-600">
+                                <i class="ph ph-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="text-center py-12">
+            <i class="ph ph-file-text text-4xl text-muted-foreground"></i>
+            <p class="mt-4 text-muted-foreground">No pages yet</p>
+            <a href="{% url 'page-create' %}" class="mt-4 inline-flex items-center justify-center rounded-lg border bg-background px-4 py-2 text-sm font-medium hover:bg-accent">
+                Create your first page
+            </a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

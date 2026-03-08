@@ -1,0 +1,122 @@
+{% extends 'admin_base.html' %}
+{% load static %}
+
+{% block title %}{% if object %}Edit Page{% else %}Create Page{% endif %}{% endblock %}
+
+{% block content %}
+<div class="mb-8">
+    <h1 class="text-3xl font-bold tracking-tight">{% if object %}Edit Page{% else %}Create Page{% endif %}</h1>
+    <p class="text-muted-foreground mt-1">{% if object %}Update page content{% else %}Create a new CMS page{% endif %}</p>
+</div>
+
+<form method="post" enctype="multipart/form-data" class="space-y-6">
+    {% csrf_token %}
+    
+    <div class="grid gap-6 md:grid-cols-2">
+        <div class="rounded-xl border bg-card p-6">
+            <h2 class="text-lg font-semibold mb-4">Basic Information</h2>
+            <div class="space-y-4">
+                <div>
+                    <label class="form-label">Title</label>
+                    {{ form.title }}
+                </div>
+                <div>
+                    <label class="form-label">Slug</label>
+                    {{ form.slug }}
+                </div>
+                <div>
+                    <label class="form-label">Subtitle</label>
+                    {{ form.subtitle }}
+                </div>
+                <div>
+                    <label class="form-label">Template</label>
+                    {{ form.template }}
+                </div>
+                <div>
+                    <label class="form-label">Status</label>
+                    {{ form.status }}
+                </div>
+            </div>
+        </div>
+        
+        <div class="rounded-xl border bg-card p-6">
+            <h2 class="text-lg font-semibold mb-4">Display Options</h2>
+            <div class="space-y-4">
+                <div>
+                    <label class="form-label">Navigation Order</label>
+                    {{ form.nav_order }}
+                </div>
+                <div class="flex items-center gap-2">
+                    {{ form.show_in_nav }}
+                    <label class="text-sm font-medium">Show in Navigation</label>
+                </div>
+                <div class="flex items-center gap-2">
+                    {{ form.is_featured }}
+                    <label class="text-sm font-medium">Featured Page</label>
+                </div>
+                <div class="flex items-center gap-2">
+                    {{ form.show_sidebar }}
+                    <label class="text-sm font-medium">Show Sidebar</label>
+                </div>
+                <div class="flex items-center gap-2">
+                    {{ form.full_width }}
+                    <label class="text-sm font-medium">Full Width</label>
+                </div>
+                <div>
+                    <label class="form-label">Background Color</label>
+                    {{ form.background_color }}
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="rounded-xl border bg-card p-6">
+        <h2 class="text-lg font-semibold mb-4">Content</h2>
+        <div class="space-y-4">
+            <div>
+                <label class="form-label">Content (Markdown)</label>
+                {{ form.content }}
+            </div>
+            <div>
+                <label class="form-label">Content (HTML)</label>
+                {{ form.content_html }}
+            </div>
+        </div>
+    </div>
+    
+    <div class="rounded-xl border bg-card p-6">
+        <h2 class="text-lg font-semibold mb-4">SEO</h2>
+        <div class="space-y-4">
+            <div>
+                <label class="form-label">Meta Title</label>
+                {{ form.meta_title }}
+            </div>
+            <div>
+                <label class="form-label">Meta Description</label>
+                {{ form.meta_description }}
+            </div>
+            <div>
+                <label class="form-label">OG Image</label>
+                {{ form.og_image }}
+            </div>
+            <div>
+                <label class="form-label">Featured Image</label>
+                {{ form.featured_image }}
+            </div>
+            <div>
+                <label class="form-label">Video URL</label>
+                {{ form.video_url }}
+            </div>
+        </div>
+    </div>
+    
+    <div class="flex items-center gap-4">
+        <button type="submit" class="inline-flex items-center justify-center rounded-lg bg-primary px-6 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90">
+            {% if object %}Update Page{% else %}Create Page{% endif %}
+        </button>
+        <a href="{% url 'page-list' %}" class="inline-flex items-center justify-center rounded-lg border bg-background px-6 py-2 text-sm font-medium hover:bg-accent">
+            Cancel
+        </a>
+    </div>
+</form>
+{% endblock %}

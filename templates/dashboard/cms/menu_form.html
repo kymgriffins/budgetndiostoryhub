@@ -1,0 +1,44 @@
+{% extends 'admin_base.html' %}
+{% load static %}
+
+{% block title %}{% if object %}Edit Menu{% else %}Create Menu{% endif %}{% endblock %}
+
+{% block content %}
+<div class="mb-8">
+    <h1 class="text-3xl font-bold tracking-tight">{% if object %}Edit Menu{% else %}Create Menu{% endif %}</h1>
+</div>
+
+<form method="post" class="space-y-6 max-w-2xl">
+    {% csrf_token %}
+    <div class="rounded-xl border bg-card p-6">
+        <div class="space-y-4">
+            <div>
+                <label class="form-label">Name</label>
+                {{ form.name }}
+            </div>
+            <div>
+                <label class="form-label">Slug</label>
+                {{ form.slug }}
+            </div>
+            <div>
+                <label class="form-label">Location</label>
+                {{ form.location }}
+            </div>
+            <div>
+                <label class="form-label">Description</label>
+                {{ form.description }}
+            </div>
+            <div class="flex items-center gap-2">
+                {{ form.is_active }}
+                <label class="text-sm font-medium">Active</label>
+            </div>
+        </div>
+    </div>
+    <div class="flex items-center gap-4">
+        <button type="submit" class="inline-flex items-center justify-center rounded-lg bg-primary px-6 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90">
+            {% if object %}Update Menu{% else %}Create Menu{% endif %}
+        </button>
+        <a href="{% url 'menu-list' %}" class="inline-flex items-center justify-center rounded-lg border bg-background px-6 py-2 text-sm font-medium hover:bg-accent">Cancel</a>
+    </div>
+</form>
+{% endblock %}

@@ -1,0 +1,1182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Manual - Budget Ndio Story</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <style>
+        :root {
+            --color-primary: #0066CC;
+            --color-primary-dark: #004c99;
+            --color-secondary: #6366f1;
+            --color-success: #10b981;
+            --color-warning: #f59e0b;
+            --color-error: #ef4444;
+            --color-info: #3b82f6;
+            --bg-primary: #0a0a0a;
+            --bg-secondary: #111827;
+            --bg-tertiary: #1f2937;
+            --bg-card: #171717;
+            --text-primary: #ffffff;
+            --text-secondary: #9ca3af;
+            --text-muted: #6b7280;
+            --border-color: #374151;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+        
+        /* Layout */
+        .manual-layout {
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        /* Sidebar */
+        .manual-sidebar {
+            width: 300px;
+            background-color: var(--bg-secondary);
+            border-right: 1px solid var(--border-color);
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            z-index: 100;
+            padding: 24px;
+        }
+        
+        .manual-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 32px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .manual-logo-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .manual-logo-text {
+            font-size: 20px;
+            font-weight: 700;
+        }
+        
+        .manual-logo-text span {
+            display: block;
+            font-size: 12px;
+            font-weight: 400;
+            color: var(--text-muted);
+        }
+        
+        /* Table of Contents */
+        .manual-toc-title {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 16px;
+        }
+        
+        .manual-nav {
+            list-style: none;
+        }
+        
+        .manual-nav-item {
+            margin-bottom: 4px;
+        }
+        
+        .manual-nav-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+        
+        .manual-nav-link:hover {
+            background-color: var(--bg-tertiary);
+            color: var(--text-primary);
+        }
+        
+        .manual-nav-link.active {
+            background-color: rgba(0, 102, 204, 0.15);
+            color: var(--color-primary);
+        }
+        
+        .manual-nav-link i {
+            width: 20px;
+            height: 20px;
+            flex-shrink: 0;
+        }
+        
+        /* Main Content */
+        .manual-content {
+            flex: 1;
+            margin-left: 300px;
+            padding: 48px;
+            max-width: 900px;
+        }
+        
+        /* Header */
+        .manual-header {
+            margin-bottom: 48px;
+            padding-bottom: 32px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .manual-header h1 {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .manual-header p {
+            font-size: 18px;
+            color: var(--text-secondary);
+            max-width: 600px;
+        }
+        
+        /* Sections */
+        .manual-section {
+            margin-bottom: 48px;
+        }
+        
+        .manual-section-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+        
+        .manual-section-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        
+        .manual-section-title {
+            font-size: 24px;
+            font-weight: 700;
+        }
+        
+        /* Dropdown/Accordion */
+        .manual-accordion {
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 16px;
+            background-color: var(--bg-card);
+        }
+        
+        .manual-accordion-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 24px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            user-select: none;
+        }
+        
+        .manual-accordion-header:hover {
+            background-color: var(--bg-tertiary);
+        }
+        
+        .manual-accordion-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 16px;
+            font-weight: 600;
+        }
+        
+        .manual-accordion-icon {
+            width: 32px;
+            height: 32px;
+            background-color: var(--bg-tertiary);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        
+        .manual-accordion-chevron {
+            width: 24px;
+            height: 24px;
+            color: var(--text-muted);
+            transition: transform 0.3s ease;
+        }
+        
+        .manual-accordion.open .manual-accordion-chevron {
+            transform: rotate(180deg);
+        }
+        
+        .manual-accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        
+        .manual-accordion.open .manual-accordion-content {
+            max-height: 1000px;
+        }
+        
+        .manual-accordion-body {
+            padding: 0 24px 24px 24px;
+            border-top: 1px solid var(--border-color);
+            padding-top: 20px;
+        }
+        
+        /* URL Table */
+        .url-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+        
+        .url-table th {
+            text-align: left;
+            padding: 12px 16px;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .url-table td {
+            padding: 16px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .url-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .url-path {
+            font-family: 'SF Mono', 'Fira Code', monospace;
+            background-color: var(--bg-tertiary);
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 13px;
+            color: var(--color-primary);
+        }
+        
+        .url-method {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        
+        .url-method.get { background-color: rgba(16, 185, 129, 0.15); color: var(--color-success); }
+        .url-method.post { background-color: rgba(59, 130, 246, 0.15); color: var(--color-info); }
+        .url-method.put { background-color: rgba(245, 158, 11, 0.15); color: var(--color-warning); }
+        .url-method.delete { background-color: rgba(239, 68, 68, 0.15); color: var(--color-error); }
+        
+        /* User Story */
+        .user-story {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+        
+        .user-story-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+        
+        .user-story-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+        
+        .user-story-avatar.admin { background: linear-gradient(135deg, #ef4444, #dc2626); }
+        .user-story-avatar.editor { background: linear-gradient(135deg, #f59e0b, #d97706); }
+        .user-story-avatar.viewer { background: linear-gradient(135deg, #10b981, #059669); }
+        
+        .user-story-meta h4 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+        
+        .user-story-meta span {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+        
+        .user-story-content h5 {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+        
+        .user-story-content ol {
+            padding-left: 20px;
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+        
+        .user-story-content li {
+            margin-bottom: 8px;
+        }
+        
+        /* Tips & Tricks */
+        .tip-box {
+            display: flex;
+            gap: 16px;
+            padding: 20px;
+            background: linear-gradient(135deg, rgba(0, 102, 204, 0.1), rgba(99, 102, 241, 0.1));
+            border: 1px solid rgba(0, 102, 204, 0.2);
+            border-radius: 12px;
+            margin-top: 20px;
+        }
+        
+        .tip-icon {
+            width: 40px;
+            height: 40px;
+            background-color: var(--color-primary);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        
+        .tip-content h4 {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        
+        .tip-content p {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+        
+        /* Keyboard Shortcuts */
+        .shortcut-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 12px;
+        }
+        
+        .shortcut-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            background-color: var(--bg-tertiary);
+            border-radius: 8px;
+        }
+        
+        .shortcut-key {
+            padding: 4px 10px;
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 12px;
+            font-family: 'SF Mono', monospace;
+            color: var(--text-primary);
+        }
+        
+        .shortcut-desc {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+        
+        /* Search Highlight */
+        .highlight-box {
+            padding: 20px;
+            background-color: var(--bg-tertiary);
+            border-radius: 8px;
+            margin-top: 16px;
+        }
+        
+        .highlight-box code {
+            background-color: var(--bg-secondary);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-family: 'SF Mono', monospace;
+            font-size: 13px;
+            color: var(--color-primary);
+        }
+        
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .manual-sidebar {
+                width: 260px;
+            }
+            .manual-content {
+                margin-left: 260px;
+                padding: 32px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .manual-sidebar {
+                display: none;
+            }
+            .manual-content {
+                margin-left: 0;
+                padding: 24px;
+            }
+            .manual-header h1 {
+                font-size: 28px;
+            }
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .animate-in {
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+    </style>
+</head>
+<body>
+    <div class="manual-layout">
+        <!-- Sidebar -->
+        <aside class="manual-sidebar">
+            <div class="manual-logo">
+                <div class="manual-logo-icon">
+                    <i data-lucide="book-open" style="color: white; width: 24px; height: 24px;"></i>
+                </div>
+                <div class="manual-logo-text">
+                    Budget Ndio
+                    <span>User Manual</span>
+                </div>
+            </div>
+            
+            <p class="manual-toc-title">Table of Contents</p>
+            <nav class="manual-nav">
+                <div class="manual-nav-item">
+                    <a href="#getting-started" class="manual-nav-link active">
+                        <i data-lucide="rocket"></i>
+                        Getting Started
+                    </a>
+                </div>
+                <div class="manual-nav-item">
+                    <a href="#url-routes" class="manual-nav-link">
+                        <i data-lucide="link"></i>
+                        URL Routes
+                    </a>
+                </div>
+                <div class="manual-nav-item">
+                    <a href="#authentication" class="manual-nav-link">
+                        <i data-lucide="log-in"></i>
+                        Authentication
+                    </a>
+                </div>
+                <div class="manual-nav-item">
+                    <a href="#dashboard" class="manual-nav-link">
+                        <i data-lucide="layout-dashboard"></i>
+                        Dashboard
+                    </a>
+                </div>
+                <div class="manual-nav-item">
+                    <a href="#content" class="manual-nav-link">
+                        <i data-lucide="file-text"></i>
+                        Content Management
+                    </a>
+                </div>
+                <div class="manual-nav-item">
+                    <a href="#profile" class="manual-nav-link">
+                        <i data-lucide="user"></i>
+                        Profile & Settings
+                    </a>
+                </div>
+                <div class="manual-nav-item">
+                    <a href="#user-stories" class="manual-nav-link">
+                        <i data-lucide="users"></i>
+                        User Stories
+                    </a>
+                </div>
+                <div class="manual-nav-item">
+                    <a href="#shortcuts" class="manual-nav-link">
+                        <i data-lucide="keyboard"></i>
+                        Keyboard Shortcuts
+                    </a>
+                </div>
+            </nav>
+        </aside>
+        
+        <!-- Main Content -->
+        <main class="manual-content">
+            <!-- Header -->
+            <header class="manual-header">
+                <h1>🎓 Budget Ndio Story User Manual</h1>
+                <p>Welcome to the complete guide for Budget Ndio Story. Learn how to navigate, manage content, and make the most of the platform.</p>
+            </header>
+            
+            <!-- Getting Started -->
+            <section id="getting-started" class="manual-section">
+                <div class="manual-section-header">
+                    <div class="manual-section-icon">
+                        <i data-lucide="rocket" style="color: white; width: 24px; height: 24px;"></i>
+                    </div>
+                    <h2 class="manual-section-title">Getting Started</h2>
+                </div>
+                
+                <!-- What is Budget Ndio Story -->
+                <div class="manual-accordion">
+                    <div class="manual-accordion-header" onclick="toggleAccordion(this)">
+                        <div class="manual-accordion-title">
+                            <div class="manual-accordion-icon">
+                                <i data-lucide="help-circle" style="width: 16px; height: 16px; color: var(--color-info);"></i>
+                            </div>
+                            What is Budget Ndio Story?
+                        </div>
+                        <i data-lucide="chevron-down" class="manual-accordion-chevron"></i>
+                    </div>
+                    <div class="manual-accordion-content">
+                        <div class="manual-accordion-body">
+                            <p style="margin-bottom: 16px; color: var(--text-secondary);">
+                                Budget Ndio Story is a Kenyan budget transparency platform designed to help citizens understand and track government spending. We turn national and county budgets into clear insights, practical analysis, and trackable evidence.
+                            </p>
+                            <p style="color: var(--text-secondary);">
+                                The platform provides educational content, budget tracking tools, and community engagement features to promote financial transparency and civic education.
+                            </p>
+                            
+                            <div class="tip-box">
+                                <div class="tip-icon">
+                                    <i data-lucide="lightbulb" style="color: white; width: 20px; height: 20px;"></i>
+                                </div>
+                                <div class="tip-content">
+                                    <h4>Fun Fact! 💡</h4>
+                                    <p>Budget Ndio means "The Budget Story" in Swahili - reflecting our mission to make government finances understandable for everyone.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Platform Features -->
+                <div class="manual-accordion">
+                    <div class="manual-accordion-header" onclick="toggleAccordion(this)">
+                        <div class="manual-accordion-title">
+                            <div class="manual-accordion-icon">
+                                <i data-lucide="star" style="width: 16px; height: 16px; color: var(--color-warning);"></i>
+                            </div>
+                            Platform Features
+                        </div>
+                        <i data-lucide="chevron-down" class="manual-accordion-chevron"></i>
+                    </div>
+                    <div class="manual-accordion-content">
+                        <div class="manual-accordion-body">
+                            <ul style="list-style: none; padding: 0;">
+                                <li style="display: flex; gap: 12px; margin-bottom: 16px;">
+                                    <i data-lucide="video" style="color: var(--color-primary); width: 20px; height: 20px; flex-shrink: 0;"></i>
+                                    <div>
+                                        <strong style="display: block; margin-bottom: 4px;">Video Content Library</strong>
+                                        <span style="color: var(--text-secondary); font-size: 14px;">Educational videos explaining budget concepts in simple terms</span>
+                                    </div>
+                                </li>
+                                <li style="display: flex; gap: 12px; margin-bottom: 16px;">
+                                    <i data-lucide="file-text" style="color: var(--color-primary); width: 20px; height: 20px; flex-shrink: 0;"></i>
+                                    <div>
+                                        <strong style="display: block; margin-bottom: 4px;">Blog & Articles</strong>
+                                        <span style="color: var(--text-secondary); font-size: 14px;">In-depth articles on financial literacy and budget analysis</span>
+                                    </div>
+                                </li>
+                                <li style="display: flex; gap: 12px; margin-bottom: 16px;">
+                                    <i data-lucide="pie-chart" style="color: var(--color-primary); width: 20px; height: 20px; flex-shrink: 0;"></i>
+                                    <div>
+                                        <strong style="display: block; margin-bottom: 4px;">Budget Tracking</strong>
+                                        <span style="color: var(--text-secondary); font-size: 14px;">Track government spending at national and county levels</span>
+                                    </div>
+                                </li>
+                                <li style="display: flex; gap: 12px; margin-bottom: 16px;">
+                                    <i data-lucide="users" style="color: var(--color-primary); width: 20px; height: 20px; flex-shrink: 0;"></i>
+                                    <div>
+                                        <strong style="display: block; margin-bottom: 4px;">Community Forum</strong>
+                                        <span style="color: var(--text-secondary); font-size: 14px;">Discuss budget topics with other engaged citizens</span>
+                                    </div>
+                                </li>
+                                <li style="display: flex; gap: 12px;">
+                                    <i data-lucide="mail" style="color: var(--color-primary); width: 20px; height: 20px; flex-shrink: 0;"></i>
+                                    <div>
+                                        <strong style="display: block; margin-bottom: 4px;">Newsletter</strong>
+                                        <span style="color: var(--text-secondary); font-size: 14px;">Stay updated with weekly budget insights</span>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Navigation Tips -->
+                <div class="manual-accordion">
+                    <div class="manual-accordion-header" onclick="toggleAccordion(this)">
+                        <div class="manual-accordion-title">
+                            <div class="manual-accordion-icon">
+                                <i data-lucide="compass" style="width: 16px; height: 16px; color: var(--color-success);"></i>
+                            </div>
+                            How to Navigate the Platform
+                        </div>
+                        <i data-lucide="chevron-down" class="manual-accordion-chevron"></i>
+                    </div>
+                    <div class="manual-accordion-content">
+                        <div class="manual-accordion-body">
+                            <p style="margin-bottom: 16px; color: var(--text-secondary);">
+                                The platform uses a modern sidebar navigation system. Here's how to get around:
+                            </p>
+                            <ol style="color: var(--text-secondary); padding-left: 20px; line-height: 2;">
+                                <li><strong>Desktop:</strong> Use the left sidebar to navigate between sections</li>
+                                <li><strong>Mobile:</strong> Tap the hamburger menu (☰) at the top left to open the sidebar</li>
+                                <li><strong>Search:</strong> Use the search bar at the top to find content quickly</li>
+                                <li><strong>Quick Actions:</strong> Look for the <code style="background: var(--bg-tertiary); padding: 2px 8px; border-radius: 4px;">+</code> buttons for quick access to create new content</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- URL Routes -->
+            <section id="url-routes" class="manual-section">
+                <div class="manual-section-header">
+                    <div class="manual-section-icon">
+                        <i data-lucide="link" style="color: white; width: 24px; height: 24px;"></i>
+                    </div>
+                    <h2 class="manual-section-title">URL Routes & Endpoints</h2>
+                </div>
+                
+                <div class="manual-accordion">
+                    <div class="manual-accordion-header" onclick="toggleAccordion(this)">
+                        <div class="manual-accordion-title">
+                            <div class="manual-accordion-icon">
+                                <i data-lucide="globe" style="width: 16px; height: 16px; color: var(--color-primary);"></i>
+                            </div>
+                            Public Routes (Click to expand)
+                        </div>
+                        <i data-lucide="chevron-down" class="manual-accordion-chevron"></i>
+                    </div>
+                    <div class="manual-accordion-content">
+                        <div class="manual-accordion-body">
+                            <table class="url-table">
+                                <thead>
+                                    <tr>
+                                        <th>URL Path</th>
+                                        <th>Page</th>
+                                        <th>Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><code class="url-path">/</code></td>
+                                        <td>Homepage</td>
+                                        <td>Main landing page</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code class="url-path">/about/</code></td>
+                                        <td>About</td>
+                                        <td>About Budget Ndio Story</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code class="url-path">/learn/</code></td>
+                                        <td>Learn</td>
+                                        <td>Educational resources</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code class="url-path">/blog/</code></td>
+                                        <td>Blog</td>
+                                        <td>Articles & blog posts</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code class="url-path">/videos/</code></td>
+                                        <td>Videos</td>
+                                        <td>Video content library</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code class="url-path">/reports/</code></td>
+                                        <td>Reports</td>
+                                        <td>Budget reports</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code class="url-path">/donate/</code></td>
+                                        <td>Donate</td>
+                                        <td>Support the platform</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="manual-accordion">
+                    <div class="manual-accordion-header" onclick="toggleAccordion(this)">
+                        <div class="manual-accordion-title">
+                            <div class="manual-accordion-icon">
+                                <i data-lucide="lock" style="width: 16px; height: 16px; color: var(--color-warning);"></i>
+                            </div>
+                            Authentication Routes (Click to expand)
+                        </div>
+                        <i data-lucide="chevron-down" class="manual-accordion-chevron"></i>
+                    </div>
+                    <div class="manual-accordion-content">
+                        <div class="manual-accordion-body">
+                            <table class="url-table">
+                                <thead>
+                                    <tr>
+                                        <th>URL Path</th>
+                                        <th>Page</th>
+                                        <th>Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><code class="url-path">/login/</code></td>
+                                        <td>Login</td>
+                                        <td>Sign in to account</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code class="url-path">/register/</code></td>
+                                        <td>Register</td>
+                                        <td>Create new account</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code class="url-path">/password-reset/</code></td>
+                                        <td>Password Reset</td>
+                                        <td>Request password reset</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code class="url-path">/password-reset/confirm/</code></td>
+                                        <td>Reset Confirm</td>
+                                        <td>Set new password</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code class="url-path">/logout/</code></td>
+                                        <td>Logout</td>
+                                        <td>Sign out of account</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="manual-accordion">
+                    <div class="manual-accordion-header" onclick="toggleAccordion(this)">
+                        <div class="manual-accordion-title">
+                            <div class="manual-accordion-icon">
+                                <i data-lucide="layout-dashboard" style="width: 16px; height: 16px; color: var(--color-success);"></i>
+                            </div>
+                            Dashboard Routes (Click to expand)
+                        </div>
+                        <i data-lucide="chevron-down" class="manual-accordion-chevron"></i>
+                    </div>
+                    <div class="manual-accordion-content">
+                        <div class="manual-accordion-body">
+                            <table class="url-table">
+                                <thead>
+                                    <tr>
+                                        <th>URL Path</th>
+                                        <th>Page</th>
+                                        <th>Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><code class="url-path">/dashboard/</code></td>
+                                        <td>Dashboard</td>
+                                        <td>Main admin dashboard</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code class="url-path">/profile/</code></td>
+                                        <td>Profile</td>
+                                        <td>User profile management</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code class="url-path">/settings/</code></td>
+                                        <td>Settings</td>
+                                        <td>Account settings</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code class="url-path">/content/videos/</code></td>
+                                        <td>Videos</td>
+                                        <td>Manage videos</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code class="url-path">/content/blog/</code></td>
+                                        <td>Blog Posts</td>
+                                        <td>Manage blog posts</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code class="url-path">/newsletter/</code></td>
+                                        <td>Newsletter</td>
+                                        <td>Manage subscribers</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code class="url-path">/sponsors/</code></td>
+                                        <td>Sponsors</td>
+                                        <td>Manage sponsors</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Authentication -->
+            <section id="authentication" class="manual-section">
+                <div class="manual-section-header">
+                    <div class="manual-section-icon">
+                        <i data-lucide="log-in" style="color: white; width: 24px; height: 24px;"></i>
+                    </div>
+                    <h2 class="manual-section-title">Authentication Guide</h2>
+                </div>
+                
+                <div class="manual-accordion">
+                    <div class="manual-accordion-header" onclick="toggleAccordion(this)">
+                        <div class="manual-accordion-title">
+                            <div class="manual-accordion-icon">
+                                <i data-lucide="user-plus" style="width: 16px; height: 16px; color: var(--color-success);"></i>
+                            </div>
+                            Creating an Account
+                        </div>
+                        <i data-lucide="chevron-down" class="manual-accordion-chevron"></i>
+                    </div>
+                    <div class="manual-accordion-content">
+                        <div class="manual-accordion-body">
+                            <p style="margin-bottom: 16px; color: var(--text-secondary);">
+                                Follow these steps to create your account:
+                            </p>
+                            <ol style="color: var(--text-secondary); padding-left: 20px; line-height: 2;">
+                                <li>Click <strong>Register</strong> on the login page or navigate to <code class="url-path">/register/</code></li>
+                                <li>Enter your <strong>First Name</strong> and <strong>Last Name</strong></li>
+                                <li>Choose a unique <strong>Username</strong> (this will be displayed publicly)</li>
+                                <li>Enter a valid <strong>Email Address</strong></li>
+                                <li>Create a <strong>Password</strong> (must be 8+ characters with uppercase, lowercase, and number)</li>
+                                <li>Confirm your password</li>
+                                <li>Accept the <strong>Terms of Service</strong></li>
+                                <li>Click <strong>Create Account</strong></li>
+                            </ol>
+                            
+                            <div class="highlight-box" style="margin-top: 20px;">
+                                <strong style="display: block; margin-bottom: 8px;">💡 Pro Tip:</strong>
+                                <p style="color: var(--text-secondary); font-size: 14px;">Use a password manager to generate and store strong passwords. Avoid using the same password across multiple sites.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="manual-accordion">
+                    <div class="manual-accordion-header" onclick="toggleAccordion(this)">
+                        <div class="manual-accordion-title">
+                            <div class="manual-accordion-icon">
+                                <i data-lucide="key" style="width: 16px; height: 16px; color: var(--color-warning);"></i>
+                            </div>
+                            Resetting Your Password
+                        </div>
+                        <i data-lucide="chevron-down" class="manual-accordion-chevron"></i>
+                    </div>
+                    <div class="manual-accordion-content">
+                        <div class="manual-accordion-body">
+                            <p style="margin-bottom: 16px; color: var(--text-secondary);">
+                                Forgot your password? No worries! Here's how to reset it:
+                            </p>
+                            <ol style="color: var(--text-secondary); padding-left: 20px; line-height: 2;">
+                                <li>Click <strong>Forgot password?</strong> on the login page</li>
+                                <li>Enter the <strong>email address</strong> you used to register</li>
+                                <li>Click <strong>Reset Password</strong></li>
+                                <li>Check your email for a <strong>reset link</strong></li>
+                                <li>Click the link to open the password reset page</li>
+                                <li>Enter and confirm your <strong>new password</strong></li>
+                                <li>Click <strong>Reset Password</strong> to save</li>
+                            </ol>
+                            
+                            <div class="tip-box">
+                                <div class="tip-icon">
+                                    <i data-lucide="mail" style="color: white; width: 20px; height: 20px;"></i>
+                                </div>
+                                <div class="tip-content">
+                                    <h4>Check Your Spam! 📧</h4>
+                                    <p>If you don't see the reset email within 5 minutes, check your spam or junk folder.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- User Stories -->
+            <section id="user-stories" class="manual-section">
+                <div class="manual-section-header">
+                    <div class="manual-section-icon">
+                        <i data-lucide="users" style="color: white; width: 24px; height: 24px;"></i>
+                    </div>
+                    <h2 class="manual-section-title">User Stories</h2>
+                </div>
+                
+                <!-- Admin Story -->
+                <div class="user-story">
+                    <div class="user-story-header">
+                        <div class="user-story-avatar admin">👑</div>
+                        <div class="user-story-meta">
+                            <h4>Sarah - Platform Administrator</h4>
+                            <span>Manages all content and users</span>
+                        </div>
+                    </div>
+                    <div class="user-story-content">
+                        <h5>Daily Workflow:</h5>
+                        <ol>
+                            <li>Logs into the <strong>Dashboard</strong> to see platform statistics</li>
+                            <li>Reviews <strong>new content submissions</strong> from editors</li>
+                            <li>Approves or requests changes to <strong>blog posts and videos</strong></li>
+                            <li>Monitors <strong>newsletter subscriptions</strong> and campaign performance</li>
+                            <li>Manages <strong>user roles and permissions</strong></li>
+                            <li>Reviews <strong>donation reports</strong> and sponsor deliverables</li>
+                        </ol>
+                        
+                        <div class="highlight-box" style="margin-top: 16px;">
+                            <strong style="display: block; margin-bottom: 8px;">🎯 Admin Powers:</strong>
+                            <p style="color: var(--text-secondary); font-size: 14px;">Admins can access all features including user management, content moderation, and financial reports.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Editor Story -->
+                <div class="user-story">
+                    <div class="user-story-header">
+                        <div class="user-story-avatar editor">✏️</div>
+                        <div class="user-story-meta">
+                            <h4>James - Content Editor</h4>
+                            <span>Creates and publishes content</span>
+                        </div>
+                    </div>
+                    <div class="user-story-content">
+                        <h5>Content Creation Workflow:</h5>
+                        <ol>
+                            <li>Navigates to <strong>Content → Videos</strong> or <strong>Blog Posts</strong></li>
+                            <li>Creates <strong>new content</strong> using the Add button</li>
+                            <li>Uploads <strong>video files</strong> or writes <strong>blog articles</strong></li>
+                            <li>Adds <strong>categories, tags, and metadata</strong></li>
+                            <li>Saves as <strong>draft</strong> for review or <strong>publishes</strong> immediately</li>
+                            <li>Monitors <strong>views and engagement</strong> from the dashboard</li>
+                        </ol>
+                        
+                        <div class="highlight-box" style="margin-top: 16px;">
+                            <strong style="display: block; margin-bottom: 8px;">💡 Editor Tip:</strong>
+                            <p style="color: var(--text-secondary); font-size: 14px;">Use the <strong>Schedule</strong> feature to automatically publish content at a specific date and time!</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Viewer Story -->
+                <div class="user-story">
+                    <div class="user-story-header">
+                        <div class="user-story-avatar viewer">👁️</div>
+                        <div class="user-story-meta">
+                            <h4>Maria - Engaged Citizen</h4>
+                            <span>Learns and engages with content</span>
+                        </div>
+                    </div>
+                    <div class="user-story-content">
+                        <h5>Learning Journey:</h5>
+                        <ol>
+                            <li>Explores the <strong>Learn section</strong> for budget basics</li>
+                            <li>Watches <strong>educational videos</strong> about government spending</li>
+                            <li>Reads <strong>blog posts</strong> on financial literacy</li>
+                            <li>Subscribes to the <strong>newsletter</strong> for updates</li>
+                            <li>Tracks <strong>budget reports</strong> for their county</li>
+                            <li>Shares interesting content on <strong>social media</strong></li>
+                        </ol>
+                        
+                        <div class="highlight-box" style="margin-top: 16px;">
+                            <strong style="display: block; margin-bottom: 8px;">🌟 Community Impact:</strong>
+                            <p style="color: var(--text-secondary); font-size: 14px;">Every engaged citizen helps promote transparency! Share what you learn with your community.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Keyboard Shortcuts -->
+            <section id="shortcuts" class="manual-section">
+                <div class="manual-section-header">
+                    <div class="manual-section-icon">
+                        <i data-lucide="keyboard" style="color: white; width: 24px; height: 24px;"></i>
+                    </div>
+                    <h2 class="manual-section-title">Keyboard Shortcuts</h2>
+                </div>
+                
+                <div class="manual-accordion">
+                    <div class="manual-accordion-header" onclick="toggleAccordion(this)">
+                        <div class="manual-accordion-title">
+                            <div class="manual-accordion-icon">
+                                <i data-lucide="zap" style="width: 16px; height: 16px; color: var(--color-warning);"></i>
+                            </div>
+                            Speed Up Your Workflow (Click to expand)
+                        </div>
+                        <i data-lucide="chevron-down" class="manual-accordion-chevron"></i>
+                    </div>
+                    <div class="manual-accordion-content">
+                        <div class="manual-accordion-body">
+                            <p style="margin-bottom: 20px; color: var(--text-secondary);">
+                                Use these keyboard shortcuts to navigate the platform faster:
+                            </p>
+                            
+                            <div class="shortcut-grid">
+                                <div class="shortcut-item">
+                                    <span class="shortcut-key">Alt + D</span>
+                                    <span class="shortcut-desc">Go to Dashboard</span>
+                                </div>
+                                <div class="shortcut-item">
+                                    <span class="shortcut-key">Alt + N</span>
+                                    <span class="shortcut-desc">New Content</span>
+                                </div>
+                                <div class="shortcut-item">
+                                    <span class="shortcut-key">Alt + S</span>
+                                    <span class="shortcut-desc">Open Settings</span>
+                                </div>
+                                <div class="shortcut-item">
+                                    <span class="shortcut-key">Alt + P</span>
+                                    <span class="shortcut-desc">View Profile</span>
+                                </div>
+                                <div class="shortcut-item">
+                                    <span class="shortcut-key">/</span>
+                                    <span class="shortcut-desc">Focus Search</span>
+                                </div>
+                                <div class="shortcut-item">
+                                    <span class="shortcut-key">Esc</span>
+                                    <span class="shortcut-desc">Close Modal</span>
+                                </div>
+                            </div>
+                            
+                            <div class="tip-box" style="margin-top: 24px;">
+                                <div class="tip-icon">
+                                    <i data-lucide="info" style="color: white; width: 20px; height: 20px;"></i>
+                                </div>
+                                <div class="tip-content">
+                                    <h4>Coming Soon! 🚀</h4>
+                                    <p>We're working on more keyboard shortcuts. Have a suggestion? Let us know!</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Footer -->
+            <footer style="margin-top: 60px; padding-top: 32px; border-top: 1px solid var(--border-color); text-align: center;">
+                <p style="color: var(--text-muted); font-size: 14px;">
+                    © 2024 Budget Ndio Story. Made with ❤️ for a transparent Kenya.
+                </p>
+                <p style="color: var(--text-muted); font-size: 12px; margin-top: 8px;">
+                    Need help? Contact us at <a href="mailto:support@budgetndiostory.org" style="color: var(--color-primary);">support@budgetndiostory.org</a>
+                </p>
+            </footer>
+        </main>
+    </div>
+    
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+        
+        // Accordion functionality
+        function toggleAccordion(header) {
+            const accordion = header.parentElement;
+            accordion.classList.toggle('open');
+        }
+        
+        // Smooth scroll for navigation
+        document.querySelectorAll('.manual-nav-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href').substring(1);
+                const targetElement = document.getElementById(targetId);
+                
+                if (targetElement) {
+                    // Update active state
+                    document.querySelectorAll('.manual-nav-link').forEach(l => l.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Smooth scroll
+                    targetElement.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+        
+        // Highlight current section on scroll
+        const sections = document.querySelectorAll('.manual-section');
+        const navLinks = document.querySelectorAll('.manual-nav-link');
+        
+        window.addEventListener('scroll', () => {
+            let current = '';
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (window.scrollY >= (sectionTop - 200)) {
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

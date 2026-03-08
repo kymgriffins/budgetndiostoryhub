@@ -1,0 +1,1088 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manuals & Documentation - Budget Ndio Story</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <style>
+        :root {
+            --color-primary: #0066CC;
+            --color-primary-dark: #004c99;
+            --color-secondary: #6366f1;
+            --color-success: #10b981;
+            --color-warning: #f59e0b;
+            --color-error: #ef4444;
+            --color-info: #3b82f6;
+            --bg-primary: #0a0a0a;
+            --bg-secondary: #111827;
+            --bg-tertiary: #1f2937;
+            --bg-card: #171717;
+            --bg-elevated: #1a1a1a;
+            --text-primary: #ffffff;
+            --text-secondary: #9ca3af;
+            --text-muted: #6b7280;
+            --border-color: #374151;
+            --border-light: #4b5563;
+            --gradient-primary: linear-gradient(135deg, #0066CC 0%, #6366f1 100%);
+            --gradient-success: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            --gradient-warning: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            --gradient-info: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        
+        /* Background Pattern */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                radial-gradient(circle at 20% 80%, rgba(99, 102, 241, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(0, 102, 204, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(16, 185, 129, 0.05) 0%, transparent 40%);
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        /* Layout */
+        .manuals-container {
+            position: relative;
+            z-index: 1;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+        
+        /* Header */
+        .manuals-header {
+            padding: 60px 0 40px;
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 60px;
+        }
+        
+        .manuals-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: 100px;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+        }
+        
+        .manuals-badge-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--color-success);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        .manuals-title {
+            font-size: 56px;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            margin-bottom: 16px;
+            background: linear-gradient(135deg, #ffffff 0%, #9ca3af 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .manuals-subtitle {
+            font-size: 20px;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        /* Navigation */
+        .manuals-nav {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+        
+        .nav-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 20px;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+        
+        .nav-link:hover {
+            background: var(--bg-card);
+            border-color: var(--border-light);
+            color: var(--text-primary);
+            transform: translateY(-2px);
+        }
+        
+        .nav-link.active {
+            background: var(--color-primary);
+            border-color: var(--color-primary);
+            color: white;
+        }
+        
+        /* Quick Links Grid */
+        .quick-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 60px;
+        }
+        
+        .quick-link-card {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            padding: 24px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .quick-link-card:hover {
+            border-color: var(--color-primary);
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-xl);
+        }
+        
+        .quick-link-icon {
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            flex-shrink: 0;
+        }
+        
+        .quick-link-icon.blue {
+            background: var(--gradient-info);
+        }
+        
+        .quick-link-icon.green {
+            background: var(--gradient-success);
+        }
+        
+        .quick-link-icon.purple {
+            background: var(--gradient-primary);
+        }
+        
+        .quick-link-icon.orange {
+            background: var(--gradient-warning);
+        }
+        
+        .quick-link-content h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 4px;
+            color: var(--text-primary);
+        }
+        
+        .quick-link-content p {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+        
+        /* Manual Categories */
+        .category-section {
+            margin-bottom: 60px;
+        }
+        
+        .category-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+        
+        .category-icon {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg-tertiary);
+            border-radius: 10px;
+        }
+        
+        .category-title {
+            font-size: 24px;
+            font-weight: 700;
+        }
+        
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 20px;
+        }
+        
+        .manual-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 28px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .manual-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--gradient-primary);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .manual-card:hover {
+            border-color: var(--border-light);
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-xl);
+        }
+        
+        .manual-card:hover::before {
+            opacity: 1;
+        }
+        
+        .manual-card-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            margin-bottom: 16px;
+        }
+        
+        .manual-card-icon {
+            width: 52px;
+            height: 52px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg-tertiary);
+            border-radius: 14px;
+        }
+        
+        .manual-card-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 10px;
+            background: rgba(16, 185, 129, 0.1);
+            border-radius: 100px;
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--color-success);
+        }
+        
+        .manual-card h3 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .manual-card p {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+        }
+        
+        .manual-card-meta {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding-top: 16px;
+            border-top: 1px solid var(--border-color);
+        }
+        
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+        
+        .manual-card-links {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
+        }
+        
+        .card-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 10px 16px;
+            background: var(--bg-tertiary);
+            border-radius: 8px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+        
+        .card-link:hover {
+            background: var(--color-primary);
+            color: white;
+        }
+        
+        .card-link.primary {
+            background: var(--color-primary);
+            color: white;
+        }
+        
+        .card-link.primary:hover {
+            background: var(--color-primary-dark);
+        }
+        
+        /* Featured Section */
+        .featured-section {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            padding: 40px;
+            margin-bottom: 60px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .featured-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        
+        .featured-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+        
+        .featured-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            background: var(--gradient-primary);
+            border-radius: 100px;
+            font-size: 12px;
+            font-weight: 600;
+            color: white;
+        }
+        
+        .featured-title {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+        
+        .featured-description {
+            font-size: 16px;
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+            max-width: 700px;
+        }
+        
+        .featured-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 16px;
+        }
+        
+        .featured-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px;
+            background: var(--bg-tertiary);
+            border-radius: 12px;
+        }
+        
+        .featured-item-icon {
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg-secondary);
+            border-radius: 8px;
+        }
+        
+        .featured-item-text {
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        /* Search Box */
+        .search-section {
+            margin-bottom: 40px;
+        }
+        
+        .search-box {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 20px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .search-box input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            outline: none;
+            font-size: 16px;
+            color: var(--text-primary);
+        }
+        
+        .search-box input::placeholder {
+            color: var(--text-muted);
+        }
+        
+        .search-box kbd {
+            padding: 4px 8px;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+        
+        /* Keyboard Shortcuts Reference */
+        .shortcuts-section {
+            margin-bottom: 60px;
+        }
+        
+        .shortcuts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 12px;
+        }
+        
+        .shortcut-card {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 18px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+        }
+        
+        .shortcut-keys {
+            display: flex;
+            gap: 4px;
+        }
+        
+        .shortcut-key {
+            padding: 4px 8px;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 12px;
+            font-family: 'SF Mono', monospace;
+            color: var(--text-primary);
+        }
+        
+        .shortcut-action {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+        
+        /* Footer */
+        .manuals-footer {
+            padding: 40px 0;
+            border-top: 1px solid var(--border-color);
+            text-align: center;
+            margin-top: 60px;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .footer-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.2s ease;
+        }
+        
+        .footer-link:hover {
+            color: var(--text-primary);
+        }
+        
+        .footer-copyright {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .manuals-title {
+                font-size: 36px;
+            }
+            
+            .manuals-subtitle {
+                font-size: 16px;
+            }
+            
+            .category-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .featured-section {
+                padding: 24px;
+            }
+            
+            .shortcuts-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .animate-in {
+            animation: fadeInUp 0.5s ease-out forwards;
+        }
+        
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; }
+        .delay-4 { animation-delay: 0.4s; }
+    </style>
+</head>
+<body>
+    <div class="manuals-container">
+        <!-- Header -->
+        <header class="manuals-header">
+            <div class="manuals-badge">
+                <span class="manuals-badge-dot"></span>
+                All Documentation in One Place
+            </div>
+            <h1 class="manuals-title">Manuals & Guides</h1>
+            <p class="manuals-subtitle">
+                Complete documentation for Budget Ndio Story platform. Find user guides, API references, developer docs, and more.
+            </p>
+            
+            <!-- Navigation -->
+            <nav class="manuals-nav">
+                <a href="/docs/" class="nav-link">
+                    <i data-lucide="book-open"></i>
+                    Documentation
+                </a>
+                <a href="/api/docs/" class="nav-link">
+                    <i data-lucide="code-2"></i>
+                    API Reference
+                </a>
+                <a href="/manual/" class="nav-link active">
+                    <i data-lucide="user"></i>
+                    User Manual
+                </a>
+                <a href="/dashboard/" class="nav-link">
+                    <i data-lucide="layout-dashboard"></i>
+                    Dashboard
+                </a>
+            </nav>
+        </header>
+        
+        <!-- Search -->
+        <div class="search-section">
+            <div class="search-box">
+                <i data-lucide="search" style="color: var(--text-muted);"></i>
+                <input type="text" placeholder="Search documentation...">
+                <kbd>⌘K</kbd>
+            </div>
+        </div>
+        
+        <!-- Quick Links -->
+        <section class="quick-links">
+            <a href="/manual/" class="quick-link-card">
+                <div class="quick-link-icon blue">
+                    <i data-lucide="user" style="color: white;"></i>
+                </div>
+                <div class="quick-link-content">
+                    <h3>User Manual</h3>
+                    <p>Complete guide for end-users</p>
+                </div>
+            </a>
+            <a href="/docs/" class="quick-link-card">
+                <div class="quick-link-icon green">
+                    <i data-lucide="book-open" style="color: white;"></i>
+                </div>
+                <div class="quick-link-content">
+                    <h3>Developer Docs</h3>
+                    <p>Tech stack & architecture</p>
+                </div>
+            </a>
+            <a href="/api/docs/" class="quick-link-card">
+                <div class="quick-link-icon purple">
+                    <i data-lucide="code-2" style="color: white;"></i>
+                </div>
+                <div class="quick-link-content">
+                    <h3>API Reference</h3>
+                    <p>REST API endpoints</p>
+                </div>
+            </a>
+            <a href="/settings/" class="quick-link-card">
+                <div class="quick-link-icon orange">
+                    <i data-lucide="settings" style="color: white;"></i>
+                </div>
+                <div class="quick-link-content">
+                    <h3>Settings Guide</h3>
+                    <p>Configuration options</p>
+                </div>
+            </a>
+        </section>
+        
+        <!-- Featured Section -->
+        <section class="featured-section">
+            <div class="featured-header">
+                <span class="featured-badge">
+                    <i data-lucide="zap" style="width: 14px; height: 14px;"></i>
+                    Getting Started
+                </span>
+            </div>
+            <h2 class="featured-title">New to Budget Ndio Story?</h2>
+            <p class="featured-description">
+                Here's everything you need to get started with the platform. Follow these guides to set up your account and start creating content.
+            </p>
+            <div class="featured-grid">
+                <div class="featured-item">
+                    <div class="featured-item-icon">
+                        <i data-lucide="user-plus" style="width: 18px; height: 18px; color: var(--color-primary);"></i>
+                    </div>
+                    <span class="featured-item-text">Create Account</span>
+                </div>
+                <div class="featured-item">
+                    <div class="featured-item-icon">
+                        <i data-lucide="video" style="width: 18px; height: 18px; color: var(--color-success);"></i>
+                    </div>
+                    <span class="featured-item-text">Upload Content</span>
+                </div>
+                <div class="featured-item">
+                    <div class="featured-item-icon">
+                        <i data-lucide="users" style="width: 18px; height: 18px; color: var(--color-secondary);"></i>
+                    </div>
+                    <span class="featured-item-text">Manage Users</span>
+                </div>
+                <div class="featured-item">
+                    <div class="featured-item-icon">
+                        <i data-lucide="bar-chart-2" style="width: 18px; height: 18px; color: var(--color-warning);"></i>
+                    </div>
+                    <span class="featured-item-text">View Analytics</span>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Manual Categories -->
+        <section class="category-section">
+            <div class="category-header">
+                <div class="category-icon">
+                    <i data-lucide="library" style="width: 20px; height: 20px; color: var(--color-primary);"></i>
+                </div>
+                <h2 class="category-title">All Manuals & Guides</h2>
+            </div>
+            
+            <div class="category-grid">
+                <!-- User Manual -->
+                <div class="manual-card">
+                    <div class="manual-card-header">
+                        <div class="manual-card-icon">
+                            <i data-lucide="user" style="width: 24px; height: 24px; color: var(--color-primary);"></i>
+                        </div>
+                        <span class="manual-card-status">
+                            <i data-lucide="check-circle" style="width: 12px; height: 12px;"></i>
+                            Complete
+                        </span>
+                    </div>
+                    <h3>User Manual</h3>
+                    <p>Comprehensive guide for platform users. Learn about features, navigation, and best practices.</p>
+                    <div class="manual-card-meta">
+                        <div class="meta-item">
+                            <i data-lucide="clock" style="width: 14px; height: 14px;"></i>
+                            15 min read
+                        </div>
+                        <div class="meta-item">
+                            <i data-lucide="file-text" style="width: 14px; height: 14px;"></i>
+                            12 sections
+                        </div>
+                    </div>
+                    <div class="manual-card-links">
+                        <a href="/manual/" class="card-link primary">
+                            Read Manual
+                            <i data-lucide="arrow-right" style="width: 14px; height: 14px;"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Admin Guide -->
+                <div class="manual-card">
+                    <div class="manual-card-header">
+                        <div class="manual-card-icon">
+                            <i data-lucide="shield" style="width: 24px; height: 24px; color: var(--color-success);"></i>
+                        </div>
+                        <span class="manual-card-status">
+                            <i data-lucide="check-circle" style="width: 12px; height: 12px;"></i>
+                            Complete
+                        </span>
+                    </div>
+                    <h3>Administrator Guide</h3>
+                    <p>For administrators managing users, content moderation, and platform settings.</p>
+                    <div class="manual-card-meta">
+                        <div class="meta-item">
+                            <i data-lucide="clock" style="width: 14px; height: 14px;"></i>
+                            20 min read
+                        </div>
+                        <div class="meta-item">
+                            <i data-lucide="file-text" style="width: 14px; height: 14px;"></i>
+                            8 sections
+                        </div>
+                    </div>
+                    <div class="manual-card-links">
+                        <a href="/manual/" class="card-link primary">
+                            Read Guide
+                            <i data-lucide="arrow-right" style="width: 14px; height: 14px;"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- API Documentation -->
+                <div class="manual-card">
+                    <div class="manual-card-header">
+                        <div class="manual-card-icon">
+                            <i data-lucide="code-2" style="width: 24px; height: 24px; color: var(--color-secondary);"></i>
+                        </div>
+                        <span class="manual-card-status">
+                            <i data-lucide="check-circle" style="width: 12px; height: 12px;"></i>
+                            Complete
+                        </span>
+                    </div>
+                    <h3>API Documentation</h3>
+                    <p>Complete REST API reference with endpoints, authentication, and code examples.</p>
+                    <div class="manual-card-meta">
+                        <div class="meta-item">
+                            <i data-lucide="clock" style="width: 14px; height: 14px;"></i>
+                            30 min read
+                        </div>
+                        <div class="meta-item">
+                            <i data-lucide="file-text" style="width: 14px; height: 14px;"></i>
+                            25+ endpoints
+                        </div>
+                    </div>
+                    <div class="manual-card-links">
+                        <a href="/api/docs/" class="card-link primary">
+                            View API Docs
+                            <i data-lucide="arrow-right" style="width: 14px; height: 14px;"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Developer Documentation -->
+                <div class="manual-card">
+                    <div class="manual-card-header">
+                        <div class="manual-card-icon">
+                            <i data-lucide="book-open" style="width: 24px; height: 24px; color: var(--color-warning);"></i>
+                        </div>
+                        <span class="manual-card-status">
+                            <i data-lucide="check-circle" style="width: 12px; height: 12px;"></i>
+                            Complete
+                        </span>
+                    </div>
+                    <h3>Developer Documentation</h3>
+                    <p>Technical documentation for developers. Tech stack, architecture, and setup guides.</p>
+                    <div class="manual-card-meta">
+                        <div class="meta-item">
+                            <i data-lucide="clock" style="width: 14px; height: 14px;"></i>
+                            45 min read
+                        </div>
+                        <div class="meta-item">
+                            <i data-lucide="file-text" style="width: 14px; height: 14px;"></i>
+                            15 sections
+                        </div>
+                    </div>
+                    <div class="manual-card-links">
+                        <a href="/docs/" class="card-link primary">
+                            Read Docs
+                            <i data-lucide="arrow-right" style="width: 14px; height: 14px;"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Content Creator Guide -->
+                <div class="manual-card">
+                    <div class="manual-card-header">
+                        <div class="manual-card-icon">
+                            <i data-lucide="video" style="width: 24px; height: 24px; color: #ec4899;"></i>
+                        </div>
+                        <span class="manual-card-status">
+                            <i data-lucide="check-circle" style="width: 12px; height: 12px;"></i>
+                            Complete
+                        </span>
+                    </div>
+                    <h3>Content Creator Guide</h3>
+                    <p>Learn how to create, edit, and publish content on the platform.</p>
+                    <div class="manual-card-meta">
+                        <div class="meta-item">
+                            <i data-lucide="clock" style="width: 14px; height: 14px;"></i>
+                            10 min read
+                        </div>
+                        <div class="meta-item">
+                            <i data-lucide="file-text" style="width: 14px; height: 14px;"></i>
+                            6 sections
+                        </div>
+                    </div>
+                    <div class="manual-card-links">
+                        <a href="/manual/" class="card-link primary">
+                            Read Guide
+                            <i data-lucide="arrow-right" style="width: 14px; height: 14px;"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Security Guide -->
+                <div class="manual-card">
+                    <div class="manual-card-header">
+                        <div class="manual-card-icon">
+                            <i data-lucide="lock" style="width: 24px; height: 24px; color: var(--color-error);"></i>
+                        </div>
+                        <span class="manual-card-status">
+                            <i data-lucide="check-circle" style="width: 12px; height: 12px;"></i>
+                            Complete
+                        </span>
+                    </div>
+                    <h3>Security Guide</h3>
+                    <p>Best practices for account security, password management, and data protection.</p>
+                    <div class="manual-card-meta">
+                        <div class="meta-item">
+                            <i data-lucide="clock" style="width: 14px; height: 14px;"></i>
+                            8 min read
+                        </div>
+                        <div class="meta-item">
+                            <i data-lucide="file-text" style="width: 14px; height: 14px;"></i>
+                            5 sections
+                        </div>
+                    </div>
+                    <div class="manual-card-links">
+                        <a href="/manual/" class="card-link primary">
+                            Read Guide
+                            <i data-lucide="arrow-right" style="width: 14px; height: 14px;"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Keyboard Shortcuts -->
+        <section class="shortcuts-section">
+            <div class="category-header">
+                <div class="category-icon">
+                    <i data-lucide="keyboard" style="width: 20px; height: 20px; color: var(--color-secondary);"></i>
+                </div>
+                <h2 class="category-title">Keyboard Shortcuts</h2>
+            </div>
+            
+            <div class="shortcuts-grid">
+                <div class="shortcut-card">
+                    <div class="shortcut-keys">
+                        <span class="shortcut-key">Alt</span>
+                        <span class="shortcut-key">D</span>
+                    </div>
+                    <span class="shortcut-action">Dashboard</span>
+                </div>
+                <div class="shortcut-card">
+                    <div class="shortcut-keys">
+                        <span class="shortcut-key">Alt</span>
+                        <span class="shortcut-key">N</span>
+                    </div>
+                    <span class="shortcut-action">New Content</span>
+                </div>
+                <div class="shortcut-card">
+                    <div class="shortcut-keys">
+                        <span class="shortcut-key">Alt</span>
+                        <span class="shortcut-key">S</span>
+                    </div>
+                    <span class="shortcut-action">Settings</span>
+                </div>
+                <div class="shortcut-card">
+                    <div class="shortcut-keys">
+                        <span class="shortcut-key">Alt</span>
+                        <span class="shortcut-key">M</span>
+                    </div>
+                    <span class="shortcut-action">Manual</span>
+                </div>
+                <div class="shortcut-card">
+                    <div class="shortcut-keys">
+                        <span class="shortcut-key">Alt</span>
+                        <span class="shortcut-key">P</span>
+                    </div>
+                    <span class="shortcut-action">Profile</span>
+                </div>
+                <div class="shortcut-card">
+                    <div class="shortcut-keys">
+                        <span class="shortcut-key">⌘</span>
+                        <span class="shortcut-key">K</span>
+                    </div>
+                    <span class="shortcut-action">Search</span>
+                </div>
+                <div class="shortcut-card">
+                    <div class="shortcut-keys">
+                        <span class="shortcut-key">Esc</span>
+                    </div>
+                    <span class="shortcut-action">Close Modal</span>
+                </div>
+                <div class="shortcut-card">
+                    <div class="shortcut-keys">
+                        <span class="shortcut-key">?</span>
+                    </div>
+                    <span class="shortcut-action">Help</span>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Footer -->
+        <footer class="manuals-footer">
+            <div class="footer-links">
+                <a href="/" class="footer-link">
+                    <i data-lucide="home" style="width: 16px; height: 16px;"></i>
+                    Home
+                </a>
+                <a href="/manual/" class="footer-link">
+                    <i data-lucide="book" style="width: 16px; height: 16px;"></i>
+                    User Manual
+                </a>
+                <a href="/docs/" class="footer-link">
+                    <i data-lucide="file-code" style="width: 16px; height: 16px;"></i>
+                    Developer Docs
+                </a>
+                <a href="/api/docs/" class="footer-link">
+                    <i data-lucide="api" style="width: 16px; height: 16px;"></i>
+                    API Reference
+                </a>
+                <a href="/contact/" class="footer-link">
+                    <i data-lucide="mail" style="width: 16px; height: 16px;"></i>
+                    Contact
+                </a>
+            </div>
+            <p class="footer-copyright">
+                © 2024 Budget Ndio Story. All documentation materials are available under open licenses.
+            </p>
+        </footer>
+    </div>
+    
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+        
+        // Add animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-in');
+                }
+            });
+        }, observerOptions);
+        
+        document.querySelectorAll('.manual-card, .quick-link-card, .shortcut-card').forEach(el => {
+            observer.observe(el);
+        });
+        
+        // Search functionality (basic)
+        const searchInput = document.querySelector('.search-box input');
+        searchInput.addEventListener('keyup', (e) => {
+            if (e.key === 'Enter') {
+                const query = encodeURIComponent(searchInput.value);
+                window.location.href = `/manual/?search=${query}`;
+            }
+        });
+    </script>
+</body>
+</html>

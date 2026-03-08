@@ -61,10 +61,13 @@ urlpatterns = [
     # Admin - must come first to avoid conflicts
     path('admin/', admin.site.urls),
     
+    # Core app - serves all pages and CRUD operations (must be BEFORE Next.js)
+    path('', include('apps.core.urls')),
+    
     # Next.js static files - serve from _next folder
     re_path(r'^_next/(?P<path_info>.*)$', serve_next_static, name='next_static'),
     
-    # Next.js pages - include the Next.js URL patterns (before core urls to take precedence)
+    # Next.js pages - include the Next.js URL patterns (after core urls)
     path('', include('apps.nextjs.urls')),
     
     # Static files from public folder
@@ -73,9 +76,6 @@ urlpatterns = [
     re_path(r'^(?P<filename>twitter-image\.png)$', serve_public_file, name='twitter_image'),
     re_path(r'^(?P<filename>logo\.svg)$', serve_public_file, name='logo'),
     re_path(r'^(?P<filename>bnsoo1\.mp4)$', serve_public_file, name='video'),
-    
-    # Core app - serves all pages and CRUD operations
-    path('', include('apps.core.urls')),
     
     # API Documentation
     path('api/docs/', api_docs, name='api_docs'),

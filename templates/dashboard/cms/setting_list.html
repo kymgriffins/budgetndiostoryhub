@@ -1,0 +1,14 @@
+{% extends 'admin_base.html' %}
+{% load static %}
+{% block title %}Site Settings{% endblock %}
+{% block content %}
+<div class="mb-8 flex items-center justify-between">
+    <div><h1 class="text-3xl font-bold tracking-tight">Site Settings</h1></div>
+    <a href="{% url 'setting-create' %}" class="inline-flex items-center justify-center rounded-lg bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90"><i class="ph ph-plus mr-2"></i>Add Setting</a>
+</div>
+<div class="rounded-xl border bg-card">
+    <div class="p-6">
+        {% if settings %}{% for setting in settings %}<div class="flex items-center justify-between p-4 border rounded-lg mb-2"><div><div class="font-medium">{{ setting.key }}</div><div class="text-sm text-muted-foreground">{{ setting.category }} | {{ setting.value_type }}</div></div><div class="flex items-center gap-2"><a href="{% url 'setting-update' setting.pk %}" class="inline-flex items-center justify-center rounded-md p-2 hover:bg-accent"><i class="ph ph-pencil-simple"></i></a><a href="{% url 'setting-delete' setting.pk %}" class="inline-flex items-center justify-center rounded-md p-2 hover:bg-accent text-red-600"><i class="ph ph-trash"></i></a></div></div>{% endfor %}{% else %}<div class="text-center py-12"><i class="ph ph-gear text-4xl text-muted-foreground"></i><p class="mt-4 text-muted-foreground">No settings yet</p></div>{% endif %}
+    </div>
+</div>
+{% endblock %}

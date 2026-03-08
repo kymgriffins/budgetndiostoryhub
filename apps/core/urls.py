@@ -108,8 +108,16 @@ urlpatterns = [
     path('api/auth/user/', current_user_view, name='current_user'),
     
     # Django Auth URLs
-    path('accounts/login/', auth_views.LoginView.as_view(template_name='admin_base.html'), name='login'),
+    path('accounts/login/', auth_views.LoginView.as_view(template_name='auth/login.html'), name='login'),
+    path('login/', auth_views.LoginView.as_view(template_name='auth/login.html'), name='login_direct'),
     path('accounts/logout/', auth_views.LogoutView.as_view(), name='logout'),
+    path('logout/', auth_views.LogoutView.as_view(), name='logout_direct'),
+    path('accounts/register/', views.register_page, name='register'),
+    path('register/', views.register_page, name='register_direct'),
+    path('accounts/password_reset/', auth_views.PasswordResetView.as_view(template_name='auth/password_reset.html'), name='password_reset'),
+    path('password_reset/', auth_views.PasswordResetView.as_view(template_name='auth/password_reset.html'), name='password_reset_direct'),
+    path('accounts/password_reset_done/', auth_views.PasswordResetDoneView.as_view(template_name='auth/password_reset.html'), name='password_reset_done'),
+    path('accounts/password_reset_confirm/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(template_name='auth/password_reset_confirm.html'), name='password_reset_confirm'),
     
     # Dashboard
     path('dashboard/', views_crud.dashboard, name='dashboard'),
@@ -179,6 +187,47 @@ urlpatterns = [
     path('dashboard/assets/create/', views_crud.SponsorAssetCreateView.as_view(), name='asset-create'),
     path('dashboard/assets/<int:pk>/delete/', views_crud.SponsorAssetDeleteView.as_view(), name='asset-delete'),
     
+    # CMS - Pages
+    path('dashboard/pages/', views_crud.PageListView.as_view(), name='page-list'),
+    path('dashboard/pages/create/', views_crud.PageCreateView.as_view(), name='page-create'),
+    path('dashboard/pages/<uuid:pk>/edit/', views_crud.PageUpdateView.as_view(), name='page-update'),
+    path('dashboard/pages/<uuid:pk>/delete/', views_crud.PageDeleteView.as_view(), name='page-delete'),
+    
+    # CMS - Menus
+    path('dashboard/menus/', views_crud.MenuListView.as_view(), name='menu-list'),
+    path('dashboard/menus/create/', views_crud.MenuCreateView.as_view(), name='menu-create'),
+    path('dashboard/menus/<int:pk>/edit/', views_crud.MenuUpdateView.as_view(), name='menu-update'),
+    path('dashboard/menus/<int:pk>/delete/', views_crud.MenuDeleteView.as_view(), name='menu-delete'),
+    
+    # CMS - Menu Items
+    path('dashboard/menu-items/', views_crud.MenuItemListView.as_view(), name='menuitem-list'),
+    path('dashboard/menu-items/create/', views_crud.MenuItemCreateView.as_view(), name='menuitem-create'),
+    path('dashboard/menu-items/<int:pk>/edit/', views_crud.MenuItemUpdateView.as_view(), name='menuitem-update'),
+    path('dashboard/menu-items/<int:pk>/delete/', views_crud.MenuItemDeleteView.as_view(), name='menuitem-delete'),
+    
+    # CMS - Site Settings
+    path('dashboard/settings/', views_crud.SiteSettingListView.as_view(), name='setting-list'),
+    path('dashboard/settings/create/', views_crud.SiteSettingCreateView.as_view(), name='setting-create'),
+    path('dashboard/settings/<int:pk>/edit/', views_crud.SiteSettingUpdateView.as_view(), name='setting-update'),
+    path('dashboard/settings/<int:pk>/delete/', views_crud.SiteSettingDeleteView.as_view(), name='setting-delete'),
+    
+    # CMS - Widgets
+    path('dashboard/widgets/', views_crud.WidgetListView.as_view(), name='widget-list'),
+    path('dashboard/widgets/create/', views_crud.WidgetCreateView.as_view(), name='widget-create'),
+    path('dashboard/widgets/<int:pk>/edit/', views_crud.WidgetUpdateView.as_view(), name='widget-update'),
+    path('dashboard/widgets/<int:pk>/delete/', views_crud.WidgetDeleteView.as_view(), name='widget-delete'),
+    
+    # CMS - Media Library
+    path('dashboard/media/', views_crud.MediaLibraryListView.as_view(), name='media-list'),
+    path('dashboard/media/upload/', views_crud.MediaLibraryCreateView.as_view(), name='media-create'),
+    path('dashboard/media/<uuid:pk>/delete/', views_crud.MediaLibraryDeleteView.as_view(), name='media-delete'),
+    
+    # Organization Profile
+    path('dashboard/organization/', views_crud.OrganizationProfileUpdateView.as_view(), name='organization-edit'),
+    
+    # Analytics Dashboard
+    path('dashboard/analytics/', views_crud.AnalyticsDashboardView.as_view(), name='analytics-dashboard'),
+    
     # Public Pages
     path('videos/', views_crud.public_videos, name='public-videos'),
     path('videos/<slug:slug>/', views_crud.public_video_detail, name='public-video-detail'),
@@ -198,4 +247,13 @@ urlpatterns = [
     path('index/', views.index, name='index'),
     path('config/', views.config_page, name='config'),
     path('v2/', views.v2_page, name='v2'),
+    
+    # Manuals & Documentation Hub
+    path('manuals/', views.manuals_page, name='manuals'),
+    path('manual/', views.manual_page, name='manual'),
+    
+    # Frontend Pages
+    path('settings/', views.settings_page, name='settings'),
+    path('profile/', views.profile_page, name='profile_page'),
+    path('content/', views.content_page, name='content'),
 ]

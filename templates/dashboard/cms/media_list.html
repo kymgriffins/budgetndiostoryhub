@@ -1,0 +1,14 @@
+{% extends 'admin_base.html' %}
+{% load static %}
+{% block title %}Media Library{% endblock %}
+{% block content %}
+<div class="mb-8 flex items-center justify-between">
+    <div><h1 class="text-3xl font-bold tracking-tight">Media Library</h1></div>
+    <a href="{% url 'media-create' %}" class="inline-flex items-center justify-center rounded-lg bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90"><i class="ph ph-upload mr-2"></i>Upload</a>
+</div>
+<div class="rounded-xl border bg-card">
+    <div class="p-6">
+        {% if media_items %}{% for media in media_items %}<div class="flex items-center justify-between p-4 border rounded-lg mb-2"><div class="flex items-center gap-4"><div class="font-medium">{{ media.filename }}</div><div class="text-sm text-muted-foreground">{{ media.get_media_type_display }} | {{ media.file_size }} bytes</div></div><div class="flex items-center gap-2"><a href="{% url 'media-delete' media.pk %}" class="inline-flex items-center justify-center rounded-md p-2 hover:bg-accent text-red-600"><i class="ph ph-trash"></i></a></div></div>{% endfor %}{% else %}<div class="text-center py-12"><i class="ph ph-image text-4xl text-muted-foreground"></i><p class="mt-4 text-muted-foreground">No media files yet</p></div>{% endif %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings - Budget Ndio Story</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../static/css/frontend.css">
+    
+    <style>
+        :root {
+            --color-primary: #0066CC;
+            --color-primary-dark: #004c99;
+            --color-secondary: #6366f1;
+            --color-success: #10b981;
+            --color-warning: #f59e0b;
+            --color-error: #ef4444;
+            --bg-primary: #000000;
+            --bg-secondary: #111827;
+            --bg-tertiary: #1f2937;
+            --text-primary: #ffffff;
+            --text-secondary: #9ca3af;
+            --text-muted: #6b7280;
+            --border-color: #374151;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+        }
+        
+        .settings-layout {
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        /* Sidebar */
+        .sidebar {
+            width: 280px;
+            background-color: var(--bg-secondary);
+            border-right: 1px solid var(--border-color);
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            z-index: 100;
+        }
+        
+        .sidebar-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .sidebar-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: var(--text-primary);
+        }
+        
+        .sidebar-brand-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .sidebar-brand-text { font-size: 18px; font-weight: 700; }
+        
+        .sidebar-nav { padding: 16px; }
+        
+        .sidebar-section { margin-bottom: 24px; }
+        
+        .sidebar-section-title {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding: 8px 16px;
+        }
+        
+        .sidebar-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+        
+        .sidebar-link:hover {
+            background-color: var(--bg-tertiary);
+            color: var(--text-primary);
+        }
+        
+        .sidebar-link.active {
+            background-color: rgba(0, 102, 204, 0.15);
+            color: var(--color-primary);
+        }
+        
+        .sidebar-link i { width: 20px; height: 20px; }
+        
+        /* Main Content */
+                   flex:  .settings-content {
+1;
+            margin-left: 280px;
+            padding: 24px;
+            max-width: 900px;
+        }
+        
+        .settings-header {
+            margin-bottom: 32px;
+        }
+        
+        .settings-title {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        
+        .settings-desc {
+            color: var(--text-secondary);
+        }
+        
+        /* Settings Tabs */
+        .settings-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 24px;
+            background-color: var(--bg-secondary);
+            padding: 8px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            overflow-x: auto;
+        }
+        
+        .settings-tab {
+            padding: 12px 20px;
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            border-radius: 8px;
+            white-space: nowrap;
+            transition: all 0.2s ease;
+        }
+        
+        .settings-tab:hover { color: var(--text-primary); }
+        
+        .settings-tab.active {
+            background-color: var(--color-primary);
+            color: white;
+        }
+        
+        /* Settings Section */
+        .settings-section {
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            margin-bottom: 24px;
+        }
+        
+        .settings-section-header {
+            padding: 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .settings-section-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        
+        .settings-section-desc {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+        
+        .settings-section-body { padding: 20px; }
+        
+        /* Form Elements */
+        .form-group { margin-bottom: 20px; }
+        
+        .form-group:last-child { margin-bottom: 0; }
+        
+        .form-label {
+            display: block;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 12px 16px;
+            background-color: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 14px;
+            transition: all 0.2s ease;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: var(--color-primary);
+            box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1);
+        }
+        
+        .form-select {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+            background-position: right 12px center;
+            background-repeat: no-repeat;
+            background-size: 20px;
+            padding-right: 40px;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+        
+        /* Toggle */
+        .toggle-group {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .toggle-group:last-child { border-bottom: none; }
+        
+        .toggle-label h4 {
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+        
+        .toggle-label p {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+        
+        .toggle-switch {
+            position: relative;
+            width: 48px;
+            height: 26px;
+            flex-shrink: 0;
+        }
+        
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: var(--bg-tertiary);
+            border-radius: 26px;
+            transition: 0.3s;
+        }
+        
+        .toggle-slider::before {
+            position: absolute;
+            content: "";
+            height: 20px;
+            width: 20px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            border-radius: 50%;
+            transition: 0.3s;
+        }
+        
+        .toggle-switch input:checked + .toggle-slider {
+            background-color: var(--color-primary);
+        }
+        
+        .toggle-switch input:checked + .toggle-slider::before {
+            transform: translateX(22px);
+        }
+        
+        /* Buttons */
+        .btn {
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            border: none;
+        }
+        
+        .btn-primary {
+            background-color: var(--color-primary);
+            color: white;
+        }
+        
+        .btn-primary:hover { background-color: var(--color-primary-dark); }
+        
+        .btn-secondary {
+            background-color: var(--bg-tertiary);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+        
+        .btn-secondary:hover { border-color: var(--text-muted); }
+        
+        .btn-ghost {
+            background: none;
+            color: var(--text-secondary);
+            padding: 8px 16px;
+        }
+        
+        .btn-ghost:hover { color: var(--text-primary); }
+        
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
+            margin-top: 20px;
+        }
+        
+        /* Danger Zone */
+        .danger-zone {
+            border-color: rgba(239, 68, 68, 0.3);
+        }
+        
+        .danger-zone .settings-section-title {
+            color: var(--color-error);
+        }
+        
+        /* Language Selector */
+        .language-options {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        
+        .language-option {
+            padding: 12px 20px;
+            background-color: var(--bg-tertiary);
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .language-option:hover { border-color: var(--text-muted); }
+        
+        .language-option.active {
+            border-color: var(--color-primary);
+            background-color: rgba(0, 102, 204, 0.1);
+        }
+        
+        .language-option input { display: none; }
+        
+        .language-flag {
+            font-size: 20px;
+        }
+        
+        .language-name {
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .sidebar { display: none; }
+            .settings-content { margin-left: 0; }
+            .form-row { grid-template-columns: 1fr; }
+            .settings-tabs { flex-wrap: nowrap; overflow-x: auto; }
+        }
+    </style>
+</head>
+<body>
+    <div class="settings-layout">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <a href="/" class="sidebar-brand">
+                    <div class="sidebar-brand-icon">
+                        <i data-lucide="layers" style="color: white; width: 20px; height: 20px;"></i>
+                    </div>
+                    <span class="sidebar-brand-text">Budget Ndio</span>
+                </a>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <div class="sidebar-section">
+                    <span class="sidebar-section-title">Main</span>
+                    <a href="dashboard.html" class="sidebar-link">
+                        <i data-lucide="layout-dashboard"></i>
+                        Dashboard
+                    </a>
+                </div>
+                
+                <div class="sidebar-section">
+                    <span class="sidebar-section-title">Account</span>
+                    <a href="profile.html" class="sidebar-link">
+                        <i data-lucide="user"></i>
+                        Profile
+                    </a>
+                    <a href="#" class="sidebar-link active">
+                        <i data-lucide="settings"></i>
+                        Settings
+                    </a>
+                </div>
+                
+                <div class="sidebar-section">
+                    <span class="sidebar-section-title">Actions</span>
+                    <a href="#" class="sidebar-link">
+                        <i data-lucide="log-out"></i>
+                        Logout
+                    </a>
+                </div>
+            </nav>
+        </aside>
+        
+        <!-- Main Content -->
+        <main class="settings-content">
+            <div class="settings-header">
+                <h1 class="settings-title">Settings</h1>
+                <p class="settings-desc">Manage your account settings and preferences.</p>
+            </div>
+            
+            <!-- Settings Tabs -->
+            <div class="settings-tabs">
+                <button class="settings-tab active">General</button>
+                <button class="settings-tab">Security</button>
+                <button class="settings-tab">Notifications</button>
+                <button class="settings-tab">Billing</button>
+                <button class="settings-tab">API</button>
+            </div>
+            
+            <!-- General Settings -->
+            <form id="settings-form">
+                <!-- Site Settings -->
+                <div class="settings-section">
+                    <div class="settings-section-header">
+                        <h2 class="settings-section-title">Site Settings</h2>
+                        <p class="settings-section-desc">Configure your site preferences.</p>
+                    </div>
+                    
+                    <div class="settings-section-body">
+                        <div class="form-group">
+                            <label class="form-label">Site Language</label>
+                            <div class="language-options">
+                                <label class="language-option active">
+                                    <input type="radio" name="language" value="en" checked>
+                                    <span class="language-flag">🇺🇸</span>
+                                    <span class="language-name">English</span>
+                                </label>
+                                <label class="language-option">
+                                    <input type="radio" name="language" value="sw">
+                                    <span class="language-flag">🇰🇪</span>
+                                    <span class="language-name">Swahili</span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label" for="timezone">Timezone</label>
+                                <select id="timezone" class="form-input form-select">
+                                    <option value="Africa/Nairobi">East Africa Time (EAT)</option>
+                                    <option value="UTC">UTC</option>
+                                    <option value="America/New_York">Eastern Time</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label" for="date-format">Date Format</label>
+                                <select id="date-format" class="form-input form-select">
+                                    <option value="MM/DD/YYYY">MM/DD/YYYY</option>
+                                    <option value="DD/MM/YYYY">DD/MM/YYYY</option>
+                                    <option value="YYYY-MM-DD">YYYY-MM-DD</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-ghost">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Appearance -->
+                <div class="settings-section">
+                    <div class="settings-section-header">
+                        <h2 class="settings-section-title">Appearance</h2>
+                        <p class="settings-section-desc">Customize how the application looks.</p>
+                    </div>
+                    
+                    <div class="settings-section-body" style="padding: 0 20px;">
+                        <div class="toggle-group">
+                            <div class="toggle-label">
+                                <h4>Dark Mode</h4>
+                                <p>Use dark theme throughout the application</p>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                        
+                        <div class="toggle-group">
+                            <div class="toggle-label">
+                                <h4>Compact Mode</h4>
+                                <p>Reduce spacing for more content visibility</p>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox">
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                        
+                        <div class="toggle-group">
+                            <div class="toggle-label">
+                                <h4>Animations</h4>
+                                <p>Enable smooth transitions and animations</p>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Security Settings -->
+                <div class="settings-section">
+                    <div class="settings-section-header">
+                        <h2 class="settings-section-title">Security</h2>
+                        <p class="settings-section-desc">Manage your security preferences.</p>
+                    </div>
+                    
+                    <div class="settings-section-body" style="padding: 0 20px;">
+                        <div class="toggle-group">
+                            <div class="toggle-label">
+                                <h4>Two-Factor Authentication</h4>
+                                <p>Add an extra layer of security to your account</p>
+                            </div>
+                            <button type="button" class="btn btn-secondary" style="padding: 8px 16px; font-size: 13px;">Enable</button>
+                        </div>
+                        
+                        <div class="toggle-group">
+                            <div class="toggle-label">
+                                <h4>Login Notifications</h4>
+                                <p>Get notified of new login attempts</p>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                        
+                        <div class="toggle-group">
+                            <div class="toggle-label">
+                                <h4>Session Timeout</h4>
+                                <p>Automatically log out after inactivity</p>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox">
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Danger Zone -->
+                <div class="settings-section danger-zone">
+                    <div class="settings-section-header">
+                        <h2 class="settings-section-title">Danger Zone</h2>
+                        <p class="settings-section-desc">Irreversible and destructive actions.</p>
+                    </div>
+                    
+                    <div class="settings-section-body">
+                        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
+                            <div>
+                                <h4 style="font-size: 14px; font-weight: 500; margin-bottom: 4px;">Delete All Data</h4>
+                                <p style="font-size: 13px; color: var(--text-muted);">Permanently delete all your data and content.</p>
+                            </div>
+                            <button type="button" class="btn" style="background-color: var(--color-error); color: white;">Delete Data</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </main>
+    </div>
+    
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+        
+        // Tab switching
+        document.querySelectorAll('.settings-tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                document.querySelectorAll('.settings-tab').forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+        
+        // Language option selection
+        document.querySelectorAll('.language-option').forEach(option => {
+            option.addEventListener('click', function() {
+                document.querySelectorAll('.language-option').forEach(o => o.classList.remove('active'));
+                this.classList.add('active');
+                this.querySelector('input').checked = true;
+            });
+        });
+        
+        // Form submission
+        document.getElementById('settings-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Settings saved successfully!');
+        });
+    </script>
+</body>
+</html>

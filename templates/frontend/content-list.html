@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Content Management - Budget Ndio Story</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <style>
+        :root {
+            --color-primary: #0066CC;
+            --color-primary-dark: #004c99;
+            --color-secondary: #6366f1;
+            --color-success: #10b981;
+            --color-warning: #f59e0b;
+            --color-error: #ef4444;
+            --bg-primary: #000000;
+            --bg-secondary: #111827;
+            --bg-tertiary: #1f2937;
+            --text-primary: #ffffff;
+            --text-secondary: #9ca3af;
+            --text-muted: #6b7280;
+            --border-color: #374151;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+        }
+        
+        .content-layout { display: flex; min-height: 100vh; }
+        
+        /* Sidebar */
+        .sidebar {
+            width: 280px;
+            background-color: var(--bg-secondary);
+            border-right: 1px solid var(--border-color);
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            z-index: 100;
+        }
+        
+        .sidebar-header { padding: 24px; border-bottom: 1px solid var(--border-color); }
+        
+        .sidebar-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: var(--text-primary);
+        }
+        
+        .sidebar-brand-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .sidebar-brand-text { font-size: 18px; font-weight: 700; }
+        
+        .sidebar-nav { padding: 16px; }
+        
+        .sidebar-section { margin-bottom: 24px; }
+        
+        .sidebar-section-title {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding: 8px 16px;
+        }
+        
+        .sidebar-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+        
+        .sidebar-link:hover { background-color: var(--bg-tertiary); color: var(--text-primary); }
+        
+        .sidebar-link.active { background-color: rgba(0, 102, 204, 0.15); color: var(--color-primary); }
+        
+        .sidebar-link i { width: 20px; height: 20px; }
+        
+        .sidebar-link .badge { margin-left: auto; padding: 2px 8px; font-size: 11px; background-color: var(--bg-tertiary); border-radius: 20px; }
+        
+        /* Main Content */
+        .content-main {
+            flex: 1;
+            margin-left: 280px;
+            padding: 24px;
+        }
+        
+        /* Header */
+        .content-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+        
+        .content-title-section h1 { font-size: 24px; font-weight: 700; margin-bottom: 4px; }
+        .content-title-section p { color: var(--text-secondary); font-size: 14px; }
+        
+        .content-actions { display: flex; gap: 12px; }
+        
+        /* Button */
+        .btn {
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            border: none;
+            text-decoration: none;
+        }
+        
+        .btn-primary { background-color: var(--color-primary); color: white; }
+        .btn-primary:hover { background-color: var(--color-primary-dark); }
+        
+        .btn-secondary { background-color: var(--bg-tertiary); color: var(--text-primary); border: 1px solid var(--border-color); }
+        .btn-secondary:hover { border-color: var(--text-muted); }
+        
+        .btn-ghost { background: none; color: var(--text-secondary); padding: 8px 12px; }
+        .btn-ghost:hover { background-color: var(--bg-tertiary); color: var(--text-primary); }
+        
+        /* Filters */
+        .content-filters {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+        }
+        
+        .filter-search {
+            position: relative;
+            flex: 1;
+            min-width: 250px;
+        }
+        
+        .filter-search input {
+            width: 100%;
+            padding: 12px 16px 12px 44px;
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 14px;
+        }
+        
+        .filter-search input:focus { outline: none; border-color: var(--color-primary); }
+        
+        .filter-search i {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            width: 18px;
+            height: 18px;
+        }
+        
+        .filter-select {
+            padding: 12px 40px 12px 16px;
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 14px;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+            background-position: right 12px center;
+            background-repeat: no-repeat;
+            background-size: 20px;
+            cursor: pointer;
+        }
+        
+        /* Table */
+        .content-table-wrapper {
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        
+        .content-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .content-table th {
+            padding: 16px 20px;
+            text-align: left;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            background-color: var(--bg-tertiary);
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .content-table td {
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 14px;
+        }
+        
+        .content-table tr:last-child td { border-bottom: none; }
+        
+        .content-table tr:hover { background-color: var(--bg-tertiary); }
+        
+        /* Video Item */
+        .video-item {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        
+        .video-thumbnail {
+            width: 120px;
+            height: 68px;
+            background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        
+        .video-info h4 { font-size: 14px; font-weight: 500; margin-bottom: 4px; }
+        .video-info p { font-size: 12px; color: var(--text-muted); }
+        
+        /* Status Badge */
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        .status-badge.published { background-color: rgba(16, 185, 129, 0.15); color: var(--color-success); }
+        .status-badge.draft { background-color: rgba(245, 158, 11, 0.15); color: var(--color-warning); }
+        .status-badge.scheduled { background-color: rgba(99, 102, 241, 0.15); color: var(--color-secondary); }
+        
+        .status-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background-color: currentColor;
+        }
+        
+        /* Actions */
+        .item-actions {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .action-btn {
+            padding: 8px;
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+        }
+        
+        .action-btn:hover { background-color: var(--bg-tertiary); color: var(--text-primary); }
+        .action-btn.danger:hover { background-color: rgba(239, 68, 68, 0.15); color: var(--color-error); }
+        
+        /* Pagination */
+        .content-pagination {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 20px;
+            border-top: 1px solid var(--border-color);
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+        
+        .pagination-info { font-size: 14px; color: var(--text-secondary); }
+        
+        .pagination-buttons { display: flex; gap: 8px; }
+        
+        .page-btn {
+            padding: 8px 14px;
+            background-color: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: var(--text-secondary);
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .page-btn:hover { border-color: var(--color-primary); color: var(--text-primary); }
+        .page-btn.active { background-color: var(--color-primary); border-color: var(--color-primary); color: white; }
+        .page-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+        
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+        }
+        
+        .empty-state-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+            background-color: var(--bg-tertiary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .empty-state h3 { font-size: 18px; font-weight: 600; margin-bottom: 8px; }
+        .empty-state p { color: var(--text-muted); margin-bottom: 20px; }
+        
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .video-thumbnail { width: 80px; height: 45px; }
+        }
+        
+        @media (max-width: 768px) {
+            .sidebar { display: none; }
+            .content-main { margin-left: 0; }
+            .content-header { flex-direction: column; align-items: stretch; }
+            .content-actions { justify-content: stretch; }
+            .content-actions .btn { flex: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="content-layout">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <a href="/" class="sidebar-brand">
+                    <div class="sidebar-brand-icon">
+                        <i data-lucide="layers" style="color: white; width: 20px; height: 20px;"></i>
+                    </div>
+                    <span class="sidebar-brand-text">Budget Ndio</span>
+                </a>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <div class="sidebar-section">
+                    <span class="sidebar-section-title">Main</span>
+                    <a href="dashboard.html" class="sidebar-link">
+                        <i data-lucide="layout-dashboard"></i>
+                        Dashboard
+                    </a>
+                </div>
+                
+                <div class="sidebar-section">
+                    <span class="sidebar-section-title">Content</span>
+                    <a href="#" class="sidebar-link active">
+                        <i data-lucide="video"></i>
+                        Videos
+                        <span class="badge">24</span>
+                    </a>
+                    <a href="#" class="sidebar-link">
+                        <i data-lucide="file-text"></i>
+                        Blog Posts
+                    </a>
+                    <a href="#" class="sidebar-link">
+                        <i data-lucide="newspaper"></i>
+                        News
+                    </a>
+                    <a href="#" class="sidebar-link">
+                        <i data-lucide="folder-tree"></i>
+                        Categories
+                    </a>
+                </div>
+                
+                <div class="sidebar-section">
+                    <span class="sidebar-section-title">Account</span>
+                    <a href="profile.html" class="sidebar-link">
+                        <i data-lucide="user"></i>
+                        Profile
+                    </a>
+                    <a href="settings.html" class="sidebar-link">
+                        <i data-lucide="settings"></i>
+                        Settings
+                    </a>
+                </div>
+            </nav>
+        </aside>
+        
+        <!-- Main Content -->
+        <main class="content-main">
+            <!-- Header -->
+            <div class="content-header">
+                <div class="content-title-section">
+                    <h1>Videos</h1>
+                    <p>Manage your video content library</p>
+                </div>
+                
+                <div class="content-actions">
+                    <button class="btn btn-secondary">
+                        <i data-lucide="upload" style="width: 18px; height: 18px;"></i>
+                        Import
+                    </button>
+                    <button class="btn btn-primary">
+                        <i data-lucide="plus" style="width: 18px; height: 18px;"></i>
+                        Add Video
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Filters -->
+            <div class="content-filters">
+                <div class="filter-search">
+                    <i data-lucide="search"></i>
+                    <input type="text" placeholder="Search videos...">
+                </div>
+                
+                <select class="filter-select">
+                    <option value="">All Categories</option>
+                    <option value="budget">Budget Analysis</option>
+                    <option value="education">Financial Education</option>
+                    <option value="news">News</option>
+                </select>
+                
+                <select class="filter-select">
+                    <option value="">All Status</option>
+                    <option value="published">Published</option>
+                    <option value="draft">Draft</option>
+                    <option value="scheduled">Scheduled</option>
+                </select>
+                
+                <select class="filter-select">
+                    <option value="newest">Newest First</option>
+                    <option value="oldest">Oldest First</option>
+                    <option value="title">By Title</option>
+                </select>
+            </div>
+            
+            <!-- Table -->
+            <div class="content-table-wrapper">
+                <table class="content-table">
+                    <thead>
+                        <tr>
+                            <th>Video</th>
+                            <th>Category</th>
+                            <th>Status</th>
+                            <th>Views</th>
+                            <th>Date</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Video 1 -->
+                        <tr>
+                            <td>
+                                <div class="video-item">
+                                    <div class="video-thumbnail">
+                                        <i data-lucide="play" style="color: white; width: 24px; height: 24px;"></i>
+                                    </div>
+                                    <div class="video-info">
+                                        <h4>Understanding the 2024 National Budget</h4>
+                                        <p>12:34 • 5 min read</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>Budget Analysis</td>
+                            <td>
+                                <span class="status-badge published">
+                                    <span class="status-dot"></span>
+                                    Published
+                                </span>
+                            </td>
+                            <td>12,456</td>
+                            <td>Jan 15, 2024</td>
+                            <td>
+                                <div class="item-actions">
+                                    <button class="action-btn" title="Edit">
+                                        <i data-lucide="edit-2" style="width: 16px; height: 16px;"></i>
+                                    </button>
+                                    <button class="action-btn" title="View">
+                                        <i data-lucide="eye" style="width: 16px; height: 16px;"></i>
+                                    </button>
+                                    <button class="action-btn danger" title="Delete">
+                                        <i data-lucide="trash-2" style="width: 16px; height: 16px;"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        
+                        <!-- Video 2 -->
+                        <tr>
+                            <td>
+                                <div class="video-item">
+                                    <div class="video-thumbnail">
+                                        <i data-lucide="play" style="color: white; width: 24px; height: 24px;"></i>
+                                    </div>
+                                    <div class="video-info">
+                                        <h4>10 Tips for Financial Literacy</h4>
+                                        <p>08:45 • 3 min read</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>Financial Education</td>
+                            <td>
+                                <span class="status-badge draft">
+                                    <span class="status-dot"></span>
+                                    Draft
+                                </span>
+                            </td>
+                            <td>—</td>
+                            <td>Jan 20, 2024</td>
+                            <td>
+                                <div class="item-actions">
+                                    <button class="action-btn" title="Edit">
+                                        <i data-lucide="edit-2" style="width: 16px; height: 16px;"></i>
+                                    </button>
+                                    <button class="action-btn" title="View">
+                                        <i data-lucide="eye" style="width: 16px; height: 16px;"></i>
+                                    </button>
+                                    <button class="action-btn danger" title="Delete">
+                                        <i data-lucide="trash-2" style="width: 16px; height: 16px;"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        
+                        <!-- Video 3 -->
+                        <tr>
+                            <td>
+                                <div class="video-item">
+                                    <div class="video-thumbnail">
+                                        <i data-lucide="play" style="color: white; width: 24px; height: 24px;"></i>
+                                    </div>
+                                    <div class="video-info">
+                                        <h4>County Budget Transparency Report</h4>
+                                        <p>15:20 • 8 min read</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>News</td>
+                            <td>
+                                <span class="status-badge scheduled">
+                                    <span class="status-dot"></span>
+                                    Scheduled
+                                </span>
+                            </td>
+                            <td>—</td>
+                            <td>Feb 1, 2024</td>
+                            <td>
+                                <div class="item-actions">
+                                    <button class="action-btn" title="Edit">
+                                        <i data-lucide="edit-2" style="width: 16px; height: 16px;"></i>
+                                    </button>
+                                    <button class="action-btn" title="View">
+                                        <i data-lucide="eye" style="width: 16px; height: 16px;"></i>
+                                    </button>
+                                    <button class="action-btn danger" title="Delete">
+                                        <i data-lucide="trash-2" style="width: 16px; height: 16px;"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        
+                        <!-- Video 4 -->
+                        <tr>
+                            <td>
+                                <div class="video-item">
+                                    <div class="video-thumbnail">
+                                        <i data-lucide="play" style="color: white; width: 24px; height: 24px;"></i>
+                                    </div>
+                                    <div class="video-info">
+                                        <h4>How to Track Government Spending</h4>
+                                        <p>10:15 • 5 min read</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>Budget Analysis</td>
+                            <td>
+                                <span class="status-badge published">
+                                    <span class="status-dot"></span>
+                                    Published
+                                </span>
+                            </td>
+                            <td>8,923</td>
+                            <td>Jan 10, 2024</td>
+                            <td>
+                                <div class="item-actions">
+                                    <button class="action-btn" title="Edit">
+                                        <i data-lucide="edit-2" style="width: 16px; height: 16px;"></i>
+                                    </button>
+                                    <button class="action-btn" title="View">
+                                        <i data-lucide="eye" style="width: 16px; height: 16px;"></i>
+                                    </button>
+                                    <button class="action-btn danger" title="Delete">
+                                        <i data-lucide="trash-2" style="width: 16px; height: 16px;"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        
+                        <!-- Video 5 -->
+                        <tr>
+                            <td>
+                                <div class="video-item">
+                                    <div class="video-thumbnail">
+                                        <i data-lucide="play" style="color: white; width: 24px; height: 24px;"></i>
+                                    </div>
+                                    <div class="video-info">
+                                        <h4>Understanding Tax Allocation</h4>
+                                        <p>14:50 • 7 min read</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>Financial Education</td>
+                            <td>
+                                <span class="status-badge published">
+                                    <span class="status-dot"></span>
+                                    Published
+                                </span>
+                            </td>
+                            <td>15,782</td>
+                            <td>Jan 5, 2024</td>
+                            <td>
+                                <div class="item-actions">
+                                    <button class="action-btn" title="Edit">
+                                        <i data-lucide="edit-2" style="width: 16px; height: 16px;"></i>
+                                    </button>
+                                    <button class="action-btn" title="View">
+                                        <i data-lucide="eye" style="width: 16px; height: 16px;"></i>
+                                    </button>
+                                    <button class="action-btn danger" title="Delete">
+                                        <i data-lucide="trash-2" style="width: 16px; height: 16px;"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <!-- Pagination -->
+                <div class="content-pagination">
+                    <span class="pagination-info">Showing 1-5 of 24 videos</span>
+                    <div class="pagination-buttons">
+                        <button class="page-btn" disabled>
+                            <i data-lucide="chevron-left" style="width: 16px; height: 16px;"></i>
+                        </button>
+                        <button class="page-btn active">1</button>
+                        <button class="page-btn">2</button>
+                        <button class="page-btn">3</button>
+                        <button class="page-btn">4</button>
+                        <button class="page-btn">
+                            <i data-lucide="chevron-right" style="width: 16px; height: 16px;"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+        
+        // Search functionality
+        document.querySelector('.filter-search input').addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const rows = document.querySelectorAll('.content-table tbody tr');
+            
+            rows.forEach(row => {
+                const title = row.querySelector('.video-info h4').textContent.toLowerCase();
+                if (title.includes(searchTerm)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

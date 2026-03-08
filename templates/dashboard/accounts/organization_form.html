@@ -1,0 +1,58 @@
+{% extends 'admin_base.html' %}
+{% load static %}
+{% block title %}Organization Profile{% endblock %}
+{% block content %}
+<div class="mb-8">
+    <h1 class="text-3xl font-bold tracking-tight">Organization Profile</h1>
+    <p class="text-muted-foreground mt-1">Manage your organization's information</p>
+</div>
+<form method="post" enctype="multipart/form-data" class="space-y-6">
+    {% csrf_token %}
+    
+    <div class="grid gap-6 md:grid-cols-2">
+        <div class="rounded-xl border bg-card p-6">
+            <h2 class="text-lg font-semibold mb-4">Basic Information</h2>
+            <div class="space-y-4">{{ form.organization_name }}{{ form.consortium_name }}{{ form.tagline }}{{ form.brand_promise }}{{ form.description }}</div>
+        </div>
+        
+        <div class="rounded-xl border bg-card p-6">
+            <h2 class="text-lg font-semibold mb-4">Vision & Mission</h2>
+            <div class="space-y-4">{{ form.vision }}{{ form.mission }}</div>
+        </div>
+    </div>
+    
+    <div class="rounded-xl border bg-card p-6">
+        <h2 class="text-lg font-semibold mb-4">Location & Registration</h2>
+        <div class="grid gap-4 md:grid-cols-3">{{ form.headquarters }}{{ form.registration_country }}{{ form.year_established }}</div>
+    </div>
+    
+    <div class="rounded-xl border bg-card p-6">
+        <h2 class="text-lg font-semibold mb-4">Contact Information</h2>
+        <div class="grid gap-4 md:grid-cols-2">{{ form.email_general }}{{ form.email_partnerships }}{{ form.email_media }}{{ form.phone }}{{ form.website }}</div>
+    </div>
+    
+    <div class="rounded-xl border bg-card p-6">
+        <h2 class="text-lg font-semibold mb-4">Social Media</h2>
+        <div class="grid gap-4 md:grid-cols-3">{{ form.tiktok }}{{ form.instagram }}{{ form.twitter }}{{ form.youtube }}{{ form.facebook }}</div>
+    </div>
+    
+    <div class="rounded-xl border bg-card p-6">
+        <h2 class="text-lg font-semibold mb-4">Brand Colors</h2>
+        <div class="grid gap-4 md:grid-cols-3">{{ form.primary_color }}{{ form.secondary_color }}{{ form.alert_color }}{{ form.success_color }}{{ form.neutral_dark }}{{ form.neutral_light }}</div>
+    </div>
+    
+    <div class="rounded-xl border bg-card p-6">
+        <h2 class="text-lg font-semibold mb-4">Impact Statistics</h2>
+        <div class="grid gap-4 md:grid-cols-3">{{ form.countries_reached }}{{ form.budget_reports_analyzed }}{{ form.citizens_engaged }}{{ form.youth_champion_trainings }}{{ form.partner_organizations }}{{ form.programs_delivered }}</div>
+    </div>
+    
+    <div class="rounded-xl border bg-card p-6">
+        <h2 class="text-lg font-semibold mb-4">Governance</h2>
+        <div class="space-y-4">{{ form.is_independent }}{{ form.is_non_partisan }}</div>
+    </div>
+    
+    <div class="flex items-center gap-4">
+        <button type="submit" class="inline-flex items-center justify-center rounded-lg bg-primary px-6 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90">Save Changes</button>
+    </div>
+</form>
+{% endblock %}

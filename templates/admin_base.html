@@ -330,6 +330,52 @@
                 </a>
             </div>
 
+            <!-- CMS Menu -->
+            <div class="menu-section pt-4">
+                <p class="menu-label px-3 py-2 text-xs font-medium text-muted-foreground uppercase tracking-wider sidebar-text">
+                    CMS
+                </p>
+                <a href="{% url 'page-list' %}" class="menu-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium">
+                    <i class="ph ph-file-text text-xl flex-shrink-0"></i>
+                    <span class="sidebar-text whitespace-nowrap">Pages</span>
+                </a>
+                <a href="{% url 'menu-list' %}" class="menu-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium">
+                    <i class="ph ph-list text-xl flex-shrink-0"></i>
+                    <span class="sidebar-text whitespace-nowrap">Menus</span>
+                </a>
+                <a href="{% url 'menuitem-list' %}" class="menu-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium">
+                    <i class="ph ph-list-dashes text-xl flex-shrink-0"></i>
+                    <span class="sidebar-text whitespace-nowrap">Menu Items</span>
+                </a>
+                <a href="{% url 'widget-list' %}" class="menu-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium">
+                    <i class="ph ph-wrench text-xl flex-shrink-0"></i>
+                    <span class="sidebar-text whitespace-nowrap">Widgets</span>
+                </a>
+                <a href="{% url 'media-list' %}" class="menu-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium">
+                    <i class="ph ph-image text-xl flex-shrink-0"></i>
+                    <span class="sidebar-text whitespace-nowrap">Media</span>
+                </a>
+                <a href="{% url 'setting-list' %}" class="menu-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium">
+                    <i class="ph ph-gear text-xl flex-shrink-0"></i>
+                    <span class="sidebar-text whitespace-nowrap">Settings</span>
+                </a>
+            </div>
+
+            <!-- Organization Menu -->
+            <div class="menu-section pt-4">
+                <p class="menu-label px-3 py-2 text-xs font-medium text-muted-foreground uppercase tracking-wider sidebar-text">
+                    Organization
+                </p>
+                <a href="{% url 'organization-edit' %}" class="menu-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium">
+                    <i class="ph ph-buildings text-xl flex-shrink-0"></i>
+                    <span class="sidebar-text whitespace-nowrap">Profile</span>
+                </a>
+                <a href="{% url 'analytics-dashboard' %}" class="menu-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium">
+                    <i class="ph ph-chart-line text-xl flex-shrink-0"></i>
+                    <span class="sidebar-text whitespace-nowrap">Analytics</span>
+                </a>
+            </div>
+
             <!-- Public Site -->
             <div class="menu-section pt-4">
                 <p class="menu-label px-3 py-2 text-xs font-medium text-muted-foreground uppercase tracking-wider sidebar-text">

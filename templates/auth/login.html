@@ -1,0 +1,553 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Login - Budget Ndio Story{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/frontend.css' %}">
+<style>
+    .auth-page {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: var(--bg-darker);
+        padding: var(--spacing-4);
+    }
+    
+    .auth-container {
+        width: 100%;
+        max-width: 440px;
+    }
+    
+    .auth-logo {
+        text-align: center;
+        margin-bottom: var(--spacing-8);
+    }
+    
+    .auth-logo a {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--spacing-3);
+        text-decoration: none;
+    }
+    
+    .auth-logo .logo-icon {
+        width: 48px;
+        height: 48px;
+        background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+        border-radius: var(--radius-xl);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .auth-logo .logo-text {
+        font-size: var(--font-size-2xl);
+        font-weight: var(--font-weight-bold);
+        color: var(--color-white);
+    }
+    
+    .auth-card {
+        background-color: var(--bg-primary);
+        border-radius: var(--radius-2xl);
+        padding: var(--spacing-8);
+        box-shadow: var(--shadow-2xl);
+    }
+    
+    .auth-header {
+        text-align: center;
+        margin-bottom: var(--spacing-8);
+    }
+    
+    .auth-header h1 {
+        font-size: var(--font-size-2xl);
+        font-weight: var(--font-weight-bold);
+        color: var(--text-primary);
+        margin-bottom: var(--spacing-2);
+    }
+    
+    .auth-header p {
+        color: var(--text-secondary);
+        margin: 0;
+    }
+    
+    .auth-header p a {
+        color: var(--color-primary);
+        font-weight: var(--font-weight-medium);
+    }
+    
+    .form-input-wrapper {
+        position: relative;
+    }
+    
+    .form-input-wrapper .form-input {
+        padding-left: var(--spacing-12);
+    }
+    
+    .form-input-icon {
+        position: absolute;
+        left: var(--spacing-4);
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--text-muted);
+        pointer-events: none;
+    }
+    
+    .password-toggle {
+        position: absolute;
+        right: var(--spacing-4);
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--text-muted);
+        cursor: pointer;
+        background: none;
+        border: none;
+        padding: var(--spacing-1);
+    }
+    
+    .password-toggle:hover {
+        color: var(--text-primary);
+    }
+    
+    .remember-forgot {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: var(--spacing-6);
+    }
+    
+    .remember-me {
+        display: flex;
+        align-items: center;
+        gap: var(--spacing-2);
+    }
+    
+    .remember-me input {
+        width: 1rem;
+        height: 1rem;
+        accent-color: var(--color-primary);
+    }
+    
+    .remember-me label {
+        font-size: var(--font-size-sm);
+        color: var(--text-secondary);
+        cursor: pointer;
+    }
+    
+    .forgot-password {
+        font-size: var(--font-size-sm);
+        color: var(--color-primary);
+    }
+    
+    .forgot-password:hover {
+        text-decoration: underline;
+    }
+    
+    .divider {
+        display: flex;
+        align-items: center;
+        gap: var(--spacing-4);
+        margin: var(--spacing-6) 0;
+    }
+    
+    .divider::before,
+    .divider::after {
+        content: '';
+        flex: 1;
+        height: 1px;
+        background-color: var(--border-color);
+    }
+    
+    .divider span {
+        font-size: var(--font-size-sm);
+        color: var(--text-muted);
+    }
+    
+    .social-login {
+        display: flex;
+        gap: var(--spacing-3);
+    }
+    
+    .social-btn {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: var(--spacing-2);
+        padding: var(--spacing-3);
+        background-color: var(--bg-secondary);
+        border: 1px solid var(--border-color);
+        border-radius: var(--radius-lg);
+        font-size: var(--font-size-sm);
+        font-weight: var(--font-weight-medium);
+        color: var(--text-primary);
+        cursor: pointer;
+        transition: var(--transition);
+    }
+    
+    .social-btn:hover {
+        background-color: var(--bg-tertiary);
+        border-color: var(--border-color-dark);
+    }
+    
+    .auth-footer {
+        text-align: center;
+        margin-top: var(--spacing-6);
+        padding-top: var(--spacing-6);
+        border-top: 1px solid var(--border-color);
+    }
+    
+    .auth-footer p {
+        color: var(--text-secondary);
+        font-size: var(--font-size-sm);
+        margin: 0;
+    }
+    
+    .auth-footer a {
+        color: var(--color-primary);
+        font-weight: var(--font-weight-medium);
+    }
+    
+    .auth-error {
+        display: none;
+        padding: var(--spacing-4);
+        background-color: var(--color-error-light);
+        border: 1px solid var(--color-error);
+        border-radius: var(--radius-lg);
+        margin-bottom: var(--spacing-6);
+    }
+    
+    .auth-error.visible {
+        display: block;
+    }
+    
+    .auth-error p {
+        color: var(--color-error-dark);
+        margin: 0;
+        font-size: var(--font-size-sm);
+    }
+    
+    .auth-success {
+        display: none;
+        padding: var(--spacing-4);
+        background-color: var(--color-success-light);
+        border: 1px solid var(--color-success);
+        border-radius: var(--radius-lg);
+        margin-bottom: var(--spacing-6);
+    }
+    
+    .auth-success.visible {
+        display: block;
+    }
+    
+    .auth-success p {
+        color: var(--color-success-dark);
+        margin: 0;
+        font-size: var(--font-size-sm);
+    }
+    
+    @media (max-width: 480px) {
+        .auth-card {
+            padding: var(--spacing-6);
+        }
+        
+        .remember-forgot {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: var(--spacing-3);
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="auth-page">
+    <div class="auth-container">
+        <!-- Logo -->
+        <div class="auth-logo">
+            <a href="/">
+                <div class="logo-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                    </svg>
+                </div>
+                <span class="logo-text">Budget Ndio</span>
+            </a>
+        </div>
+        
+        <!-- Login Card -->
+        <div class="auth-card">
+            <div class="auth-header">
+                <h1>Welcome back</h1>
+                <p>Sign in to your account to continue</p>
+            </div>
+            
+            <!-- Error Message -->
+            <div id="login-error" class="auth-error">
+                <p>Invalid username or password. Please try again.</p>
+            </div>
+            
+            <!-- Success Message -->
+            <div id="login-success" class="auth-success">
+                <p>Login successful! Redirecting...</p>
+            </div>
+            
+            <!-- Login Form -->
+            <form id="login-form" method="POST" action="{% url 'login' %}">
+                {% csrf_token %}
+                
+                <!-- Username -->
+                <div class="form-group">
+                    <label for="username" class="form-label required">Username or Email</label>
+                    <div class="form-input-wrapper">
+                        <svg class="form-input-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                            <circle cx="12" cy="7" r="4"/>
+                        </svg>
+                        <input 
+                            type="text" 
+                            id="username" 
+                            name="username" 
+                            class="form-input" 
+                            placeholder="Enter your username or email"
+                            required
+                            autocomplete="username"
+                            value="{{ form.username.value|default:'' }}"
+                        >
+                    </div>
+                </div>
+                
+                <!-- Password -->
+                <div class="form-group">
+                    <label for="password" class="form-label required">Password</label>
+                    <div class="form-input-wrapper">
+                        <svg class="form-input-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                            <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                        </svg>
+                        <input 
+                            type="password" 
+                            id="password" 
+                            name="password" 
+                            class="form-input" 
+                            placeholder="Enter your password"
+                            required
+                            autocomplete="current-password"
+                        >
+                        <button type="button" class="password-toggle" id="password-toggle" aria-label="Toggle password visibility">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="eye-open">
+                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                                <circle cx="12" cy="12" r="3"/>
+                            </svg>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="eye-closed" style="display: none;">
+                                <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/>
+                                <line x1="1" y1="1" x2="23" y2="23"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Remember Me & Forgot Password -->
+                <div class="remember-forgot">
+                    <div class="remember-me">
+                        <input type="checkbox" id="remember" name="remember">
+                        <label for="remember">Remember me</label>
+                    </div>
+                    <a href="{% url 'password_reset' %}" class="forgot-password">Forgot password?</a>
+                </div>
+                
+                <!-- Submit Button -->
+                <button type="submit" class="btn btn-primary w-full" id="login-btn">
+                    <span class="btn-text">Sign In</span>
+                    <span class="btn-loading" style="display: none;">
+                        <svg class="animate-spin" width="20" height="20" viewBox="0 0 24 24" fill="none">
+                            <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" class="opacity-25"/>
+                            <path fill="currentColor" class="opacity-75" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/>
+                        </svg>
+                    </span>
+                </button>
+            </form>
+            
+            <!-- Divider -->
+            <div class="divider">
+                <span>or continue with</span>
+            </div>
+            
+            <!-- Social Login -->
+            <div class="social-login">
+                <button type="button" class="social-btn" id="google-login">
+                    <svg width="20" height="20" viewBox="0 0 24 24">
+                        <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                        <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                        <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                        <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                    </svg>
+                    Google
+                </button>
+                <button type="button" class="social-btn" id="twitter-login">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                    </svg>
+                    X
+                </button>
+            </div>
+            
+            <!-- Sign Up Link -->
+            <div class="auth-footer">
+                <p>Don't have an account? <a href="{% url 'register' %}">Create one</a></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="{% static 'js/frontend.js' %}"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('login-form');
+    const passwordInput = document.getElementById('password');
+    const passwordToggle = document.getElementById('password-toggle');
+    const loginBtn = document.getElementById('login-btn');
+    const errorEl = document.getElementById('login-error');
+    const successEl = document.getElementById('login-success');
+    
+    // Password visibility toggle
+    passwordToggle.addEventListener('click', function() {
+        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordInput.setAttribute('type', type);
+        
+        const eyeOpen = this.querySelector('.eye-open');
+        const eyeClosed = this.querySelector('.eye-closed');
+        
+        if (type === 'text') {
+            eyeOpen.style.display = 'none';
+            eyeClosed.style.display = 'block';
+        } else {
+            eyeOpen.style.display = 'block';
+            eyeClosed.style.display = 'none';
+        }
+    });
+    
+    // Form validation
+    const validationRules = {
+        username: {
+            required: true,
+            minLength: 3,
+        },
+        password: {
+            required: true,
+            minLength: 6,
+        },
+    };
+    
+    // Client-side validation
+    function validateForm() {
+        let isValid = true;
+        const username = document.getElementById('username');
+        const password = document.getElementById('password');
+        
+        // Clear previous errors
+        errorEl.classList.remove('visible');
+        
+        // Validate username
+        if (!username.value || username.value.length < 3) {
+            username.classList.add('error');
+            isValid = false;
+        } else {
+            username.classList.remove('error');
+        }
+        
+        // Validate password
+        if (!password.value || password.value.length < 6) {
+            password.classList.add('error');
+            isValid = false;
+        } else {
+            password.classList.remove('error');
+        }
+        
+        return isValid;
+    }
+    
+    // Form submission
+    form.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        if (!validateForm()) {
+            return;
+        }
+        
+        // Show loading state
+        loginBtn.classList.add('loading');
+        loginBtn.querySelector('.btn-text').style.display = 'none';
+        loginBtn.querySelector('.btn-loading').style.display = 'inline-flex';
+        loginBtn.disabled = true;
+        
+        // Clear any previous errors
+        errorEl.classList.remove('visible');
+        
+        try {
+            // Attempt login using the API
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            const response = await fetch('{% url "api_login" %}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}',
+                },
+                credentials: 'include',
+                body: JSON.stringify({ username, password }),
+            });
+            
+            const data = await response.json();
+            
+            if (!response.ok) {
+                throw new Error(data.error || 'Login failed');
+            }
+            
+            // Show success
+            successEl.classList.add('visible');
+            
+            // Redirect to dashboard or next page
+            const nextUrl = new URLSearchParams(window.location.search).get('next');
+            setTimeout(() => {
+                window.location.href = nextUrl || '{% url "dashboard" %}';
+            }, 1000);
+            
+        } catch (error) {
+            errorEl.querySelector('p').textContent = error.message || 'Invalid credentials. Please try again.';
+            errorEl.classList.add('visible');
+        } finally {
+            // Reset button state
+            loginBtn.classList.remove('loading');
+            loginBtn.querySelector('.btn-text').style.display = 'inline';
+            loginBtn.querySelector('.btn-loading').style.display = 'none';
+            loginBtn.disabled = false;
+        }
+    });
+    
+    // Real-time validation
+    document.getElementById('username').addEventListener('input', function() {
+        if (this.classList.contains('error') && this.value.length >= 3) {
+            this.classList.remove('error');
+        }
+    });
+    
+    document.getElementById('password').addEventListener('input', function() {
+        if (this.classList.contains('error') && this.value.length >= 6) {
+            this.classList.remove('error');
+        }
+    });
+    
+    // Social login handlers (placeholder)
+    document.getElementById('google-login').addEventListener('click', function() {
+        window.location.href = '{% url "social:begin" "google-oauth2" %}';
+    });
+    
+    document.getElementById('twitter-login').addEventListener('click', function() {
+        window.location.href = '{% url "social:begin" "twitter" %}';
+    });
+});
+</script>
+{% endblock %}
