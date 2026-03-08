@@ -13,7 +13,7 @@ def home(request):
 
 
 def index(request):
-    """Main index page - serves the Next.js build output."""
+    """Main index page - serves the main app."""
     return render(request, 'out/home/index.html')
 
 

@@ -137,6 +137,7 @@ STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'public' / 'static'
 STATICFILES_DIRS = [
     BASE_DIR / 'templates' / 'out' / '_next',
+    BASE_DIR / 'public',
 ]
 
 # Media files
