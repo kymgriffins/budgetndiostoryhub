@@ -83,15 +83,17 @@ urlpatterns = [
     # API Dashboard - Custom HTML Interface
     path('api/', views_api.APIDashboardView.as_view(), name='api_dashboard'),
     path('api/browser/', views_api.APIBrowserView.as_view(), name='api_browser'),
-    path('api/v1/<str:app_name>/', views_api.APIEndpointProxyView.as_view(), name='api_endpoint'),
     
-    # API endpoints (original DRF endpoints)
+    # API endpoints (original DRF endpoints) - must come BEFORE catch-all proxy
     path('api/v1/accounts/', include('apps.accounts.urls')),
     path('api/v1/content/', include('apps.content.urls')),
     path('api/v1/newsletter/', include('apps.newsletter.urls')),
     path('api/v1/sponsors/', include('apps.sponsors.urls')),
     path('api/v1/analytics/', include('apps.analytics.urls')),
     path('api/v1/cms/', include('apps.cms.urls')),
+    
+    # Catch-all proxy view for API Dashboard - must come AFTER real endpoints
+    path('api/v1/<str:app_name>/', views_api.APIEndpointProxyView.as_view(), name='api_endpoint'),
 ]
 
 # Serve media files in development
