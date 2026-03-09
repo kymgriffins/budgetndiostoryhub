@@ -2,33 +2,34 @@
    Budget Ndio Story - Main Stylesheet
    ============================================= */
 
-/* CSS Variables */
+/* CSS Variables - WCAG AA Compliant */
 :root {
-    /* Colors */
-    --color-primary: #0066CC;
-    --color-primary-dark: #0052a3;
-    --color-primary-light: #0073e6;
-    --color-blue: #0066CC;
+    /* Colors - WCAG AA Compliant */
+    --color-primary: #0056B3;
+    --color-primary-dark: #004494;
+    --color-primary-light: #1a75ff;
+    --color-blue: #0056B3;
     --color-brand-100: #e6f0ff;
     --color-brand-300: #80b3ff;
-    --color-brand-600: #004499;
+    --color-brand-600: #004494;
     
     --color-background: #ffffff;
     --color-background-secondary: #f8fafc;
     --color-surface: #ffffff;
     --color-card: #ffffff;
     
-    --color-foreground: #0f172a;
-    --color-foreground-secondary: #475569;
-    --color-muted: #64748b;
-    --color-muted-foreground: #94a3b8;
+    --color-foreground: #0f172a;  /* Darker for better contrast */
+    --color-foreground-secondary: #334155;  /* Darker for WCAG AA */
+    --color-muted: #475569;  /* Darker for WCAG AA */
+    --color-muted-foreground: #64748b;
     
     --color-border: #e2e8f0;
     --color-border-light: #f1f5f9;
     
-    --color-success: #10b981;
-    --color-warning: #f59e0b;
-    --color-error: #ef4444;
+    /* Semantic Colors - WCAG AA Compliant */
+    --color-success: #047857;
+    --color-warning: #b45309;
+    --color-error: #dc2626;
     
     --color-white: #ffffff;
     --color-black: #000000;

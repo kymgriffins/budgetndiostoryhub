@@ -157,6 +157,13 @@
             }
             
             console.error('API Error:', error);
+            
+            // Show error toast notification
+            if (typeof window.AppUI !== 'undefined' && window.AppUI.showToast) {
+                const errorMessage = error.message || 'An unexpected error occurred';
+                window.AppUI.showToast(errorMessage, 'error', 5000);
+            }
+            
             return { 
                 success: false, 
                 error: error.message,

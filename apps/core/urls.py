@@ -108,10 +108,12 @@ urlpatterns = [
     path('api/auth/user/', current_user_view, name='current_user'),
     
     # Django Auth URLs
+    path('login/', views.login_page, name='login_page'),
     path('accounts/login/', auth_views.LoginView.as_view(template_name='auth/login.html'), name='login'),
-    path('login/', auth_views.LoginView.as_view(template_name='auth/login.html'), name='login_direct'),
+    path('login-old/', auth_views.LoginView.as_view(template_name='auth/login.html'), name='login_direct'),
     path('accounts/logout/', auth_views.LogoutView.as_view(), name='logout'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout_direct'),
+    path('signup/', views.register_page, name='register'),
     path('accounts/register/', views.register_page, name='register'),
     path('register/', views.register_page, name='register_direct'),
     path('accounts/password_reset/', auth_views.PasswordResetView.as_view(template_name='auth/password_reset.html'), name='password_reset'),
@@ -185,6 +187,7 @@ urlpatterns = [
     # Sponsors - Assets
     path('dashboard/assets/', views_crud.SponsorAssetListView.as_view(), name='asset-list'),
     path('dashboard/assets/create/', views_crud.SponsorAssetCreateView.as_view(), name='asset-create'),
+    path('dashboard/assets/<int:pk>/edit/', views_crud.SponsorAssetUpdateView.as_view(), name='asset-update'),
     path('dashboard/assets/<int:pk>/delete/', views_crud.SponsorAssetDeleteView.as_view(), name='asset-delete'),
     
     # CMS - Pages
@@ -220,6 +223,7 @@ urlpatterns = [
     # CMS - Media Library
     path('dashboard/media/', views_crud.MediaLibraryListView.as_view(), name='media-list'),
     path('dashboard/media/upload/', views_crud.MediaLibraryCreateView.as_view(), name='media-create'),
+    path('dashboard/media/<uuid:pk>/edit/', views_crud.MediaLibraryUpdateView.as_view(), name='media-update'),
     path('dashboard/media/<uuid:pk>/delete/', views_crud.MediaLibraryDeleteView.as_view(), name='media-delete'),
     
     # Organization Profile

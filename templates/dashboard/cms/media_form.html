@@ -1,13 +1,18 @@
 {% extends 'admin_base.html' %}
 {% load static %}
-{% block title %}Upload Media{% endblock %}
+{% block title %}{% if object %}Edit Media{% else %}Upload Media{% endblock %}
 {% block content %}
-<div class="mb-8"><h1 class="text-3xl font-bold tracking-tight">Upload Media</h1></div>
+<div class="mb-8">
+    <h1 class="text-3xl font-bold tracking-tight">{% if object %}Edit Media{% else %}Upload Media{% endif %}</h1>
+    <p class="text-gray-500 mt-1">{% if object %}Update media details{% else %}Upload a new media file{% endif %}</p>
+</div>
 <form method="post" enctype="multipart/form-data" class="space-y-6 max-w-2xl">
     {% csrf_token %}
     <div class="rounded-xl border bg-card p-6"><div class="space-y-4">{{ form.as_p }}</div></div>
     <div class="flex items-center gap-4">
-        <button type="submit" class="inline-flex items-center justify-center rounded-lg bg-primary px-6 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90">Upload</button>
+        <button type="submit" class="inline-flex items-center justify-center rounded-lg bg-primary px-6 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90">
+            {% if object %}Update Media{% else %}Upload{% endif %}
+        </button>
         <a href="{% url 'media-list' %}" class="inline-flex items-center justify-center rounded-lg border bg-background px-6 py-2 text-sm font-medium hover:bg-accent">Cancel</a>
     </div>
 </form>

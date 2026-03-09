@@ -1,649 +1,2594 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Budget Ndio Story - Civic Education Platform</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollToPlugin.min.js"></script>
-    <!-- Fonts - NeueMontreal -->
-    <style>
-        @font-face {
-            font-family: 'NeueMontreal';
-            src: url('templates/NeueMontreal.woff') format('woff');
-            font-weight: normal;
-            font-style: normal;
-            font-display: swap;
-        }
-    </style>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
     
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'bns': {
-                            DEFAULT: '#0066CC',
-                            light: '#1a75ff',
-                            dark: '#004c99',
-                            50: '#e6f0ff',
-                            100: '#cce0ff',
-                        },
-                        'teal': {
-                            DEFAULT: '#0066CC',
-                            light: '#1a75ff',
-                            dark: '#004c99',
-                            50: '#e6f0ff',
-                            100: '#cce0ff',
-                        },
-                        'orange': {
-                            DEFAULT: '#0066CC',
-                            light: '#1a75ff',
-                            dark: '#004c99',
-                            50: '#e6f0ff',
-                            100: '#cce0ff',
-                        },
-                        'green': {
-                            DEFAULT: '#0066CC',
-                            light: '#1a75ff',
-                            dark: '#004c99',
-                            50: '#e6f0ff',
-                            100: '#cce0ff',
-                        },
-                        'dark': {
-                            DEFAULT: '#000000',
-                            light: '#0a0a0a',
-                            dark: '#000000',
-                        },
-                        'light': '#ffffff',
-                    },
-                    fontFamily: {
-                        'sans': ['NeueMontreal', 'sans-serif'],
-                        'mono': ['Space Mono', 'monospace'],
-                    }
-                }
-            }
+    <!-- Primary Meta Tags -->
+    <title>Budget Ndio Story - Follow the Budget. Find the Story.</title>
+    <meta name="title" content="Budget Ndio Story - Follow the Budget. Find the Story.">
+    <meta name="description" content="Kenyan budget transparency platform for young citizens. We turn national and county budgets into clear insights, practical analysis, and trackable evidence.">
+    <meta name="author" content="Budget Ndio Story">
+    <meta name="keywords" content="Kenya budget,budget transparency,county budgets,youth participation,budget tracking,government accountability,public finance,Kenya">
+    <meta name="creator" content="Budget Ndio Story">
+    <meta name="publisher" content="Budget Ndio Story">
+    <meta name="robots" content="index, follow">
+    <meta name="googlebot" content="index, follow, max-video-preview:-1, max-image-preview:large, max-snippet:-1">
+    
+    <!-- Canonical & Alternate -->
+    <link rel="canonical" href="https://budgetndiostory.org/">
+    <link rel="alternate" hreflang="en" href="https://budgetndiostory.org/">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://budgetndiostory.org/">
+    <meta property="og:title" content="Budget Ndio Story - Kenya Budget Transparency Platform">
+    <meta property="og:description" content="Kenyan budget transparency platform for young citizens. We turn national and county budgets into clear insights, practical analysis, and trackable evidence.">
+    <meta property="og:image" content="https://budgetndiostory.org/opengraph-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Budget Ndio Story - Follow the Budget, Find the Story">
+    <meta property="og:site_name" content="Budget Ndio Story">
+    <meta property="og:locale" content="en_KE">
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:creator" content="@BudgetNdioStory">
+    <meta name="twitter:title" content="Budget Ndio Story - Kenya Budget Transparency Platform">
+    <meta name="twitter:description" content="Kenyan budget transparency platform for young citizens. We turn national and county budgets into clear insights.">
+    <meta name="twitter:image" content="https://budgetndiostory.org/twitter-image.png">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="/favicon.ico" type="image/x-icon" sizes="256x256">
+    
+<!-- Fonts -->
+<link rel="stylesheet" href="/static/fonts/NeueMontreal.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Material+Icons+Round" rel="stylesheet">
+
+<!-- Material Icons -->
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "Budget Ndio Story",
+        "url": "https://budgetndiostory.org/",
+        "description": "Kenyan budget transparency platform for young citizens",
+        "publisher": {
+            "@type": "Organization",
+            "name": "Budget Ndio Story",
+            "url": "https://budgetndiostory.org/"
         }
+    }
     </script>
     
     <style>
-        * {
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
+/* CSS Reset & Variables */
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --color-bg: #000000;
+    --color-bg-elevated: #1a1a1a;
+    --color-surface: #2d2d2d;
+    --color-surface-hover: #404040;
+    --color-text: #ffffff;
+    --color-text-secondary: #b3b3b3;
+    --color-text-muted: #808080;
+    --color-primary: #0066ff;
+    --color-primary-hover: #0052cc;
+    --color-accent: #ff4d4d;
+    --color-border: #333333;
+    --color-neue-montreal: #22c55e;
+
+    --font-sans: 'NeueMontreal', system-ui, -apple-system, sans-serif;
+
+    --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-in-out-quint: cubic-bezier(0.83, 0, 0.17, 1);
+
+    --header-height: 80px;
+    --header-height-mobile: 72px;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--font-sans);
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    line-height: 1.6;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+        /* Preloader */
+        .preloader {
+            position: fixed;
+            inset: 0;
+            background: var(--color-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.6s var(--ease-out-expo), visibility 0.6s;
         }
-        
-        
-        /* Cinematic Easing */
-        .ease-cinematic {
-            transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .ease-smooth {
-            transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        .ease-bounce {
-            transition-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-        
-        /* Enhanced Loyalty Points Animations */
-        .perk-card {
+
+        .preloader.hidden {
             opacity: 0;
-            transform: translateY(40px);
-            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            visibility: hidden;
+            pointer-events: none;
         }
-        
-        .perk-card.revealed {
+
+        .preloader-content {
+            text-align: center;
+        }
+
+        .preloader-spinner {
+            width: 48px;
+            height: 48px;
+            border: 3px solid var(--color-surface);
+            border-top-color: var(--color-primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Skip Link */
+        .skip-link {
+            position: absolute;
+            top: -100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--color-primary);
+            color: var(--color-bg);
+            padding: 0.75rem 1.5rem;
+            border-radius: 0 0 0.5rem 0.5rem;
+            font-weight: 600;
+            text-decoration: none;
+            z-index: 10001;
+            transition: top 0.3s;
+        }
+
+        .skip-link:focus {
+            top: 0;
+        }
+
+        /* Header - Fixed Overlay Style */
+        .site-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: var(--header-height);
+            z-index: 1000;
+            transition: all 0.4s var(--ease-out-expo);
+        }
+
+        .site-header.scrolled {
+            height: 72px;
+            background: rgba(10, 10, 10, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .header-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .header-brand {
+            display: flex;
+            align-items: center;
+        }
+
+        .header-logo {
+            height: 40px;
+            width: auto;
+            transition: transform 0.3s var(--ease-out-expo);
+        }
+
+        .header-logo:hover {
+            transform: scale(1.05);
+        }
+
+        /* Navigation */
+        .main-nav {
+            display: none;
+        }
+
+        @media (min-width: 1024px) {
+            .main-nav {
+                display: block;
+            }
+        }
+
+        .nav-list {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-link {
+            color: var(--color-text);
+            text-decoration: none;
+            font-size: 0.9375rem;
+            font-weight: 500;
+            position: relative;
+            padding: 0.5rem 0;
+            transition: color 0.3s;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--color-primary);
+            transition: width 0.3s var(--ease-out-expo);
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .social-links {
+            display: none;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        @media (min-width: 768px) {
+            .social-links {
+                display: flex;
+            }
+        }
+
+        .social-link {
+            color: var(--color-text-secondary);
+            transition: color 0.3s, transform 0.3s;
+        }
+
+        .social-link:hover {
+            color: var(--color-text);
+            transform: translateY(-2px);
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            font-size: 0.9375rem;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s var(--ease-out-expo);
+        }
+
+        .btn-primary {
+            background: var(--color-primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--color-primary-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px -10px rgba(34, 197, 94, 0.4);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--color-text);
+            border: 1px solid var(--color-border);
+        }
+
+        .btn-outline:hover {
+            background: var(--color-surface);
+            border-color: var(--color-text-secondary);
+        }
+
+        .btn-lg {
+            padding: 1rem 2rem;
+            font-size: 1rem;
+        }
+
+        .donate-btn {
+            display: none;
+        }
+
+        @media (min-width: 1024px) {
+            .donate-btn {
+                display: inline-flex;
+            }
+        }
+
+        /* Mobile Menu Toggle */
+        .mobile-menu-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 48px;
+            height: 48px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            position: relative;
+            z-index: 1001;
+        }
+
+        @media (min-width: 1024px) {
+            .mobile-menu-toggle {
+                display: none;
+            }
+        }
+
+        .menu-icon,
+        .menu-icon::before,
+        .menu-icon::after {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background: var(--color-text);
+            transition: all 0.3s var(--ease-out-expo);
+        }
+
+        .menu-icon {
+            position: relative;
+        }
+
+        .menu-icon::before,
+        .menu-icon::after {
+            content: '';
+            position: absolute;
+            left: 0;
+        }
+
+        .menu-icon::before { top: -8px; }
+        .menu-icon::after { top: 8px; }
+
+        .mobile-menu-toggle.active .menu-icon {
+            background: transparent;
+        }
+
+        .mobile-menu-toggle.active .menu-icon::before {
+            top: 0;
+            transform: rotate(45deg);
+        }
+
+        .mobile-menu-toggle.active .menu-icon::after {
+            top: 0;
+            transform: rotate(-45deg);
+        }
+
+        /* Mobile Navigation */
+        .mobile-nav {
+            position: fixed;
+            inset: 0;
+            background: var(--color-bg);
+            z-index: 999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.5s var(--ease-out-expo);
+        }
+
+        .mobile-nav.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .mobile-nav-list {
+            list-style: none;
+            text-align: center;
+        }
+
+        .mobile-nav-list li {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.4s var(--ease-out-expo);
+        }
+
+        .mobile-nav.active .mobile-nav-list li {
             opacity: 1;
             transform: translateY(0);
         }
-        
-        .perk-icon {
-            transform: scale(0.8);
-            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        
-        .perk-card:hover .perk-icon {
-            transform: scale(1.1) rotate(5deg);
-        }
-        
-        /* Animated Text */
-        .animate-text {
-            position: relative;
-            height: 1.5em;
-            overflow: hidden;
-        }
-        
-        .text-anim {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            opacity: 0;
-            animation: textCycle 8s infinite;
-        }
-        
-        .text-anim:nth-child(1) { animation-delay: 0s; }
-        .text-anim:nth-child(2) { animation-delay: 2.67s; }
-        .text-anim:nth-child(3) { animation-delay: 5.33s; }
-        
-        @keyframes textCycle {
-            0%, 25% { opacity: 0; transform: translateY(-100%); }
-            33%, 58% { opacity: 1; transform: translateY(0); }
-            66%, 100% { opacity: 0; transform: translateY(100%); }
-        }
-        
-        /* Film Grain */
-        .grain {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 9999;
-            opacity: 0.03;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-        }
-        
-        /* Smooth Scroll Container */
-        .smooth-scroll {
-            overflow: hidden;
-        }
-        
-        /* Magnetic Element */
-        .magnetic {
-            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        
-        /* Text Split Animation */
-        .split-line {
-            overflow: hidden;
+
+        .mobile-nav.active .mobile-nav-list li:nth-child(1) { transition-delay: 0.1s; }
+        .mobile-nav.active .mobile-nav-list li:nth-child(2) { transition-delay: 0.15s; }
+        .mobile-nav.active .mobile-nav-list li:nth-child(3) { transition-delay: 0.2s; }
+        .mobile-nav.active .mobile-nav-list li:nth-child(4) { transition-delay: 0.25s; }
+        .mobile-nav.active .mobile-nav-list li:nth-child(5) { transition-delay: 0.3s; }
+
+        .mobile-nav-link {
             display: block;
+            color: var(--color-text);
+            text-decoration: none;
+            font-size: 2rem;
+            font-weight: 700;
+            padding: 1rem;
+            transition: color 0.3s;
         }
-        .split-line-inner {
-            display: block;
-            transform: translateY(100%);
+
+        .mobile-nav-link:hover {
+            color: var(--color-primary);
         }
-        
-        /* FIXED Branch Transition System - 4 Scenes */
-        .branch-container {
+
+        /* Hero Section - Full Viewport */
+        .hero-section {
             position: relative;
-            height: 400vh; /* 4 scenes × 100vh */
-        }
-        
-        .branch-sticky {
-            position: sticky;
-            top: 0;
-            height: 100vh;
-            width: 100%;
+            min-height: 100vh;
+            min-height: 100dvh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             overflow: hidden;
         }
-        
-        .branch-scene {
+
+        .hero-video-container {
             position: absolute;
             inset: 0;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.8s;
+            z-index: 0;
+        }
+
+        .hero-video {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                to bottom,
+                rgba(10, 10, 10, 0.4) 0%,
+                rgba(10, 10, 10, 0.6) 50%,
+                rgba(10, 10, 10, 0.9) 100%
+            );
             z-index: 1;
         }
-        
-        .branch-scene.active {
-            opacity: 1;
-            visibility: visible;
-            z-index: 10;
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: calc(var(--header-height) + 2rem) 2rem 4rem;
+            text-align: center;
         }
-        
-        /* Letter Navigation - N O K R A S */
-        .letter-nav {
-            font-size: clamp(40px, 10vw, 140px);
-            font-weight: 300;
-            line-height: 0.9;
-            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-            opacity: 0.08;
-            cursor: pointer;
-            font-family: 'Cormorant Garamond', serif;
+
+        @media (min-width: 768px) {
+            .hero-content {
+                padding: calc(var(--header-height) + 4rem) 2rem 6rem;
+            }
         }
-        
-        .letter-nav:hover, .letter-nav.active {
-            opacity: 1;
-            transform: scale(1.1);
-            text-shadow: 0 0 60px rgba(20, 56, 54, 0.3);
+
+.hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(0, 102, 255, 0.15);
+    color: var(--color-primary);
+    padding: 0.5rem 1rem;
+    border-radius: 2rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    margin-bottom: 2rem;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(0, 102, 255, 0.2);
+    animation: fadeInUp 0.8s var(--ease-out-expo) 0.2s both;
+}
+
+.badge-dot {
+    width: 8px;
+    height: 8px;
+    background: var(--color-primary);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+}
+
+.hero-rating {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(255, 77, 77, 0.15);
+    color: var(--color-accent);
+    padding: 0.5rem 1rem;
+    border-radius: 2rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    margin-bottom: 2rem;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 77, 77, 0.2);
+    animation: fadeInUp 0.8s var(--ease-out-expo) 0.2s both;
+}
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
         }
-        
-        .letter-nav.active {
-            color: #143836;
-        }
-        
-        /* Glass Morphism */
-        .glass-panel {
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(20px) saturate(180%);
-            -webkit-backdrop-filter: blur(20px) saturate(180%);
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
-        }
-        
-        .glass-dark {
-            background: rgba(20, 56, 54, 0.95);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(201, 169, 98, 0.2);
-        }
-        
-        /* Custom Cursor */
-        .cursor {
-            position: fixed;
-            width: 20px;
-            height: 20px;
-            border: 1px solid #143836;
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 10000;
-            transition: transform 0.15s ease, width 0.3s ease, height 0.3s ease, background-color 0.3s ease;
-            transform: translate(-50%, -50%);
-            mix-blend-mode: difference;
-        }
-        
-        .cursor.hover {
-            width: 60px;
-            height: 60px;
-            background-color: rgba(20, 56, 54, 0.1);
-            border-color: #c9a962;
-        }
-        
-        /* Gallery Lightbox */
-        #galleryLightbox.visible {
-            opacity: 1 !important;
-            visibility: visible !important;
-        }
-        
-        #virtualTour.visible {
-            opacity: 1 !important;
-            visibility: visible !important;
-        }
-        
-        /* Chatbot */
-        #chatWindow {
-            animation: slideUp 0.3s ease-out;
-        }
-        
-        @keyframes slideUp {
+
+        @keyframes fadeInUp {
             from {
                 opacity: 0;
-                transform: translateY(20px);
+                transform: translateY(30px);
             }
             to {
                 opacity: 1;
                 transform: translateY(0);
             }
         }
-        
-        /* Chat responsive adjustments */
-        @media (max-width: 640px) {
-            #chatWindow {
-                max-height: calc(100vh - 120px);
-            }
-            #chatMessages {
-                min-height: 150px;
-            }
+
+        .hero-title {
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.02em;
+            animation: fadeInUp 0.8s var(--ease-out-expo) 0.3s both;
         }
-        
-        @media (min-width: 640px) and (max-width: 768px) {
-            #chatWindow {
-                max-height: calc(100vh - 140px);
-            }
+
+        .hero-title-highlight {
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
-        
-        #chatMessages::-webkit-scrollbar {
-            width: 4px;
+
+        .hero-description {
+            font-size: clamp(1.125rem, 2.5vw, 1.375rem);
+            color: var(--color-text-secondary);
+            max-width: 600px;
+            margin: 0 auto 2.5rem;
+            line-height: 1.7;
+            animation: fadeInUp 0.8s var(--ease-out-expo) 0.4s both;
         }
-        
-        #chatMessages::-webkit-scrollbar-track {
-            background: transparent;
-        }
-        
-        #chatMessages::-webkit-scrollbar-thumb {
-            background: rgba(20, 56, 54, 0.2);
-            border-radius: 4px;
-        }
-        
-        /* User message styling */
-        #chatMessages .user-message {
-            margin-left: auto;
-        }
-        
-        .cursor-dot {
-            position: fixed;
-            width: 6px;
-            height: 6px;
-            background-color: #c9a962;
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 10001;
-            transform: translate(-50%, -50%);
-        }
-        
-        /* Loading Screen */
-        .loader {
-            position: fixed;
-            inset: 0;
-            background: #000000;
-            z-index: 100000;
+
+        .hero-actions {
             display: flex;
             flex-direction: column;
+            gap: 1rem;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 3rem;
+            animation: fadeInUp 0.8s var(--ease-out-expo) 0.5s both;
+        }
+
+        @media (min-width: 640px) {
+            .hero-actions {
+                flex-direction: row;
+            }
+        }
+
+        .hero-social-proof {
+            display: flex;
             align-items: center;
             justify-content: center;
+            gap: 1rem;
+            animation: fadeInUp 0.8s var(--ease-out-expo) 0.6s both;
         }
-        
-        .loader-content {
-            text-align: center;
+
+        .avatar-list {
+            display: flex;
+            list-style: none;
         }
-        
-        .loader-logo {
-            width: 180px;
-            height: auto;
-            margin-bottom: 40px;
-            opacity: 0;
-            transform: scale(0.9);
-        }
-        
-        .loader-text {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 14px;
-            letter-spacing: 0.3em;
-            text-transform: uppercase;
-            color: #ffffff;
-            opacity: 0;
-            margin-bottom: 20px;
-        }
-        
-        .loader-line {
-            width: 200px;
-            height: 1px;
-            background: rgba(255, 255, 255, 0.2);
-            position: relative;
+
+        .avatar-list li {
+            margin-left: -0.75rem;
+            border: 3px solid var(--color-bg);
+            border-radius: 50%;
             overflow: hidden;
+            transition: transform 0.3s;
         }
-        
-        .loader-progress {
-            position: absolute;
-            left: 0;
-            top: 0;
-            height: 100%;
-            width: 0%;
-            background: #c9a962;
-            transition: width 0.3s ease;
+
+        .avatar-list li:first-child {
+            margin-left: 0;
         }
-        
-        .loader-percent {
-            font-family: 'Inter', sans-serif;
-            font-size: 12px;
-            color: #ffffff;
-            margin-top: 15px;
-            opacity: 0;
+
+        .avatar-list li:hover {
+            transform: translateY(-4px);
+            z-index: 2;
         }
-        
+
+        .avatar-list img {
+            width: 40px;
+            height: 40px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .social-proof-text {
+            text-align: left;
+        }
+
+        .rating {
+            color: var(--color-accent);
+            font-size: 0.875rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .social-proof-text p {
+            font-size: 0.875rem;
+            color: var(--color-text-secondary);
+        }
+
+        .social-proof-text strong {
+            color: var(--color-text);
+        }
+
         /* Scroll Indicator */
-        .scroll-hint {
+        .scroll-indicator {
             position: absolute;
-            bottom: 40px;
+            bottom: 2rem;
             left: 50%;
             transform: translateX(-50%);
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 10px;
-            opacity: 0;
+            gap: 0.5rem;
+            color: var(--color-text-muted);
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            animation: bounce 2s infinite;
+            cursor: pointer;
+            z-index: 2;
         }
-        
-        .scroll-line {
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+            40% { transform: translateX(-50%) translateY(-10px); }
+            60% { transform: translateX(-50%) translateY(-5px); }
+        }
+
+        .scroll-indicator::after {
+            content: '';
             width: 1px;
             height: 60px;
-            background: linear-gradient(to bottom, #143836, transparent);
-            animation: scrollPulse 2s ease-in-out infinite;
+            background: linear-gradient(to bottom, var(--color-text-muted), transparent);
         }
-        
-        @keyframes scrollPulse {
-            0%, 100% { transform: scaleY(0); transform-origin: top; }
-            50% { transform: scaleY(1); transform-origin: top; }
-            51% { transform-origin: bottom; }
-            100% { transform: scaleY(0); transform-origin: bottom; }
-        }
-        
-        /* Perk Cards */
-        .perk-card {
-            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        
-        .perk-card:hover {
-            transform: translateY(-10px);
-        }
-        
-        .perk-card:hover .perk-icon {
-            transform: scale(1.1) rotate(5deg);
-        }
-        
-        .perk-icon {
-            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        
-        /* Image Reveal */
-        .img-reveal {
+
+        /* Marquee Section */
+        .announcement-bar {
+            background: var(--color-surface);
+            border-top: 1px solid var(--color-border);
+            border-bottom: 1px solid var(--color-border);
+            padding: 1rem 0;
             overflow: hidden;
         }
-        
-        .img-reveal img {
-            transform: scale(1.2);
-            transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        
-        .img-reveal.revealed img {
-            transform: scale(1);
-        }
-        
-        /* Scene Image */
-        .scene-image {
-            position: absolute;
-            inset: 0;
-            background-size: cover;
-            background-position: center;
-            transform: scale(1.1);
-            transition: transform 1.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.8s ease;
-        }
-        
-        .branch-scene.active .scene-image {
-            transform: scale(1);
-        }
-        
-        /* Content Reveal */
-        .content-reveal {
-            opacity: 0;
-            transform: translateY(40px);
-            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        
-        .branch-scene.active .content-reveal {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        
-        .branch-scene.active .content-reveal:nth-child(1) { transition-delay: 0.2s; }
-        .branch-scene.active .content-reveal:nth-child(2) { transition-delay: 0.35s; }
-        .branch-scene.active .content-reveal:nth-child(3) { transition-delay: 0.5s; }
-        .branch-scene.active .content-reveal:nth-child(4) { transition-delay: 0.65s; }
-        
-        /* Navigation Dots */
-        .nav-dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.3);
-            border: 2px solid transparent;
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-        
-        .nav-dot.active {
-            background: #c9a962;
-            border-color: #fff;
-            transform: scale(1.3);
-        }
-        
-        /* Ambient Float */
-        @keyframes ambientFloat {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            33% { transform: translateY(-15px) rotate(2deg); }
-            66% { transform: translateY(10px) rotate(-1deg); }
-        }
-        
-        .ambient-float {
-            animation: ambientFloat 8s ease-in-out infinite;
-        }
-        
-        /* Promo Badge */
-        .promo-badge {
-            background: linear-gradient(135deg, #c9a962 0%, #a88b4a 100%);
-            color: #143836;
-            font-weight: 600;
-            font-size: 0.75rem;
-            padding: 0.25rem 0.75rem;
-            border-radius: 9999px;
-            animation: pulse 2s infinite;
-        }
-        
-        @keyframes pulse {
-            0%, 100% { box-shadow: 0 0 0 0 rgba(201, 169, 98, 0.4); }
-            50% { box-shadow: 0 0 0 10px rgba(201, 169, 98, 0); }
-        }
-        
-        /* Price Display */
-        .price-display {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 2.5rem;
-            font-weight: 600;
-            color: #143836;
-        }
-        
-        /* Child Age Input */
-        .child-age-row {
+
+        .marquee-container {
             display: flex;
+            width: max-content;
+            animation: marquee 30s linear infinite;
+        }
+
+        .marquee-container:hover {
+            animation-play-state: paused;
+        }
+
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        .marquee-content {
+            display: flex;
+            gap: 4rem;
+            padding: 0 2rem;
+        }
+
+        .marquee-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            white-space: nowrap;
+        }
+
+        .badge-new,
+        .badge-creators,
+        .badge-civic {
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .badge-new { background: var(--color-primary); color: white; }
+        .badge-creators { background: var(--color-accent); color: black; }
+        .badge-civic { background: #3b82f6; color: white; }
+
+        .marquee-title {
+            font-weight: 600;
+            color: var(--color-text);
+        }
+
+        .marquee-desc {
+            color: var(--color-text-secondary);
+            font-size: 0.9375rem;
+        }
+
+        /* Sections General */
+        .section {
+            padding: 6rem 0;
+        }
+
+        @media (min-width: 768px) {
+            .section {
+                padding: 8rem 0;
+            }
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        @media (min-width: 768px) {
+            .container {
+                padding: 0 2rem;
+            }
+        }
+
+        .section-label {
+            color: var(--color-primary);
+            font-size: 0.875rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 1rem;
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.02em;
+        }
+
+        .section-description {
+            color: var(--color-text-secondary);
+            font-size: 1.125rem;
+            max-width: 600px;
+            line-height: 1.7;
+        }
+
+        .section-header {
+            margin-bottom: 4rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        @media (min-width: 1024px) {
+            .section-header {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: flex-end;
+            }
+        }
+
+        .section-header.centered {
+            text-align: center;
+            align-items: center;
+        }
+
+        .section-header.centered .section-description {
+            max-width: 800px;
+        }
+
+        /* About Section */
+        .about-section {
+            background: var(--color-bg-elevated);
+        }
+
+        .grid-2 {
+            display: grid;
+            gap: 4rem;
+        }
+
+        @media (min-width: 1024px) {
+            .grid-2 {
+                grid-template-columns: 1fr 1fr;
+                align-items: center;
+            }
+        }
+
+        .about-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .about-meta {
+            display: flex;
+            flex-wrap: wrap;
             gap: 0.5rem;
             align-items: center;
+            color: var(--color-text-muted);
+            font-size: 0.875rem;
+        }
+
+        .separator {
+            color: var(--color-border);
+        }
+
+        .about-card {
+            background: var(--color-surface);
+            border: 1px solid var(--color-border);
+            border-radius: 1.5rem;
+            padding: 2rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .about-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px -20px rgba(0, 0, 0, 0.5);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-label {
+            font-weight: 700;
             margin-bottom: 0.5rem;
         }
-        
-        /* Hide scrollbar but keep functionality */
-        body {
-            overflow-x: hidden;
+
+        .card-desc {
+            color: var(--color-text-secondary);
+            font-size: 0.9375rem;
         }
-        
-        ::-webkit-scrollbar {
-            width: 8px;
+
+        .badge-live {
+            background: rgba(239, 68, 68, 0.15);
+            color: #ef4444;
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.75rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.375rem;
         }
-        
-        ::-webkit-scrollbar-track {
-            background: #f1f1f1;
+
+        .badge-live::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            background: #ef4444;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
         }
-        
-        ::-webkit-scrollbar-thumb {
-            background: #143836;
-            border-radius: 4px;
+
+        .card-links {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
         }
-        
-        /* Mobile Responsive Fixes */
-        @media (max-width: 768px) {
-            .letter-nav {
-                font-size: clamp(30px, 8vw, 80px);
+
+        .card-link {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.25rem;
+            background: var(--color-bg-elevated);
+            border-radius: 1rem;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.3s;
+            border: 1px solid transparent;
+        }
+
+        .card-link:hover {
+            background: var(--color-surface-hover);
+            border-color: var(--color-border);
+            transform: translateX(4px);
+        }
+
+        .link-title {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .link-desc {
+            font-size: 0.875rem;
+            color: var(--color-text-secondary);
+        }
+
+        .link-arrow {
+            color: var(--color-primary);
+            font-size: 1.25rem;
+            transition: transform 0.3s;
+        }
+
+        .card-link:hover .link-arrow {
+            transform: translateX(4px);
+        }
+
+        /* Stats Section */
+        .stats-grid {
+            display: grid;
+            gap: 1.5rem;
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        @media (min-width: 768px) {
+            .stats-grid {
+                grid-template-columns: repeat(4, 1fr);
             }
-            
-            .branch-scene .max-w-xl {
-                max-width: 100%;
-                padding: 0 1rem;
-            }
-            
-            .branch-scene h2 {
-                font-size: 2.5rem;
+        }
+
+        .stat-card {
+            background: var(--color-surface);
+            border: 1px solid var(--color-border);
+            border-radius: 1.5rem;
+            padding: 2rem;
+            transition: all 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--color-primary);
+        }
+
+        .stat-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--color-bg-elevated);
+            border-radius: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--color-primary);
+            margin-bottom: 1.5rem;
+        }
+
+        .stat-label {
+            font-size: 0.875rem;
+            color: var(--color-text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-value {
+            font-size: 3rem;
+            font-weight: 800;
+            line-height: 1;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, var(--color-text) 0%, var(--color-text-secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .stat-desc {
+            color: var(--color-text-secondary);
+            font-size: 0.9375rem;
+        }
+
+        /* How It Works */
+        .how-it-works-section {
+            background: var(--color-bg-elevated);
+        }
+
+        .steps-grid {
+            display: grid;
+            gap: 2rem;
+        }
+
+        @media (min-width: 768px) {
+            .steps-grid {
+                grid-template-columns: repeat(3, 1fr);
             }
         }
-        
-        /* Advertisement Banner */
-        .ad-banner {
-            background: linear-gradient(90deg, #143836 0%, #1a4a47 50%, #143836 100%);
+
+        .step-card {
             position: relative;
-            overflow: hidden;
+            padding: 2rem;
+            background: var(--color-surface);
+            border: 1px solid var(--color-border);
+            border-radius: 1.5rem;
+            transition: all 0.3s;
         }
-        
-        .ad-banner::before {
+
+        .step-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px -20px rgba(0, 0, 0, 0.5);
+        }
+
+        .step-card::before {
             content: '';
             position: absolute;
             top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
-            animation: shimmer 3s infinite;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
+            transform: scaleX(0);
+            transition: transform 0.3s;
+            border-radius: 1.5rem 1.5rem 0 0;
         }
-        
-        @keyframes shimmer {
-            0% { left: -100%; }
-            100% { left: 100%; }
+
+        .step-card:hover::before {
+            transform: scaleX(1);
         }
-        
-        /* Discount Badge */
-        .discount-badge {
-            position: absolute;
-            top: -10px;
-            right: -10px;
-            background: #dc2626;
-            color: white;
-            padding: 0.5rem 1rem;
-            border-radius: 9999px;
-            font-weight: 600;
+
+        .step-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+        }
+
+        .step-number {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--color-surface-hover);
+            line-height: 1;
+        }
+
+        .step-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--color-bg-elevated);
+            border-radius: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--color-primary);
+        }
+
+        .step-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+        }
+
+        .step-description {
+            color: var(--color-text-secondary);
+            line-height: 1.7;
+        }
+
+        /* Reports Section */
+        .reports-list {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        @media (min-width: 768px) {
+            .reports-list {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .report-card {
+            background: var(--color-surface);
+            border: 1px solid var(--color-border);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.3s;
+        }
+
+        .report-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--color-primary);
+            box-shadow: 0 20px 40px -20px rgba(0, 0, 0, 0.3);
+        }
+
+        .report-meta {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
             font-size: 0.875rem;
-            transform: rotate(12deg);
-            box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
         }
-        
-        /* Task List Checkbox */
-        .task-checkbox:checked + label {
-            text-decoration: line-through;
-            opacity: 0.5;
+
+        .report-type {
+            color: var(--color-primary);
+            font-weight: 600;
         }
-        
-        /* Menu Category */
-        .menu-category {
+
+        .report-date {
+            color: var(--color-text-muted);
+        }
+
+        .report-content {
+            flex: 1;
+            margin-bottom: 1.5rem;
+        }
+
+        .report-title {
+            font-size: 1.125rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            line-height: 1.4;
+        }
+
+        .report-description {
+            color: var(--color-text-secondary);
+            font-size: 0.9375rem;
+        }
+
+        .report-link {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--color-primary);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9375rem;
+            transition: gap 0.3s;
+        }
+
+        .report-link:hover {
+            gap: 0.75rem;
+        }
+
+        /* Partners Section */
+        .partners-section {
+            background: var(--color-bg-elevated);
+        }
+
+        .partners-grid {
+            display: grid;
+            gap: 2rem;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        @media (min-width: 768px) {
+            .partners-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .partner-card {
+            background: var(--color-surface);
+            border: 1px solid var(--color-border);
+            border-radius: 1.5rem;
+            padding: 2rem;
+            text-align: center;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .partner-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--color-primary);
+        }
+
+        .partner-logo {
+            height: 60px;
+            width: auto;
+            max-width: 100%;
+            object-fit: contain;
+            filter: grayscale(100%) brightness(1.5);
+            transition: filter 0.3s;
+        }
+
+        .partner-card:hover .partner-logo {
+            filter: grayscale(0%) brightness(1);
+        }
+
+        .partner-name {
+            font-weight: 600;
+            font-size: 0.9375rem;
+        }
+
+        /* Donate Section */
+        .donate-section {
             position: relative;
-            padding-left: 1.5rem;
+            overflow: hidden;
         }
-        
-        .menu-category::before {
+
+        .donate-section::before {
             content: '';
             position: absolute;
-            left: 0;
-            top: 50%;
-            transform: translateY(-50%);
+            inset: 0;
+            background: radial-gradient(circle at 50% 50%, rgba(34, 197, 94, 0.1) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .donate-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .donate-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(34, 197, 94, 0.15);
+            color: var(--color-primary);
+            padding: 0.75rem 1.5rem;
+            border-radius: 2rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+
+        .donate-title {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 800;
+            margin-bottom: 1rem;
+        }
+
+        .donate-description {
+            color: var(--color-text-secondary);
+            font-size: 1.125rem;
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+
+        .donate-meta {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+            color: var(--color-text-muted);
+            font-size: 0.875rem;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Footer */
+        .site-footer {
+            background: var(--color-bg-elevated);
+            border-top: 1px solid var(--color-border);
+            padding: 4rem 0 2rem;
+        }
+
+        .footer-grid {
+            display: grid;
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        @media (min-width: 768px) {
+            .footer-grid {
+                grid-template-columns: 2fr repeat(3, 1fr);
+            }
+        }
+
+        .footer-logo {
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+
+        .footer-logo img {
+            height: 40px;
+            width: auto;
+        }
+
+        .footer-description {
+            color: var(--color-text-secondary);
+            font-size: 0.9375rem;
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+            max-width: 300px;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .footer-social a {
+            color: var(--color-text-secondary);
+            transition: color 0.3s, transform 0.3s;
+        }
+
+        .footer-social a:hover {
+            color: var(--color-text);
+            transform: translateY(-2px);
+        }
+
+        .footer-links h4 {
+            font-size: 0.875rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 1.5rem;
+            color: var(--color-text);
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-links a {
+            color: var(--color-text-secondary);
+            text-decoration: none;
+            font-size: 0.9375rem;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--color-primary);
+        }
+
+        .footer-contact li {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+            color: var(--color-text-secondary);
+            font-size: 0.9375rem;
+        }
+
+        .footer-contact a {
+            color: inherit;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-contact a:hover {
+            color: var(--color-primary);
+        }
+
+        .footer-bottom {
+            padding-top: 2rem;
+            border-top: 1px solid var(--color-border);
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            text-align: center;
+            color: var(--color-text-muted);
+            font-size: 0.875rem;
+        }
+
+        @media (min-width: 768px) {
+            .footer-bottom {
+                flex-direction: row;
+                justify-content: space-between;
+            }
+        }
+
+        /* Chat Widget */
+        .chat-widget-toggle {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 56px;
+            height: 56px;
+            background: var(--color-primary);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 10px 30px -10px rgba(34, 197, 94, 0.5);
+            transition: all 0.3s var(--ease-out-expo);
+            z-index: 998;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .chat-widget-toggle:hover {
+            transform: scale(1.1) rotate(90deg);
+        }
+
+        .chat-widget {
+            position: fixed;
+            bottom: 6rem;
+            right: 2rem;
+            width: 380px;
+            max-width: calc(100vw - 2rem);
+            background: var(--color-surface);
+            border: 1px solid var(--color-border);
+            border-radius: 1.5rem;
+            box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px) scale(0.95);
+            transition: all 0.3s var(--ease-out-expo);
+            z-index: 997;
+        }
+
+        .chat-widget.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0) scale(1);
+        }
+
+        .chat-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .chat-header-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .chat-avatar {
+            width: 40px;
+            height: 40px;
+            background: var(--color-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+        }
+
+        .chat-header h3 {
+            font-size: 1rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .chat-header p {
+            font-size: 0.875rem;
+            color: var(--color-text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .online-dot {
             width: 8px;
             height: 8px;
-            background: #c9a962;
+            background: var(--color-primary);
             border-radius: 50%;
+            animation: pulse 2s infinite;
         }
-        
-        /* Smooth page transitions */
-        .page-transition {
+
+        .chat-messages {
+            padding: 1.5rem;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .chat-message {
+            margin-bottom: 1rem;
+        }
+
+        .chat-message.bot .message-content {
+            background: var(--color-bg-elevated);
+            padding: 1rem;
+            border-radius: 1rem;
+            border-bottom-left-radius: 0.25rem;
+        }
+
+        .message-content p {
+            margin-bottom: 0.75rem;
+            font-size: 0.9375rem;
+            line-height: 1.6;
+        }
+
+        .message-content p:last-child {
+            margin-bottom: 0;
+        }
+
+        .message-note {
+            font-size: 0.75rem;
+            color: var(--color-text-muted);
+            border-top: 1px solid var(--color-border);
+            padding-top: 0.75rem;
+            margin-top: 0.75rem;
+        }
+
+        .chat-input {
+            padding: 1rem 1.5rem 1.5rem;
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .chat-input input {
+            flex: 1;
+            background: var(--color-bg-elevated);
+            border: 1px solid var(--color-border);
+            border-radius: 0.75rem;
+            padding: 0.75rem 1rem;
+            color: var(--color-text);
+            font-size: 0.9375rem;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .chat-input input:focus {
+            border-color: var(--color-primary);
+        }
+
+        .chat-input button {
+            width: 44px;
+            height: 44px;
+            background: var(--color-primary);
+            border: none;
+            border-radius: 0.75rem;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s;
+        }
+
+        .chat-input button:hover {
+            background: var(--color-primary-hover);
+        }
+
+        /* Modal */
+        .modal {
+            position: fixed;
+            inset: 0;
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             opacity: 0;
-            transform: translateY(20px);
-            animation: fadeInUp 0.6s forwards;
+            visibility: hidden;
+            transition: all 0.3s;
         }
-        
-        @keyframes fadeInUp {
-            to {
-                opacity: 1;
-                transform: translateY(0);
+
+        .modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+        }
+
+        .modal-content {
+            position: relative;
+            background: var(--color-surface);
+            border: 1px solid var(--color-border);
+            border-radius: 1.5rem;
+            padding: 2rem;
+            width: 90%;
+            max-width: 480px;
+            transform: scale(0.95);
+            transition: transform 0.3s var(--ease-out-expo);
+        }
+
+        .modal.active .modal-content {
+            transform: scale(1);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            width: 40px;
+            height: 40px;
+            background: transparent;
+            border: none;
+            color: var(--color-text-secondary);
+            font-size: 1.5rem;
+            cursor: pointer;
+            border-radius: 0.5rem;
+            transition: all 0.3s;
+        }
+
+        .modal-close:hover {
+            background: var(--color-bg-elevated);
+            color: var(--color-text);
+        }
+
+        .auth-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .auth-tab {
+            padding: 0.75rem 0;
+            background: transparent;
+            border: none;
+            color: var(--color-text-secondary);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            position: relative;
+            transition: color 0.3s;
+        }
+
+        .auth-tab.active {
+            color: var(--color-text);
+        }
+
+        .auth-tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--color-primary);
+        }
+
+        .auth-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .auth-form.hidden {
+            display: none;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .form-group label {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--color-text-secondary);
+        }
+
+        .form-group input {
+            padding: 0.875rem 1rem;
+            background: var(--color-bg-elevated);
+            border: 1px solid var(--color-border);
+            border-radius: 0.75rem;
+            color: var(--color-text);
+            font-size: 0.9375rem;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus {
+            border-color: var(--color-primary);
+        }
+
+        .form-error {
+            color: #ef4444;
+            font-size: 0.875rem;
+        }
+
+        .btn-block {
+            width: 100%;
+            justify-content: center;
+        }
+
+        /* Scroll Reveal Animation */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s var(--ease-out-expo);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Reduced Motion */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+            
+            html {
+                scroll-behavior: auto;
             }
         }
     </style>
 </head>
+<body>
+    <!-- Preloader -->
+    <div id="preloader" class="preloader" aria-hidden="true">
+        <div class="preloader-content">
+            <div class="preloader-spinner"></div>
+            <p>Loading experience...</p>
+        </div>
+    </div>
+    
+    <!-- Skip to Main Content -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    
+    <!-- Navigation Header -->
+    <header class="site-header" id="header">
+        <div class="header-container">
+            <div class="header-brand">
+                <a href="/" aria-label="Budget Ndio Story Home">
+                    <svg class="header-logo" viewBox="0 0 200 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <text x="0" y="30" fill="var(--color-neue-montreal)" font-family="Inter" font-weight="800" font-size="24">Budget</text>
+                        <text x="95" y="30" fill="var(--color-text)" font-family="Inter" font-weight="600" font-size="24">Ndio Story</text>
+                    </svg>
+                </a>
+            </div>
+            
+            <nav class="main-nav" aria-label="Main navigation">
+                <ul class="nav-list">
+                    <li><a href="/reports/" class="nav-link">Budget Reports</a></li>
+                    <li><a href="/learn/" class="nav-link">Learn</a></li>
+                    <li><a href="/blogs/" class="nav-link">Articles</a></li>
+                    <li><a href="/about/" class="nav-link">About</a></li>
+                </ul>
+            </nav>
+            
+            <div class="header-actions">
+                <div class="social-links">
+                    <a href="https://www.facebook.com/profile.php?id=61586898487932" target="_blank" rel="noopener noreferrer" aria-label="Facebook" class="social-link">
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+                    </a>
+                    <a href="https://www.instagram.com/budgetndiostory" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="social-link">
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"></line></svg>
+                    </a>
+                    <a href="https://www.youtube.com/@BudgetNdioStory" target="_blank" rel="noopener noreferrer" aria-label="YouTube" class="social-link">
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17"></path><path d="m10 15 5-3-5-3z"></path></svg>
+                    </a>
+                    <a href="https://x.com/BudgetNdioStory" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)" class="social-link">
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path></svg>
+                    </a>
+                </div>
+                
+                <a href="/donate/" class="btn btn-primary donate-btn">
+                    <span>DONATE!</span>
+                    <span class="btn-icon">↗</span>
+                </a>
+                
+                <button class="mobile-menu-toggle" id="menu-toggle" aria-label="Toggle menu" aria-expanded="false">
+                    <span class="menu-icon"></span>
+                </button>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Mobile Navigation -->
+    <div class="mobile-nav" id="mobile-nav" aria-hidden="true">
+        <nav>
+            <ul class="mobile-nav-list">
+                <li><a href="/reports/" class="mobile-nav-link">Budget Reports</a></li>
+                <li><a href="/learn/" class="mobile-nav-link">Learn</a></li>
+                <li><a href="/blogs/" class="mobile-nav-link">Articles</a></li>
+                <li><a href="/about/" class="mobile-nav-link">About</a></li>
+                <li><a href="/donate/" class="mobile-nav-link">Donate</a></li>
+            </ul>
+        </nav>
+    </div>
+    
+    <!-- Main Content -->
+    <main id="main-content">
+        <!-- Hero Section -->
+        <section class="hero-section" aria-labelledby="hero-title">
+            <div class="hero-video-container">
+                <video class="hero-video" autoplay loop muted playsinline poster="https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=1920&q=80">
+                    <source src="https://assets.mixkit.co/videos/preview/mixkit-abstract-technology-network-connections-27611-large.mp4" type="video/mp4">
+                </video>
+                <div class="hero-overlay"></div>
+            </div>
+            
+            <div class="hero-content">
+                <span class="hero-badge">
+                    <span class="badge-dot"></span>
+                    Kenya Budget Transparency
+                </span>
+                
+                <h1 id="hero-title" class="hero-title">
+                    Follow the Budget.<br>
+                    <span class="hero-title-highlight">Find the Story.</span>
+                </h1>
+                
+                <p class="hero-description">
+                    We turn Kenya's national and county budgets into clear insights, practical analysis, 
+                    and trackable evidence to enhance youth participation and accountability.
+                </p>
+                
+                <div class="hero-actions">
+                    <a href="/auth/sign-up/" class="btn btn-primary btn-lg">
+                        Get Started
+                        <span class="btn-icon">↗</span>
+                    </a>
+                    <a href="/reports/" class="btn btn-outline btn-lg">
+                        Explore Reports
+                    </a>
+                </div>
+                
+                <div class="hero-social-proof">
+                    <ul class="avatar-list">
+                        <li><img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&h=100&fit=crop" alt="User" width="40" height="40"></li>
+                        <li><img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=100&h=100&fit=crop" alt="User" width="40" height="40"></li>
+                        <li><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop" alt="User" width="40" height="40"></li>
+                        <li><img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop" alt="User" width="40" height="40"></li>
+                    </ul>
+                    <div class="social-proof-text">
+                        <div class="rating">
+                            <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+                        </div>
+                        <p>Trusted by <strong>10,000+</strong> Kenyans</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="scroll-indicator" onclick="document.getElementById('announcements').scrollIntoView({behavior: 'smooth'})">
+                <span>Scroll</span>
+            </div>
+        </section>
+        
+        <!-- Announcement Marquee -->
+        <section id="announcements" class="announcement-bar" aria-label="Announcements">
+            <div class="marquee-container">
+                <div class="marquee-content">
+                    <div class="marquee-item">
+                        <span class="badge-new">New</span>
+                        <span class="marquee-title">Budget 101 · Learn hub is live</span>
+                        <span class="marquee-desc">Start with BPS 2026 and move from "confused" to "I can explain this."</span>
+                    </div>
+                    <div class="marquee-item">
+                        <span class="badge-creators">Creators</span>
+                        <span class="marquee-title">Visual budget stories for TikTok, IG & YouTube</span>
+                        <span class="marquee-desc">Briefs, hooks and formats that make public finance scroll‑stopping.</span>
+                    </div>
+                    <div class="marquee-item">
+                        <span class="badge-civic">Civic windows</span>
+                        <span class="marquee-title">Track key dates in Kenya's budget calendar</span>
+                        <span class="marquee-desc">From BPS to county barazas, we surface when your voice matters most.</span>
+                    </div>
+                    <div class="marquee-item">
+                        <span class="badge-new">New</span>
+                        <span class="marquee-title">Budget 101 · Learn hub is live</span>
+                        <span class="marquee-desc">Start with BPS 2026 and move from "confused" to "I can explain this."</span>
+                    </div>
+                    <div class="marquee-item">
+                        <span class="badge-creators">Creators</span>
+                        <span class="marquee-title">Visual budget stories for TikTok, IG & YouTube</span>
+                        <span class="marquee-desc">Briefs, hooks and formats that make public finance scroll‑stopping.</span>
+                    </div>
+                    <div class="marquee-item">
+                        <span class="badge-civic">Civic windows</span>
+                        <span class="marquee-title">Track key dates in Kenya's budget calendar</span>
+                        <span class="marquee-desc">From BPS to county barazas, we surface when your voice matters most.</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- About Section -->
+        <section class="section about-section" aria-labelledby="about-title">
+            <div class="container">
+                <div class="grid-2">
+                    <div class="about-content reveal">
+                        <p class="section-label">Youth-first public finance</p>
+                        <h2 id="about-title" class="section-title">A premium home for Kenya's budget story.</h2>
+                        <p class="section-description">
+                            We pair serious fiscal analysis with cinematic storytelling so young Kenyans 
+                            can see where money starts, where it moves, and what actually lands on the ground.
+                        </p>
+                        
+                        <div class="about-actions">
+                            <a href="/reports/" class="btn btn-primary">
+                                Browse latest reports
+                                <span class="btn-icon">→</span>
+                            </a>
+                            <a href="/take-action/" class="btn btn-outline">
+                                Join as a budget storyteller
+                            </a>
+                        </div>
+                        
+                        <div class="about-meta">
+                            <span>Co-created with creators, universities & civic groups.</span>
+                            <span class="separator">•</span>
+                            <span>Always free to access.</span>
+                        </div>
+                    </div>
+                    
+                    <div class="about-card reveal">
+                        <div class="card-header">
+                            <div>
+                                <p class="card-label">Next civic windows</p>
+                                <p class="card-desc">We surface the moments in Kenya's budget calendar that actually need your voice.</p>
+                            </div>
+                            <span class="badge-live">Live tracker</span>
+                        </div>
+                        
+                        <div class="card-links">
+                            <a href="/tracker/" class="card-link">
+                                <div>
+                                    <p class="link-title">Budget reading & debate</p>
+                                    <p class="link-desc">Follow allocations as they're tabled and amended.</p>
+                                </div>
+                                <span class="link-arrow">→</span>
+                            </a>
+                            <a href="/take-action/" class="card-link">
+                                <div>
+                                    <p class="link-title">County public participation</p>
+                                    <p class="link-desc">Templates, briefs, and examples that actually work in a baraza.</p>
+                                </div>
+                                <span class="link-arrow">→</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Impact Stats Section -->
+        <section class="section stats-section" aria-labelledby="stats-title">
+            <div class="container">
+                <div class="section-header reveal">
+                    <div>
+                        <p class="section-label">Impact in numbers</p>
+                        <h2 id="stats-title" class="section-title">A budget platform that starts with people, not PDFs.</h2>
+                        <p class="section-description">
+                            We work with analysts, creators and organizers to keep Kenya's budget story 
+                            measurable, searchable and shareable.
+                        </p>
+                    </div>
+                    <p class="section-note" style="color: var(--color-text-muted); font-size: 0.875rem; max-width: 300px;">
+                        All numbers are rounded, regularly updated and linked back to source documents where possible.
+                    </p>
+                </div>
+                
+                <div class="stats-grid">
+                    <article class="stat-card reveal">
+                        <div class="stat-icon">
+                            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path></svg>
+                        </div>
+                        <span class="stat-label">Reports</span>
+                        <div class="stat-value" data-count="10">0+</div>
+                        <p class="stat-desc">Years of Budget Reports Analyzed</p>
+                    </article>
+                    
+                    <article class="stat-card reveal">
+                        <div class="stat-icon">
+                            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg>
+                        </div>
+                        <span class="stat-label">People</span>
+                        <div class="stat-value" data-count="15000">0+</div>
+                        <p class="stat-desc">Kenyans Reached</p>
+                    </article>
+                    
+                    <article class="stat-card reveal">
+                        <div class="stat-icon">
+                            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                        </div>
+                        <span class="stat-label">Network</span>
+                        <div class="stat-value" data-count="47">0</div>
+                        <p class="stat-desc">Counties & Contexts Covered</p>
+                    </article>
+                    
+                    <article class="stat-card reveal">
+                        <div class="stat-icon">
+                            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="m11 17 2 2a1 1 0 1 0 3-3"></path><path d="m14 14 2.5 2.5a1 1 0 1 0 3-3l-3.88-3.88a3 3 0 0 0-4.24 0l-.88.88a1 1 0 1 1-3-3l2.81-2.81a5.79 5.79 0 0 1 7.06-.87l.47.28a2 2 0 0 0 1.42.25L21 4"></path></svg>
+                        </div>
+                        <span class="stat-label">Network</span>
+                        <div class="stat-value" data-count="20">0+</div>
+                        <p class="stat-desc">Partner Organizations</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+        
+        <!-- How It Works Section -->
+        <section class="section how-it-works-section" aria-labelledby="how-title">
+            <div class="container">
+                <div class="section-header reveal">
+                    <div>
+                        <p class="section-label">How Budget Ndio Story works</p>
+                        <h2 id="how-title" class="section-title">Three simple moves from document to story to pressure.</h2>
+                    </div>
+                    <p class="section-description">
+                        Every feature on the platform mirrors this flow so you never lose track 
+                        of where you are in the process.
+                    </p>
+                </div>
+                
+                <div class="steps-grid">
+                    <article class="step-card reveal">
+                        <div class="step-header">
+                            <span class="step-number">01</span>
+                            <div class="step-icon">
+                                <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 7v14"></path><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"></path></svg>
+                            </div>
+                        </div>
+                        <h3 class="step-title">Browse Reports</h3>
+                        <p class="step-description">
+                            Explore simplified budget documents from national and county levels in plain language.
+                        </p>
+                    </article>
+                    
+                    <article class="step-card reveal">
+                        <div class="step-header">
+                            <span class="step-number">02</span>
+                            <div class="step-icon">
+                                <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v16a2 2 0 0 0 2 2h16"></path><path d="M18 17V9"></path><path d="M13 17V5"></path><path d="M8 17v-3"></path></svg>
+                            </div>
+                        </div>
+                        <h3 class="step-title">Analyze Insights</h3>
+                        <p class="step-description">
+                            Dive deep into sector analysis, track changes over time, and understand what it means for you.
+                        </p>
+                    </article>
+                    
+                    <article class="step-card reveal">
+                        <div class="step-header">
+                            <span class="step-number">03</span>
+                            <div class="step-icon">
+                                <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 14h2a2 2 0 1 0 0-4h-3c-.6 0-1.1.2-1.4.6L3 16"></path><path d="m7 20 1.6-1.4c.3-.4.8-.6 1.4-.6h4c1.1 0 2.1-.4 2.8-1.2l4.6-4.4a2 2 0 0 0-2.75-2.91l-4.2 3.9"></path><path d="m2 15 6 6"></path></svg>
+                            </div>
+                        </div>
+                        <h3 class="step-title">Take Action</h3>
+                        <p class="step-description">
+                            Use templates, join trainings, and participate in budget processes to make your voice heard.
+                        </p>
+                    </article>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Latest Reports Section -->
+        <section class="section reports-section" aria-labelledby="reports-title">
+            <div class="container">
+                <div class="section-header reveal">
+                    <div>
+                        <p class="section-label">Fresh from the budget</p>
+                        <h2 id="reports-title" class="section-title">Latest reports and visual explainers.</h2>
+                    </div>
+                    <a href="/reports/" class="btn btn-outline btn-sm" style="padding: 0.5rem 1rem; font-size: 0.875rem;">
+                        View all reports
+                        <span class="btn-icon">→</span>
+                    </a>
+                </div>
+                
+                <div class="reports-list">
+                    <article class="report-card reveal">
+                        <div class="report-meta">
+                            <span class="report-type">National</span>
+                            <span class="report-date">Feb 2025</span>
+                        </div>
+                        <div class="report-content">
+                            <h3 class="report-title">FY 2025/26 Budget at a Glance</h3>
+                            <p class="report-description">Key highlights from the national budget reading</p>
+                        </div>
+                        <a href="/reports/" class="report-link">
+                            Read brief
+                            <span class="link-arrow">→</span>
+                        </a>
+                    </article>
+                    
+                    <article class="report-card reveal">
+                        <div class="report-meta">
+                            <span class="report-type">Sector Analysis</span>
+                            <span class="report-date">Jan 2025</span>
+                        </div>
+                        <div class="report-content">
+                            <h3 class="report-title">Health Sector Budget Analysis</h3>
+                            <p class="report-description">Where healthcare funding is going and what it means</p>
+                        </div>
+                        <a href="/reports/" class="report-link">
+                            Read brief
+                            <span class="link-arrow">→</span>
+                        </a>
+                    </article>
+                    
+                    <article class="report-card reveal">
+                        <div class="report-meta">
+                            <span class="report-type">County</span>
+                            <span class="report-date">Dec 2024</span>
+                        </div>
+                        <div class="report-content">
+                            <h3 class="report-title">Nairobi County Budget Brief</h3>
+                            <p class="report-description">Understanding the city budget for residents</p>
+                        </div>
+                        <a href="/reports/" class="report-link">
+                            Read brief
+                            <span class="link-arrow">→</span>
+                        </a>
+                    </article>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Partners Section -->
+        <section class="section partners-section" aria-labelledby="partners-title">
+            <div class="container">
+                <div class="section-header centered reveal">
+                    <div>
+                        <p class="section-label">Led by storytellers</p>
+                        <h2 id="partners-title" class="section-title">A Kenya-wide consortium at the intersection of media, data and organizing.</h2>
+                        <p class="section-description">
+                            Budget Ndio Story is led by <strong>The Continental Pot, Colour Twist Media,</strong> 
+                            and <strong>Sen Media & Events</strong>, working with creators, universities, civil society 
+                            and partners across the country.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="partners-grid">
+                    <a href="https://continentalpot.africa" target="_blank" rel="noopener noreferrer" class="partner-card reveal">
+                        <svg class="partner-logo" viewBox="0 0 200 60" fill="none">
+                            <text x="10" y="40" fill="#666" font-family="Inter" font-weight="700" font-size="20">The Continental Pot</text>
+                        </svg>
+                        <span class="partner-name">The Continental Pot</span>
+                    </a>
+                    
+                    <a href="https://colortwistmedia.co.ke" target="_blank" rel="noopener noreferrer" class="partner-card reveal">
+                        <svg class="partner-logo" viewBox="0 0 200 60" fill="none">
+                            <text x="10" y="40" fill="#666" font-family="Inter" font-weight="700" font-size="20">Colour Twist</text>
+                        </svg>
+                        <span class="partner-name">Colour Twist Media</span>
+                    </a>
+                    
+                    <a href="https://senmedia-events.co.ke" target="_blank" rel="noopener noreferrer" class="partner-card reveal">
+                        <svg class="partner-logo" viewBox="0 0 200 60" fill="none">
+                            <text x="10" y="40" fill="#666" font-family="Inter" font-weight="700" font-size="20">Sen Media</text>
+                        </svg>
+                        <span class="partner-name">Sen Media & Events</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Donate Section -->
+        <section class="section donate-section" aria-labelledby="donate-title">
+            <div class="container">
+                <div class="donate-content reveal">
+                    <div class="donate-badge">
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path></svg>
+                        Support Our Work
+                    </div>
+                    
+                    <h2 id="donate-title" class="donate-title">Help Us Keep Kenya's Budget Transparent</h2>
+                    
+                    <p class="donate-description">
+                        Budget Ndio Story is a youth-led initiative making budget information accessible 
+                        to all Kenyans. Your support helps us continue this work—producing reports, 
+                        training champions, and keeping government accountable.
+                    </p>
+                    
+                    <a href="/donate/" class="btn btn-primary btn-lg">
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path></svg>
+                        Donate Now
+                    </a>
+                    
+                    <div class="donate-meta">
+                        <div class="meta-item">
+                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M2 12h20"></path><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                            <span>We accept international donations</span>
+                        </div>
+                        <div class="meta-item">
+                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>
+                            <span>Contact us for partnership: info@budgetndiostory.org</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="/" class="footer-logo">
+                        <svg viewBox="0 0 200 40" fill="none" style="height: 40px;">
+                            <text x="0" y="30" fill="#22c55e" font-family="Inter" font-weight="800" font-size="24">Budget</text>
+                            <text x="95" y="30" fill="#fafafa" font-family="Inter" font-weight="600" font-size="24">Ndio Story</text>
+                        </svg>
+                    </a>
+                    <p class="footer-description">
+                        We turn national and county budgets into clear insights, practical analysis, 
+                        and trackable evidence to enhance youth participation and accountability.
+                    </p>
+                    <div class="footer-social">
+                        <a href="https://www.facebook.com/profile.php?id=61586898487932" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+                            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+                        </a>
+                        <a href="https://www.youtube.com/@BudgetNdioStory" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
+                            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17"></path><path d="m10 15 5-3-5-3z"></path></svg>
+                        </a>
+                        <a href="https://www.instagram.com/budgetndiostory" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"></line></svg>
+                        </a>
+                        <a href="https://x.com/BudgetNdioStory" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)">
+                            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path></svg>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="footer-links">
+                    <h4>Explore</h4>
+                    <ul>
+                        <li><a href="/reports/">Reports</a></li>
+                        <li><a href="/insights/">Analysis</a></li>
+                        <li><a href="/tracker/">Tracker</a></li>
+                        <li><a href="/take-action/">Take Action</a></li>
+                        <li><a href="/learn/">Learn</a></li>
+                        <li><a href="/news/">News</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-links">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="/about/">About Us</a></li>
+                        <li><a href="/about/">Partner With Us</a></li>
+                        <li><a href="/about/">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-links">
+                    <h4>Transparency</h4>
+                    <ul>
+                        <li><a href="/accuracy/">Accuracy Commitment</a></li>
+                        <li><a href="/corrections/">Corrections</a></li>
+                        <li><a href="/sources/">Sources</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>©2026 BudgetNdioStory. All Rights Reserved</p>
+                <p>Follow the Budget. Find the Story.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Support Chat Widget -->
+    <button class="chat-widget-toggle" id="chat-toggle" aria-label="Open Support Desk">
+        <span>?</span>
+    </button>
+    
+    <div class="chat-widget" id="chat-widget" aria-hidden="true">
+        <div class="chat-header">
+            <div class="chat-header-info">
+                <span class="chat-avatar">?</span>
+                <div>
+                    <h3>Support Desk</h3>
+                    <p><span class="online-dot"></span>Online • Typically replies in minutes</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="chat-messages" id="chat-messages">
+            <div class="chat-message bot">
+                <div class="message-content">
+                    <p>Welcome to <strong>BudgetNdioStory Support Desk</strong>! 👋</p>
+                    <p>I'm here to help you with any questions or issues you may have. How can I assist you today?</p>
+                    <p class="message-note">💡 I use AI trained on public budget documents. Your conversations help us improve but aren't shared with third parties.</p>
+                </div>
+            </div>
+        </div>
+        
+        <form class="chat-input" id="chat-form">
+            <input type="text" placeholder="Type your message..." aria-label="Type your message">
+            <button type="submit" aria-label="Send message">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z"></path><path d="m21.854 2.147-10.94 10.939"></path></svg>
+            </button>
+        </form>
+    </div>
+    
+    <!-- Authentication Modal -->
+    <div class="modal" id="auth-modal" aria-hidden="true" role="dialog" aria-labelledby="auth-modal-title">
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <button class="modal-close" aria-label="Close modal">×</button>
+            
+            <div class="auth-tabs">
+                <button class="auth-tab active" data-tab="login">Sign In</button>
+                <button class="auth-tab" data-tab="register">Sign Up</button>
+            </div>
+            
+            <form class="auth-form" id="login-form">
+                <div class="form-group">
+                    <label for="login-email">Email</label>
+                    <input type="email" id="login-email" name="email" required autocomplete="email">
+                </div>
+                
+                <div class="form-group">
+                    <label for="login-password">Password</label>
+                    <input type="password" id="login-password" name="password" required autocomplete="current-password">
+                </div>
+                
+                <div class="form-error" id="login-error"></div>
+                
+                <button type="submit" class="btn btn-primary btn-block">
+                    Sign In
+                </button>
+            </form>
+            
+            <form class="auth-form hidden" id="register-form">
+                <div class="form-group">
+                    <label for="register-name">Full Name</label>
+                    <input type="text" id="register-name" name="name" required autocomplete="name">
+                </div>
+                
+                <div class="form-group">
+                    <label for="register-email">Email</label>
+                    <input type="email" id="register-email" name="email" required autocomplete="email">
+                </div>
+                
+                <div class="form-group">
+                    <label for="register-password">Password</label>
+                    <input type="password" id="register-password" name="password" required autocomplete="new-password">
+                </div>
+                
+                <div class="form-error" id="register-error"></div>
+                
+                <button type="submit" class="btn btn-primary btn-block">
+                    Create Account
+                </button>
+            </form>
+        </div>
+    </div>
+    
+    <script>
+        // Preloader
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('preloader').classList.add('hidden');
+            }, 500);
+        });
 
+        // Header scroll effect
+        const header = document.getElementById('header');
+        let lastScroll = 0;
+
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+            
+            if (currentScroll > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+            
+            lastScroll = currentScroll;
+        });
+
+        // Mobile menu toggle
+        const menuToggle = document.getElementById('menu-toggle');
+        const mobileNav = document.getElementById('mobile-nav');
+
+        menuToggle.addEventListener('click', () => {
+            menuToggle.classList.toggle('active');
+            mobileNav.classList.toggle('active');
+            const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
+            menuToggle.setAttribute('aria-expanded', !isExpanded);
+            mobileNav.setAttribute('aria-hidden', isExpanded);
+        });
+
+        // Close mobile menu on link click
+        document.querySelectorAll('.mobile-nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                menuToggle.classList.remove('active');
+                mobileNav.classList.remove('active');
+                menuToggle.setAttribute('aria-expanded', 'false');
+                mobileNav.setAttribute('aria-hidden', 'true');
+            });
+        });
+
+        // Chat widget toggle
+        const chatToggle = document.getElementById('chat-toggle');
+        const chatWidget = document.getElementById('chat-widget');
+
+        chatToggle.addEventListener('click', () => {
+            chatWidget.classList.toggle('active');
+            const isHidden = chatWidget.getAttribute('aria-hidden') === 'true';
+            chatWidget.setAttribute('aria-hidden', !isHidden);
+        });
+
+        // Chat form submission
+        document.getElementById('chat-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const input = e.target.querySelector('input');
+            const message = input.value.trim();
+            
+            if (message) {
+                // Add user message
+                const messagesContainer = document.getElementById('chat-messages');
+                const userMessage = document.createElement('div');
+                userMessage.className = 'chat-message';
+                userMessage.innerHTML = `
+                    <div class="message-content" style="background: var(--color-primary); color: white; border-bottom-right-radius: 0.25rem; border-bottom-left-radius: 1rem; text-align: right;">
+                        <p>${message}</p>
+                    </div>
+                `;
+                messagesContainer.appendChild(userMessage);
+                input.value = '';
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+                
+                // Simulate bot response
+                setTimeout(() => {
+                    const botMessage = document.createElement('div');
+                    botMessage.className = 'chat-message bot';
+                    botMessage.innerHTML = `
+                        <div class="message-content">
+                            <p>Thanks for your message! Our team will get back to you shortly. In the meantime, check out our <a href="/learn/" style="color: var(--color-primary);">Learn section</a> for budget basics.</p>
+                        </div>
+                    `;
+                    messagesContainer.appendChild(botMessage);
+                    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+                }, 1000);
+            }
+        });
+
+        // Auth modal
+        const authModal = document.getElementById('auth-modal');
+        const modalClose = document.querySelector('.modal-close');
+        const authTabs = document.querySelectorAll('.auth-tab');
+        const loginForm = document.getElementById('login-form');
+        const registerForm = document.getElementById('register-form');
+
+        // Open modal when clicking Get Started
+        document.querySelector('.hero-actions .btn-primary').addEventListener('click', (e) => {
+            e.preventDefault();
+            authModal.classList.add('active');
+            authModal.setAttribute('aria-hidden', 'false');
+        });
+
+        modalClose.addEventListener('click', () => {
+            authModal.classList.remove('active');
+            authModal.setAttribute('aria-hidden', 'true');
+        });
+
+        authModal.querySelector('.modal-overlay').addEventListener('click', () => {
+            authModal.classList.remove('active');
+            authModal.setAttribute('aria-hidden', 'true');
+        });
+
+        authTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                authTabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                
+                if (tab.dataset.tab === 'login') {
+                    loginForm.classList.remove('hidden');
+                    registerForm.classList.add('hidden');
+                } else {
+                    loginForm.classList.add('hidden');
+                    registerForm.classList.remove('hidden');
+                }
+            });
+        });
+
+        // Form submissions
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            document.getElementById('login-error').textContent = 'Demo mode: Login functionality would connect to backend API';
+        });
+
+        registerForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            document.getElementById('register-error').textContent = 'Demo mode: Registration functionality would connect to backend API';
+        });
+
+        // Scroll reveal animation
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Counter animation for stats
+        const counterObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const target = entry.target;
+                    const count = parseInt(target.dataset.count);
+                    const duration = 2000;
+                    const step = count / (duration / 16);
+                    let current = 0;
+                    
+                    const timer = setInterval(() => {
+                        current += step;
+                        if (current >= count) {
+                            target.textContent = count.toLocaleString() + (target.textContent.includes('+') ? '+' : '');
+                            clearInterval(timer);
+                        } else {
+                            target.textContent = Math.floor(current).toLocaleString() + (target.textContent.includes('+') ? '+' : '');
+                        }
+                    }, 16);
+                    
+                    counterObserver.unobserve(target);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        document.querySelectorAll('.stat-value').forEach(stat => {
+            counterObserver.observe(stat);
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Keyboard navigation for modal
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && authModal.classList.contains('active')) {
+                authModal.classList.remove('active');
+                authModal.setAttribute('aria-hidden', 'true');
+            }
+        });
+    </script>
+</body>
 </html>

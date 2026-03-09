@@ -121,13 +121,9 @@
                         <a href="{% url 'video-update' video.pk %}" class="p-2 text-muted-foreground hover:text-primary transition-colors" title="Edit">
                             <i class="ph ph-pencil-simple text-xl"></i>
                         </a>
-                        <button 
-                            data-delete-confirm="Are you sure you want to delete '{{ video.title }}'?"
-                            data-delete-url="/api/v1/content/videos/{{ video.pk }}/"
-                            class="p-2 text-muted-foreground hover:text-destructive transition-colors delete-btn" 
-                            title="Delete">
+                        <a href="{% url 'video-delete' video.pk %}" class="p-2 text-muted-foreground hover:text-destructive transition-colors delete-btn" title="Delete">
                             <i class="ph ph-trash text-xl"></i>
-                        </button>
+                        </a>
                     </div>
                 </td>
             </tr>

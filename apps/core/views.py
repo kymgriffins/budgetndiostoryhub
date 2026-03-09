@@ -1,5 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.conf import settings
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.forms import AuthenticationForm
 
 
 def api_docs(request):
@@ -67,3 +69,22 @@ def register_page(request):
     else:
         form = UserCreationForm()
     return render(request, 'auth/register.html', {'form': form})
+
+
+def login_page(request):
+    """Serve the login page with both login and signup options."""
+    if request.user.is_authenticated:
+        return redirect('dashboard')
+    
+    if request.method == 'POST':
+        form = AuthenticationForm(request, data=request.POST)
+        if form.is_valid():
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                login(request, user)
+                return redirect('dashboard')
+    else:
+        form = AuthenticationForm()
+    return render(request, 'auth/login-new.html', {'form': form})

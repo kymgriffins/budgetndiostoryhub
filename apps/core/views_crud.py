@@ -6,6 +6,53 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 from django.db import models
+from django.http import JsonResponse
+from django.views.decorators.http import require_http_methods
+import logging
+
+logger = logging.getLogger(__name__)
+
+
+class CRUDMixin:
+    """Base mixin for CRUD views with error handling and logging"""
+    
+    def get_success_message(self, action='created'):
+        """Get success message for the action"""
+        return f'{self.model.__name__} {action} successfully!'
+    
+    def get_error_message(self, action='create'):
+        """Get error message for the action"""
+        return f'Failed to {action} {self.model.__name__.lower()}. Please check the form for errors.'
+
+
+# ==================== ACCOUNTS VIEWS ====================
+
+class AdminRequiredMixin(UserPassesTestMixin):
+    """Mixin to require admin user - redirects to login instead of 403"""
+    raise_exception = False  # Don't raise exception, handle manually
+    login_url = 'login_page'  # Redirect to login page
+    
+    def test_func(self):
+        """Check if user is staff member"""
+        if not self.request.user.is_authenticated:
+            logger.warning(f"Unauthorized access attempt to {self.request.path}")
+            return False
+        if not self.request.user.is_staff:
+            logger.warning(f"Non-staff user {self.request.user.email} attempted to access {self.request.path}")
+            return False
+        return True
+    
+    def handle_no_permission(self):
+        """Handle unauthorized access by redirecting to login"""
+        if self.request.user.is_authenticated:
+            # User is logged in but not staff - redirect to home with error
+            messages.error(self.request, 'You do not have permission to access this page.')
+        else:
+            # User is not logged in - redirect to login page
+            messages.error(self.request, 'Please log in to access the dashboard.')
+        # Redirect to login page
+        return redirect('login_page')
+
 
 # Accounts models
 from apps.accounts.models import User, DonorProfile, SponsorProfile, ConsortiumPartner, OrganizationProfile
@@ -44,12 +91,6 @@ from apps.cms.forms import (
 
 
 # ==================== ACCOUNTS VIEWS ====================
-
-class AdminRequiredMixin(UserPassesTestMixin):
-    """Mixin to require admin user"""
-    def test_func(self):
-        return self.request.user.is_staff
-
 
 class AccountsListView(AdminRequiredMixin, ListView):
     """List view for all account-related models"""
@@ -109,8 +150,14 @@ class CategoryCreateView(AdminRequiredMixin, CreateView):
     success_url = reverse_lazy('category-list')
     
     def form_valid(self, form):
-        messages.success(self.request, 'Category created successfully!')
+        messages.success(self.request, f'Category "{form.instance.name}" created successfully!')
+        logger.info(f"Category created: {form.instance.name} by user {self.request.user.email}")
         return super().form_valid(form)
+    
+    def form_invalid(self, form):
+        logger.error(f"Category creation failed: {form.errors}")
+        messages.error(self.request, 'Failed to create category. Please check the form for errors.')
+        return super().form_invalid(form)
 
 
 class CategoryUpdateView(AdminRequiredMixin, UpdateView):
@@ -120,8 +167,14 @@ class CategoryUpdateView(AdminRequiredMixin, UpdateView):
     success_url = reverse_lazy('category-list')
     
     def form_valid(self, form):
-        messages.success(self.request, 'Category updated successfully!')
+        messages.success(self.request, f'Category "{form.instance.name}" updated successfully!')
+        logger.info(f"Category updated: {form.instance.name} by user {self.request.user.email}")
         return super().form_valid(form)
+    
+    def form_invalid(self, form):
+        logger.error(f"Category update failed for pk {self.kwargs.get('pk')}: {form.errors}")
+        messages.error(self.request, 'Failed to update category. Please check the form for errors.')
+        return super().form_invalid(form)
 
 
 class CategoryDeleteView(AdminRequiredMixin, DeleteView):
@@ -130,8 +183,15 @@ class CategoryDeleteView(AdminRequiredMixin, DeleteView):
     success_url = reverse_lazy('category-list')
     
     def form_valid(self, form):
-        messages.success(self.request, 'Category deleted successfully!')
+        category_name = self.object.name
+        messages.success(self.request, f'Category "{category_name}" deleted successfully!')
+        logger.info(f"Category deleted: {category_name} by user {self.request.user.email}")
         return super().form_valid(form)
+    
+    def form_invalid(self, form):
+        logger.error(f"Category deletion failed for pk {self.kwargs.get('pk')}: {form.errors}")
+        messages.error(self.request, 'Failed to delete category. It may be in use by other content.')
+        return super().form_invalid(form)
 
 
 class VideoListView(AdminRequiredMixin, ListView):
@@ -486,6 +546,21 @@ class SponsorAssetCreateView(AdminRequiredMixin, CreateView):
         return super().form_valid(form)
 
 
+class SponsorAssetUpdateView(AdminRequiredMixin, UpdateView):
+    model = SponsorAsset
+    form_class = SponsorAssetForm
+    template_name = 'dashboard/sponsors/asset_form.html'
+    success_url = reverse_lazy('asset-list')
+    
+    def form_valid(self, form):
+        messages.success(self.request, 'Asset updated successfully!')
+        return super().form_valid(form)
+
+    def form_invalid(self, form):
+        messages.error(self.request, 'Failed to update asset. Please check the form for errors.')
+        return super().form_invalid(form)
+
+
 class SponsorAssetDeleteView(AdminRequiredMixin, DeleteView):
     model = SponsorAsset
     template_name = 'dashboard/sponsors/asset_confirm_delete.html'
@@ -719,6 +794,21 @@ class MediaLibraryCreateView(AdminRequiredMixin, CreateView):
         return super().form_valid(form)
 
 
+class MediaLibraryUpdateView(AdminRequiredMixin, UpdateView):
+    model = MediaLibrary
+    form_class = MediaLibraryForm
+    template_name = 'dashboard/cms/media_form.html'
+    success_url = reverse_lazy('media-list')
+    
+    def form_valid(self, form):
+        messages.success(self.request, 'Media updated successfully!')
+        return super().form_valid(form)
+    
+    def form_invalid(self, form):
+        messages.error(self.request, 'Failed to update media. Please check the form for errors.')
+        return super().form_invalid(form)
+
+
 class MediaLibraryDeleteView(AdminRequiredMixin, DeleteView):
     model = MediaLibrary
     template_name = 'dashboard/cms/media_confirm_delete.html'
@@ -784,8 +874,12 @@ class AnalyticsDashboardView(AdminRequiredMixin, ListView):
 
 def dashboard(request):
     """Main dashboard view"""
+    if not request.user.is_authenticated:
+        messages.error(request, 'Please log in to access the dashboard.')
+        return redirect('login_page')
     if not request.user.is_staff:
-        raise PermissionDenied
+        messages.error(request, 'You do not have permission to access this page.')
+        return redirect('login_page')
     
     context = {
         'user_count': User.objects.count(),

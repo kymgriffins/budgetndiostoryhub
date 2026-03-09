@@ -1,12 +1,12 @@
 {% extends 'admin_base.html' %}
 
-{% block title %}Upload Asset - Budget Ndio Story{% endblock %}
+{% block title %}{% if object %}Edit Asset{% else %}Upload Asset{% endif %} - Budget Ndio Story{% endblock %}
 
 {% block content %}
 <div class="max-w-4xl">
     <div class="mb-8">
-        <h1 class="text-3xl font-bold text-dark">Upload New Asset</h1>
-        <p class="text-gray-500 mt-1">Upload a new sponsor asset or file</p>
+        <h1 class="text-3xl font-bold text-dark">{% if object %}Edit Asset{% else %}Upload New Asset{% endif %}</h1>
+        <p class="text-gray-500 mt-1">{% if object %}Update the asset details{% else %}Upload a new sponsor asset or file{% endif %}</p>
     </div>
 
     <form method="post" enctype="multipart/form-data" class="bg-white rounded-xl shadow-sm p-8">
@@ -29,6 +29,7 @@
                 {% endif %}
             </div>
             
+            {% if not object %}
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-2">File *</label>
                 {{ form.file }}
@@ -36,6 +37,20 @@
                 <p class="mt-1 text-sm text-red-600">{{ form.file.errors.0 }}</p>
                 {% endif %}
             </div>
+            {% else %}
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Current File</label>
+                <p class="text-gray-600">{{ object.file.name }}</p>
+                <p class="text-sm text-gray-500 mt-1">Upload a new file to replace the current one</p>
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Replace File</label>
+                {{ form.file }}
+                {% if form.file.errors %}
+                <p class="mt-1 text-sm text-red-600">{{ form.file.errors.0 }}</p>
+                {% endif %}
+            </div>
+            {% endif %}
             
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-2">Description</label>
@@ -49,7 +64,7 @@
                 Cancel
             </a>
             <button type="submit" class="px-6 py-3 bg-bns text-white rounded-lg hover:bg-bns-dark transition-colors">
-                Upload Asset
+                {% if object %}Update Asset{% else %}Upload Asset{% endif %}
             </button>
         </div>
     </form>

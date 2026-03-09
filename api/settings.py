@@ -137,6 +137,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Custom User Model
 AUTH_USER_MODEL = 'accounts.User'
 
+# Login URL for authentication redirects
+LOGIN_URL = '/login/'
+
 # Internationalization
 LANGUAGE_CODE = 'en-us'
 
