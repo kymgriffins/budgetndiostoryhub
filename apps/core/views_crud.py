@@ -136,6 +136,107 @@ class AccountsListView(AdminRequiredMixin, ListView):
 
 # ==================== CONTENT VIEWS ====================
 
+# User CRUD Views
+class UserCreateView(AdminRequiredMixin, CreateView):
+    model = User
+    form_class = UserCreationForm
+    template_name = 'dashboard/accounts/user_form.html'
+    success_url = reverse_lazy('user-list')
+    
+    def form_valid(self, form):
+        messages.success(self.request, 'User created successfully!')
+        return super().form_valid(form)
+
+
+class UserUpdateView(AdminRequiredMixin, UpdateView):
+    model = User
+    form_class = UserChangeForm
+    template_name = 'dashboard/accounts/user_form.html'
+    success_url = reverse_lazy('user-list')
+    
+    def form_valid(self, form):
+        messages.success(self.request, 'User updated successfully!')
+        return super().form_valid(form)
+
+
+class UserDeleteView(AdminRequiredMixin, DeleteView):
+    model = User
+    template_name = 'dashboard/accounts/user_confirm_delete.html'
+    success_url = reverse_lazy('user-list')
+    
+    def form_valid(self, form):
+        messages.success(self.request, 'User deleted successfully!')
+        return super().form_valid(form)
+
+
+# DonorProfile CRUD Views
+class DonorCreateView(AdminRequiredMixin, CreateView):
+    model = DonorProfile
+    form_class = DonorProfileForm
+    template_name = 'dashboard/accounts/donor_form.html'
+    success_url = reverse_lazy('donor-list')
+    
+    def form_valid(self, form):
+        messages.success(self.request, 'Donor created successfully!')
+        return super().form_valid(form)
+
+
+class DonorUpdateView(AdminRequiredMixin, UpdateView):
+    model = DonorProfile
+    form_class = DonorProfileForm
+    template_name = 'dashboard/accounts/donor_form.html'
+    success_url = reverse_lazy('donor-list')
+    
+    def form_valid(self, form):
+        messages.success(self.request, 'Donor updated successfully!')
+        return super().form_valid(form)
+
+
+class DonorDeleteView(AdminRequiredMixin, DeleteView):
+    model = DonorProfile
+    template_name = 'dashboard/accounts/donor_confirm_delete.html'
+    success_url = reverse_lazy('donor-list')
+    
+    def form_valid(self, form):
+        messages.success(self.request, 'Donor deleted successfully!')
+        return super().form_valid(form)
+
+
+# SponsorProfile CRUD Views
+class SponsorCreateView(AdminRequiredMixin, CreateView):
+    model = SponsorProfile
+    form_class = SponsorProfileForm
+    template_name = 'dashboard/accounts/sponsor_form.html'
+    success_url = reverse_lazy('sponsor-list')
+    
+    def form_valid(self, form):
+        messages.success(self.request, 'Sponsor created successfully!')
+        return super().form_valid(form)
+
+
+class SponsorUpdateView(AdminRequiredMixin, UpdateView):
+    model = SponsorProfile
+    form_class = SponsorProfileForm
+    template_name = 'dashboard/accounts/sponsor_form.html'
+    success_url = reverse_lazy('sponsor-list')
+    
+    def form_valid(self, form):
+        messages.success(self.request, 'Sponsor updated successfully!')
+        return super().form_valid(form)
+
+
+class SponsorDeleteView(AdminRequiredMixin, DeleteView):
+    model = SponsorProfile
+    template_name = 'dashboard/accounts/sponsor_confirm_delete.html'
+    success_url = reverse_lazy('sponsor-list')
+    
+    def form_valid(self, form):
+        messages.success(self.request, 'Sponsor deleted successfully!')
+        return super().form_valid(form)
+
+
+# ==================== CONTENT VIEWS ====================
+
 class CategoryListView(AdminRequiredMixin, ListView):
     model = Category
     template_name = 'dashboard/content/category_list.html'

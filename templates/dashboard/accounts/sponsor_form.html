@@ -1,0 +1,184 @@
+{% extends 'admin_base.html' %}
+
+{% block title %}{% if object %}Edit Sponsor{% else %}Create Sponsor{% endif %} - Budget Ndio Story{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl">
+    <div class="mb-8">
+        <h1 class="text-3xl font-bold text-dark">{% if object %}Edit Sponsor{% else %}Create Sponsor{% endif %}</h1>
+        <p class="text-gray-500 mt-1">{% if object %}Update sponsor information{% else %}Add a new sponsor to the system{% endif %}</p>
+    </div>
+
+    <form method="post" enctype="multipart/form-data" class="bg-white rounded-xl shadow-sm p-8">
+        {% csrf_token %}
+        
+        <!-- Basic Info -->
+        <div class="mb-8">
+            <h2 class="text-lg font-semibold text-dark mb-4 pb-2 border-b">Sponsor Details</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">User Account *</label>
+                    {{ form.user }}
+                    {% if form.user.errors %}
+                    <p class="mt-1 text-sm text-red-600">{{ form.user.errors.0 }}</p>
+                    {% endif %}
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Company Name *</label>
+                    {{ form.company_name }}
+                    {% if form.company_name.errors %}
+                    <p class="mt-1 text-sm text-red-600">{{ form.company_name.errors.0 }}</p>
+                    {% endif %}
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Logo</label>
+                    {{ form.logo }}
+                    {% if form.logo.errors %}
+                    <p class="mt-1 text-sm text-red-600">{{ form.logo.errors.0 }}</p>
+                    {% endif %}
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Website</label>
+                    {{ form.website }}
+                    {% if form.website.errors %}
+                    <p class="mt-1 text-sm text-red-600">{{ form.website.errors.0 }}</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        
+        <!-- Contract Details -->
+        <div class="mb-8">
+            <h2 class="text-lg font-semibold text-dark mb-4 pb-2 border-b">Contract Details</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Sponsorship Level *</label>
+                    {{ form.level }}
+                    {% if form.level.errors %}
+                    <p class="mt-1 text-sm text-red-600">{{ form.level.errors.0 }}</p>
+                    {% endif %}
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Contract Value *</label>
+                    {{ form.contract_value }}
+                    {% if form.contract_value.errors %}
+                    <p class="mt-1 text-sm text-red-600">{{ form.contract_value.errors.0 }}</p>
+                    {% endif %}
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Contract Start *</label>
+                    {{ form.contract_start }}
+                    {% if form.contract_start.errors %}
+                    <p class="mt-1 text-sm text-red-600">{{ form.contract_start.errors.0 }}</p>
+                    {% endif %}
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Contract End *</label>
+                    {{ form.contract_end }}
+                    {% if form.contract_end.errors %}
+                    <p class="mt-1 text-sm text-red-600">{{ form.contract_end.errors.0 }}</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        
+        <!-- Sponsor Benefits -->
+        <div class="mb-8">
+            <h2 class="text-lg font-semibold text-dark mb-4 pb-2 border-b">Sponsor Benefits</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Brand Visibility Slots</label>
+                    {{ form.brand_visibility_slots }}
+                    {% if form.brand_visibility_slots.errors %}
+                    <p class="mt-1 text-sm text-red-600">{{ form.brand_visibility_slots.errors.0 }}</p>
+                    {% endif %}
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Dedicated Content Pieces</label>
+                    {{ form.dedicated_content_pieces }}
+                    {% if form.dedicated_content_pieces.errors %}
+                    <p class="mt-1 text-sm text-red-600">{{ form.dedicated_content_pieces.errors.0 }}</p>
+                    {% endif %}
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Event Sponsorships</label>
+                    {{ form.event_sponsorships }}
+                    {% if form.event_sponsorships.errors %}
+                    <p class="mt-1 text-sm text-red-600">{{ form.event_sponsorships.errors.0 }}</p>
+                    {% endif %}
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Account Manager</label>
+                    {{ form.account_manager }}
+                    {% if form.account_manager.errors %}
+                    <p class="mt-1 text-sm text-red-600">{{ form.account_manager.errors.0 }}</p>
+                    {% endif %}
+                </div>
+                
+                <div class="md:col-span-2">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Benefits Claimed (JSON)</label>
+                    {{ form.benefits_claimed }}
+                    {% if form.benefits_claimed.errors %}
+                    <p class="mt-1 text-sm text-red-600">{{ form.benefits_claimed.errors.0 }}</p>
+                    {% endif %}
+                    <p class="mt-1 text-xs text-gray-500">Enter as JSON array, e.g. ["logo_display", "newsletter_mention"]</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Status -->
+        <div class="mb-8">
+            <h2 class="text-lg font-semibold text-dark mb-4 pb-2 border-b">Status</h2>
+            <div class="flex items-center mt-6">
+                {{ form.is_active }}
+                <label class="ml-2 text-sm font-medium text-gray-700">Active Sponsor</label>
+            </div>
+        </div>
+        
+        <!-- Form Actions -->
+        <div class="flex justify-end gap-4 pt-6 border-t">
+            <a href="{% url 'sponsor-list' %}" class="px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors">
+                Cancel
+            </a>
+            <button type="submit" class="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+                {% if object %}Update Sponsor{% else %}Create Sponsor{% endif %}
+            </button>
+        </div>
+    </form>
+</div>
+
+<style>
+    input[type="text"],
+    input[type="url"],
+    input[type="number"],
+    input[type="date"],
+    select,
+    textarea {
+        width: 100%;
+        padding: 0.625rem;
+        border: 1px solid #d1d5db;
+        border-radius: 0.5rem;
+        font-size: 0.875rem;
+        transition: border-color 0.15s;
+    }
+    input:focus, select:focus, textarea:focus {
+        outline: none;
+        border-color: #0066CC;
+        box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1);
+    }
+    input[type="checkbox"] {
+        width: 1.25rem;
+        height: 1.25rem;
+        border-radius: 0.25rem;
+    }
+</style>
+{% endblock %}

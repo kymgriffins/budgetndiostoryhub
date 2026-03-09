@@ -183,9 +183,47 @@
         .sidebar.collapsed {
             width: 80px;
         }
-
+        
         .sidebar.expanded {
             width: 300px;
+        }
+        
+        /* Collapsible menu modules */
+        .menu-module-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.75rem 1rem;
+            cursor: pointer;
+            border-radius: 0.5rem;
+            transition: background-color 0.2s;
+            user-select: none;
+        }
+        
+        .menu-module-header:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        .menu-module-header .chevron {
+            transition: transform 0.3s ease;
+        }
+        
+        .menu-module.collapsed .menu-module-header .chevron {
+            transform: rotate(-90deg);
+        }
+        
+        .menu-module.collapsed .menu-module-items {
+            display: none;
+        }
+        
+        .menu-module .menu-label {
+            padding: 0;
+            margin: 0;
+        }
+        
+        .menu-module-items {
+            overflow: hidden;
+            transition: all 0.3s ease;
         }
 
         /* Main content transition */
@@ -339,10 +377,10 @@
 </head>
 <body class="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 font-sans antialiased">
     <!-- Mobile Overlay -->
-    <div id="sidebar-overlay" class="fixed inset-0 z-40 bg-black/30 backdrop-blur-sm lg:hidden hidden" onclick="toggleSidebar()"></div>
+    <div id="sidebar-overlay" class="fixed inset-0 z-40 bg-black/30 backdrop-blur-sm lg:hidden hidden" onclick="toggleSidebar(event)"></div>
 
     <!-- Sidebar -->
-    <aside id="sidebar" class="sidebar fixed left-0 top-0 z-50 h-screen glass border-r border-gray-200/50 dark:border-gray-700/50 flex flex-col sidebar-expanded">
+    <aside id="sidebar" class="sidebar fixed left-0 top-0 z-50 h-screen glass border-r border-gray-200/50 dark:border-gray-700/50 flex flex-col transition-transform duration-300 lg:translate-x-0 -translate-x-full sidebar-expanded">
         <!-- Logo Section -->
         <div class="flex items-center justify-between h-20 px-5 border-b border-gray-200/50 dark:border-gray-700/50">
             <a href="/" class="flex items-center gap-3 overflow-hidden">
@@ -360,191 +398,230 @@
         </div>
 
         <!-- Navigation -->
-        <nav class="flex-1 overflow-y-auto sidebar-scroll p-4 space-y-2">
-            <!-- Main Menu -->
-            <div class="menu-section">
-                <p class="menu-label px-4 py-3 text-xs font-semibold text-muted-foreground uppercase tracking-widest sidebar-text">
-                    Main
-                </p>
-                <a href="/dashboard/" class="menu-item relative flex items-center gap-3 px-4 py-3 text-sm font-medium {% if request.path == '/dashboard/' %}active{% endif %}">
-                    <div class="nav-indicator absolute left-0 top-1/2 -translate-y-1/2 h-6 bg-white"></div>
-                    <i class="ph ph-house text-xl flex-shrink-0"></i>
-                    <span class="sidebar-text whitespace-nowrap">Dashboard</span>
-                </a>
+        <nav class="flex-1 overflow-y-auto sidebar-scroll p-4 space-y-1">
+            <!-- Main Menu - Always expanded -->
+            <div class="menu-module">
+                <div class="menu-module-header">
+                    <p class="menu-label text-xs font-semibold text-muted-foreground uppercase tracking-widest sidebar-text">
+                        Main
+                    </p>
+                </div>
+                <div class="menu-module-items">
+                    <a href="{% url 'dashboard' %}" class="menu-item relative flex items-center gap-3 px-4 py-3 text-sm font-medium {% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}" aria-current="{% if request.resolver_match.url_name == 'dashboard' %}page{% endif %}">
+                        <div class="nav-indicator absolute left-0 top-1/2 -translate-y-1/2 h-6 bg-white"></div>
+                        <i class="ph ph-house text-xl flex-shrink-0"></i>
+                        <span class="sidebar-text whitespace-nowrap">Dashboard</span>
+                    </a>
+                </div>
             </div>
 
             <!-- Content Menu -->
-            <div class="menu-section pt-4">
-                <p class="menu-label px-4 py-3 text-xs font-semibold text-muted-foreground uppercase tracking-widest sidebar-text">
-                    Content
-                </p>
-                <a href="/dashboard/categories/" class="menu-item relative flex items-center gap-3 px-4 py-3 text-sm font-medium {% if request.path == '/dashboard/categories/' %}active{% endif %}">
-                    <div class="nav-indicator absolute left-0 top-1/2 -translate-y-1/2 h-6 bg-white"></div>
-                    <i class="ph ph-tag text-xl flex-shrink-0"></i>
-                    <span class="sidebar-text whitespace-nowrap">Categories</span>
-                </a>
-                <a href="/dashboard/videos/" class="menu-item relative flex items-center gap-3 px-4 py-3 text-sm font-medium {% if '/dashboard/videos' in request.path %}active{% endif %}">
-                    <div class="nav-indicator absolute left-0 top-1/2 -translate-y-1/2 h-6 bg-white"></div>
-                    <i class="ph ph-video-camera text-xl flex-shrink-0"></i>
-                    <span class="sidebar-text whitespace-nowrap">Videos</span>
-                </a>
-                <a href="/dashboard/playlists/" class="menu-item relative flex items-center gap-3 px-4 py-3 text-sm font-medium {% if '/dashboard/playlists' in request.path %}active{% endif %}">
-                    <div class="nav-indicator absolute left-0 top-1/2 -translate-y-1/2 h-6 bg-white"></div>
-                    <i class="ph ph-list-dashes text-xl flex-shrink-0"></i>
-                    <span class="sidebar-text whitespace-nowrap">Playlists</span>
-                </a>
-                <a href="/dashboard/posts/" class="menu-item relative flex items-center gap-3 px-4 py-3 text-sm font-medium {% if '/dashboard/posts' in request.path %}active{% endif %}">
-                    <div class="nav-indicator absolute left-0 top-1/2 -translate-y-1/2 h-6 bg-white"></div>
-                    <i class="ph ph-article text-xl flex-shrink-0"></i>
-                    <span class="sidebar-text whitespace-nowrap">Blog Posts</span>
-                </a>
-                <a href="/dashboard/news/" class="menu-item relative flex items-center gap-3 px-4 py-3 text-sm font-medium {% if '/dashboard/news' in request.path %}active{% endif %}">
-                    <div class="nav-indicator absolute left-0 top-1/2 -translate-y-1/2 h-6 bg-white"></div>
-                    <i class="ph ph-newspaper text-xl flex-shrink-0"></i>
-                    <span class="sidebar-text whitespace-nowrap">News</span>
-                </a>
+            <div class="menu-module" id="module-content">
+                <div class="menu-module-header" onclick="toggleModule('module-content')" role="button" aria-expanded="false" aria-controls="module-content-items">
+                    <p class="menu-label text-xs font-semibold text-muted-foreground uppercase tracking-widest sidebar-text">
+                        Content
+                    </p>
+                    <i class="ph ph-caret-down chevron text-xs sidebar-text"></i>
+                </div>
+                <div class="menu-module-items">
+                    <a href="{% url 'category-list' %}" class="menu-item relative flex items-center gap-3 px-4 py-3 text-sm font-medium {% if request.resolver_match.url_name == 'category-list' %}active{% endif %}" aria-current="{% if request.resolver_match.url_name == 'category-list' %}page{% endif %}">
+                        <div class="nav-indicator absolute left-0 top-1/2 -translate-y-1/2 h-6 bg-white"></div>
+                        <i class="ph ph-tag text-xl flex-shrink-0"></i>
+                        <span class="sidebar-text whitespace-nowrap">Categories</span>
+                    </a>
+                    <a href="{% url 'video-list' %}" class="menu-item relative flex items-center gap-3 px-4 py-3 text-sm font-medium {% if request.resolver_match.url_name == 'video-list' or request.resolver_match.url_name == 'video-create' or request.resolver_match.url_name == 'video-update' or request.resolver_match.url_name == 'video-delete' %}active{% endif %}" aria-current="{% if request.resolver_match.url_name == 'video-list' %}page{% endif %}">
+                        <div class="nav-indicator absolute left-0 top-1/2 -translate-y-1/2 h-6 bg-white"></div>
+                        <i class="ph ph-video-camera text-xl flex-shrink-0"></i>
+                        <span class="sidebar-text whitespace-nowrap">Videos</span>
+                    </a>
+                    <a href="{% url 'playlist-list' %}" class="menu-item relative flex items-center gap-3 px-4 py-3 text-sm font-medium {% if request.resolver_match.url_name == 'playlist-list' or request.resolver_match.url_name == 'playlist-create' or request.resolver_match.url_name == 'playlist-update' or request.resolver_match.url_name == 'playlist-delete' %}active{% endif %}" aria-current="{% if request.resolver_match.url_name == 'playlist-list' %}page{% endif %}">
+                        <div class="nav-indicator absolute left-0 top-1/2 -translate-y-1/2 h-6 bg-white"></div>
+                        <i class="ph ph-list-dashes text-xl flex-shrink-0"></i>
+                        <span class="sidebar-text whitespace-nowrap">Playlists</span>
+                    </a>
+                    <a href="{% url 'blogpost-list' %}" class="menu-item relative flex items-center gap-3 px-4 py-3 text-sm font-medium {% if request.resolver_match.url_name == 'blogpost-list' or request.resolver_match.url_name == 'blogpost-create' or request.resolver_match.url_name == 'blogpost-update' or request.resolver_match.url_name == 'blogpost-delete' %}active{% endif %}" aria-current="{% if request.resolver_match.url_name == 'blogpost-list' %}page{% endif %}">
+                        <div class="nav-indicator absolute left-0 top-1/2 -translate-y-1/2 h-6 bg-white"></div>
+                        <i class="ph ph-article text-xl flex-shrink-0"></i>
+                        <span class="sidebar-text whitespace-nowrap">Blog Posts</span>
+                    </a>
+                    <a href="{% url 'newsitem-list' %}" class="menu-item relative flex items-center gap-3 px-4 py-3 text-sm font-medium {% if request.resolver_match.url_name == 'newsitem-list' or request.resolver_match.url_name == 'newsitem-create' or request.resolver_match.url_name == 'newsitem-update' or request.resolver_match.url_name == 'newsitem-delete' %}active{% endif %}" aria-current="{% if request.resolver_match.url_name == 'newsitem-list' %}page{% endif %}">
+                        <div class="nav-indicator absolute left-0 top-1/2 -translate-y-1/2 h-6 bg-white"></div>
+                        <i class="ph ph-newspaper text-xl flex-shrink-0"></i>
+                        <span class="sidebar-text whitespace-nowrap">News</span>
+                    </a>
+                </div>
             </div>
 
             <!-- Users Menu -->
-            <div class="menu-section pt-4">
-                <p class="menu-label px-4 py-3 text-xs font-semibold text-muted-foreground uppercase tracking-widest sidebar-text">
-                    Users
-                </p>
-                <a href="/dashboard/users/" class="menu-item relative flex items-center gap-3 px-4 py-3 text-sm font-medium {% if '/dashboard/users' in request.path %}active{% endif %}">
-                    <div class="nav-indicator absolute left-0 top-1/2 -translate-y-1/2 h-6 bg-white"></div>
-                    <i class="ph ph-users text-xl flex-shrink-0"></i>
-                    <span class="sidebar-text whitespace-nowrap">Users</span>
-                </a>
-                <a href="/dashboard/donors/" class="menu-item relative flex items-center gap-3 px-4 py-3 text-sm font-medium {% if '/dashboard/donors' in request.path %}active{% endif %}">
-                    <div class="nav-indicator absolute left-0 top-1/2 -translate-y-1/2 h-6 bg-white"></div>
-                    <i class="ph ph-hand-heart text-xl flex-shrink-0"></i>
-                    <span class="sidebar-text whitespace-nowrap">Donors</span>
-                </a>
-                <a href="/dashboard/sponsors/" class="menu-item relative flex items-center gap-3 px-4 py-3 text-sm font-medium {% if '/dashboard/sponsors' in request.path %}active{% endif %}">
-                    <div class="nav-indicator absolute left-0 top-1/2 -translate-y-1/2 h-6 bg-white"></div>
-                    <i class="ph ph-handshake text-xl flex-shrink-0"></i>
-                    <span class="sidebar-text whitespace-nowrap">Sponsors</span>
-                </a>
-                <a href="/dashboard/partners/" class="menu-item relative flex items-center gap-3 px-4 py-3 text-sm font-medium {% if '/dashboard/partners' in request.path %}active{% endif %}">
-                    <div class="nav-indicator absolute left-0 top-1/2 -translate-y-1/2 h-6 bg-white"></div>
-                    <i class="ph ph-users-three text-xl flex-shrink-0"></i>
-                    <span class="sidebar-text whitespace-nowrap">Partners</span>
-                </a>
+            <div class="menu-module" id="module-users">
+                <div class="menu-module-header" onclick="toggleModule('module-users')" role="button" aria-expanded="false" aria-controls="module-users-items">
+                    <p class="menu-label text-xs font-semibold text-muted-foreground uppercase tracking-widest sidebar-text">
+                        Users
+                    </p>
+                    <i class="ph ph-caret-down chevron text-xs sidebar-text"></i>
+                </div>
+                <div class="menu-module-items">
+                    <a href="{% url 'user-list' %}" class="menu-item relative flex items-center gap-3 px-4 py-3 text-sm font-medium {% if request.resolver_match.url_name == 'user-list' or request.resolver_match.url_name == 'user-create' or request.resolver_match.url_name == 'user-update' or request.resolver_match.url_name == 'user-delete' %}active{% endif %}" aria-current="{% if request.resolver_match.url_name == 'user-list' %}page{% endif %}">
+                        <div class="nav-indicator absolute left-0 top-1/2 -translate-y-1/2 h-6 bg-white"></div>
+                        <i class="ph ph-users text-xl flex-shrink-0"></i>
+                        <span class="sidebar-text whitespace-nowrap">Users</span>
+                    </a>
+                    <a href="{% url 'donor-list' %}" class="menu-item relative flex items-center gap-3 px-4 py-3 text-sm font-medium {% if request.resolver_match.url_name == 'donor-list' or request.resolver_match.url_name == 'donor-create' or request.resolver_match.url_name == 'donor-update' or request.resolver_match.url_name == 'donor-delete' %}active{% endif %}" aria-current="{% if request.resolver_match.url_name == 'donor-list' %}page{% endif %}">
+                        <div class="nav-indicator absolute left-0 top-1/2 -translate-y-1/2 h-6 bg-white"></div>
+                        <i class="ph ph-hand-heart text-xl flex-shrink-0"></i>
+                        <span class="sidebar-text whitespace-nowrap">Donors</span>
+                    </a>
+                    <a href="{% url 'sponsor-list' %}" class="menu-item relative flex items-center gap-3 px-4 py-3 text-sm font-medium {% if request.resolver_match.url_name == 'sponsor-list' or request.resolver_match.url_name == 'sponsor-create' or request.resolver_match.url_name == 'sponsor-update' or request.resolver_match.url_name == 'sponsor-delete' %}active{% endif %}" aria-current="{% if request.resolver_match.url_name == 'sponsor-list' %}page{% endif %}">
+                        <div class="nav-indicator absolute left-0 top-1/2 -translate-y-1/2 h-6 bg-white"></div>
+                        <i class="ph ph-handshake text-xl flex-shrink-0"></i>
+                        <span class="sidebar-text whitespace-nowrap">Sponsors</span>
+                    </a>
+                    <a href="{% url 'partner-list' %}" class="menu-item relative flex items-center gap-3 px-4 py-3 text-sm font-medium {% if request.resolver_match.url_name == 'partner-list' %}active{% endif %}" aria-current="{% if request.resolver_match.url_name == 'partner-list' %}page{% endif %}">
+                        <div class="nav-indicator absolute left-0 top-1/2 -translate-y-1/2 h-6 bg-white"></div>
+                        <i class="ph ph-users-three text-xl flex-shrink-0"></i>
+                        <span class="sidebar-text whitespace-nowrap">Partners</span>
+                    </a>
+                </div>
             </div>
 
             <!-- Marketing Menu -->
-            <div class="menu-section pt-4">
-                <p class="menu-label px-4 py-3 text-xs font-semibold text-muted-foreground uppercase tracking-widest sidebar-text">
-                    Marketing
-                </p>
-                <a href="/dashboard/subscribers/" class="menu-item relative flex items-center gap-3 px-4 py-3 text-sm font-medium {% if '/dashboard/subscribers' in request.path %}active{% endif %}">
-                    <div class="nav-indicator absolute left-0 top-1/2 -translate-y-1/2 h-6 bg-white"></div>
-                    <i class="ph ph-envelope-simple text-xl flex-shrink-0"></i>
-                    <span class="sidebar-text whitespace-nowrap">Subscribers</span>
-                </a>
-                <a href="/dashboard/campaigns/" class="menu-item relative flex items-center gap-3 px-4 py-3 text-sm font-medium {% if '/dashboard/campaigns' in request.path %}active{% endif %}">
-                    <div class="nav-indicator absolute left-0 top-1/2 -translate-y-1/2 h-6 bg-white"></div>
-                    <i class="ph ph-megaphone text-xl flex-shrink-0"></i>
-                    <span class="sidebar-text whitespace-nowrap">Campaigns</span>
-                </a>
+            <div class="menu-module" id="module-marketing">
+                <div class="menu-module-header" onclick="toggleModule('module-marketing')" role="button" aria-expanded="false" aria-controls="module-marketing-items">
+                    <p class="menu-label text-xs font-semibold text-muted-foreground uppercase tracking-widest sidebar-text">
+                        Marketing
+                    </p>
+                    <i class="ph ph-caret-down chevron text-xs sidebar-text"></i>
+                </div>
+                <div class="menu-module-items">
+                    <a href="{% url 'subscriber-list' %}" class="menu-item relative flex items-center gap-3 px-4 py-3 text-sm font-medium {% if request.resolver_match.url_name == 'subscriber-list' or request.resolver_match.url_name == 'subscriber-create' or request.resolver_match.url_name == 'subscriber-update' or request.resolver_match.url_name == 'subscriber-delete' %}active{% endif %}" aria-current="{% if request.resolver_match.url_name == 'subscriber-list' %}page{% endif %}">
+                        <div class="nav-indicator absolute left-0 top-1/2 -translate-y-1/2 h-6 bg-white"></div>
+                        <i class="ph ph-envelope-simple text-xl flex-shrink-0"></i>
+                        <span class="sidebar-text whitespace-nowrap">Subscribers</span>
+                    </a>
+                    <a href="{% url 'campaign-list' %}" class="menu-item relative flex items-center gap-3 px-4 py-3 text-sm font-medium {% if request.resolver_match.url_name == 'campaign-list' or request.resolver_match.url_name == 'campaign-create' or request.resolver_match.url_name == 'campaign-update' or request.resolver_match.url_name == 'campaign-delete' %}active{% endif %}" aria-current="{% if request.resolver_match.url_name == 'campaign-list' %}page{% endif %}">
+                        <div class="nav-indicator absolute left-0 top-1/2 -translate-y-1/2 h-6 bg-white"></div>
+                        <i class="ph ph-megaphone text-xl flex-shrink-0"></i>
+                        <span class="sidebar-text whitespace-nowrap">Campaigns</span>
+                    </a>
+                </div>
             </div>
 
             <!-- Finance Menu -->
-            <div class="menu-section pt-4">
-                <p class="menu-label px-4 py-3 text-xs font-semibold text-muted-foreground uppercase tracking-widest sidebar-text">
-                    Finance
-                </p>
-                <a href="/dashboard/donations/" class="menu-item relative flex items-center gap-3 px-4 py-3 text-sm font-medium {% if '/dashboard/donations' in request.path %}active{% endif %}">
-                    <div class="nav-indicator absolute left-0 top-1/2 -translate-y-1/2 h-6 bg-white"></div>
-                    <i class="ph ph-currency-dollar text-xl flex-shrink-0"></i>
-                    <span class="sidebar-text whitespace-nowrap">Donations</span>
-                </a>
-                <a href="/dashboard/deliverables/" class="menu-item relative flex items-center gap-3 px-4 py-3 text-sm font-medium {% if '/dashboard/deliverables' in request.path %}active{% endif %}">
-                    <div class="nav-indicator absolute left-0 top-1/2 -translate-y-1/2 h-6 bg-white"></div>
-                    <i class="ph ph-check-square-offset text-xl flex-shrink-0"></i>
-                    <span class="sidebar-text whitespace-nowrap">Deliverables</span>
-                </a>
-                <a href="/dashboard/assets/" class="menu-item relative flex items-center gap-3 px-4 py-3 text-sm font-medium {% if '/dashboard/assets' in request.path %}active{% endif %}">
-                    <div class="nav-indicator absolute left-0 top-1/2 -translate-y-1/2 h-6 bg-white"></div>
-                    <i class="ph ph-folder-simple text-xl flex-shrink-0"></i>
-                    <span class="sidebar-text whitespace-nowrap">Assets</span>
-                </a>
+            <div class="menu-module" id="module-finance">
+                <div class="menu-module-header" onclick="toggleModule('module-finance')" role="button" aria-expanded="false" aria-controls="module-finance-items">
+                    <p class="menu-label text-xs font-semibold text-muted-foreground uppercase tracking-widest sidebar-text">
+                        Finance
+                    </p>
+                    <i class="ph ph-caret-down chevron text-xs sidebar-text"></i>
+                </div>
+                <div class="menu-module-items">
+                    <a href="{% url 'donation-list' %}" class="menu-item relative flex items-center gap-3 px-4 py-3 text-sm font-medium {% if request.resolver_match.url_name == 'donation-list' or request.resolver_match.url_name == 'donation-create' or request.resolver_match.url_name == 'donation-update' or request.resolver_match.url_name == 'donation-delete' %}active{% endif %}" aria-current="{% if request.resolver_match.url_name == 'donation-list' %}page{% endif %}">
+                        <div class="nav-indicator absolute left-0 top-1/2 -translate-y-1/2 h-6 bg-white"></div>
+                        <i class="ph ph-currency-dollar text-xl flex-shrink-0"></i>
+                        <span class="sidebar-text whitespace-nowrap">Donations</span>
+                    </a>
+                    <a href="{% url 'deliverable-list' %}" class="menu-item relative flex items-center gap-3 px-4 py-3 text-sm font-medium {% if request.resolver_match.url_name == 'deliverable-list' or request.resolver_match.url_name == 'deliverable-create' or request.resolver_match.url_name == 'deliverable-update' or request.resolver_match.url_name == 'deliverable-delete' %}active{% endif %}" aria-current="{% if request.resolver_match.url_name == 'deliverable-list' %}page{% endif %}">
+                        <div class="nav-indicator absolute left-0 top-1/2 -translate-y-1/2 h-6 bg-white"></div>
+                        <i class="ph ph-check-square-offset text-xl flex-shrink-0"></i>
+                        <span class="sidebar-text whitespace-nowrap">Deliverables</span>
+                    </a>
+                    <a href="{% url 'asset-list' %}" class="menu-item relative flex items-center gap-3 px-4 py-3 text-sm font-medium {% if request.resolver_match.url_name == 'asset-list' or request.resolver_match.url_name == 'asset-create' or request.resolver_match.url_name == 'asset-update' or request.resolver_match.url_name == 'asset-delete' %}active{% endif %}" aria-current="{% if request.resolver_match.url_name == 'asset-list' %}page{% endif %}">
+                        <div class="nav-indicator absolute left-0 top-1/2 -translate-y-1/2 h-6 bg-white"></div>
+                        <i class="ph ph-folder-simple text-xl flex-shrink-0"></i>
+                        <span class="sidebar-text whitespace-nowrap">Assets</span>
+                    </a>
+                </div>
             </div>
 
             <!-- CMS Menu -->
-            <div class="menu-section pt-4">
-                <p class="menu-label px-4 py-3 text-xs font-semibold text-muted-foreground uppercase tracking-widest sidebar-text">
-                    CMS
-                </p>
-                <a href="/dashboard/pages/" class="menu-item relative flex items-center gap-3 px-4 py-3 text-sm font-medium {% if '/dashboard/pages' in request.path and '/dashboard/media' not in request.path %}active{% endif %}">
-                    <div class="nav-indicator absolute left-0 top-1/2 -translate-y-1/2 h-6 bg-white"></div>
-                    <i class="ph ph-file-text text-xl flex-shrink-0"></i>
-                    <span class="sidebar-text whitespace-nowrap">Pages</span>
-                </a>
-                <a href="/dashboard/menus/" class="menu-item relative flex items-center gap-3 px-4 py-3 text-sm font-medium {% if '/dashboard/menus' in request.path %}active{% endif %}">
-                    <div class="nav-indicator absolute left-0 top-1/2 -translate-y-1/2 h-6 bg-white"></div>
-                    <i class="ph ph-list text-xl flex-shrink-0"></i>
-                    <span class="sidebar-text whitespace-nowrap">Menus</span>
-                </a>
-                <a href="/dashboard/menu-items/" class="menu-item relative flex items-center gap-3 px-4 py-3 text-sm font-medium {% if '/dashboard/menu-items' in request.path %}active{% endif %}">
-                    <div class="nav-indicator absolute left-0 top-1/2 -translate-y-1/2 h-6 bg-white"></div>
-                    <i class="ph ph-list-dashes text-xl flex-shrink-0"></i>
-                    <span class="sidebar-text whitespace-nowrap">Menu Items</span>
-                </a>
-                <a href="/dashboard/widgets/" class="menu-item relative flex items-center gap-3 px-4 py-3 text-sm font-medium {% if '/dashboard/widgets' in request.path %}active{% endif %}">
-                    <div class="nav-indicator absolute left-0 top-1/2 -translate-y-1/2 h-6 bg-white"></div>
-                    <i class="ph ph-wrench text-xl flex-shrink-0"></i>
-                    <span class="sidebar-text whitespace-nowrap">Widgets</span>
-                </a>
-                <a href="/dashboard/media/" class="menu-item relative flex items-center gap-3 px-4 py-3 text-sm font-medium {% if '/dashboard/media' in request.path %}active{% endif %}">
-                    <div class="nav-indicator absolute left-0 top-1/2 -translate-y-1/2 h-6 bg-white"></div>
-                    <i class="ph ph-image text-xl flex-shrink-0"></i>
-                    <span class="sidebar-text whitespace-nowrap">Media</span>
-                </a>
-                <a href="/dashboard/settings/" class="menu-item relative flex items-center gap-3 px-4 py-3 text-sm font-medium {% if '/dashboard/settings' in request.path %}active{% endif %}">
-                    <div class="nav-indicator absolute left-0 top-1/2 -translate-y-1/2 h-6 bg-white"></div>
-                    <i class="ph ph-gear text-xl flex-shrink-0"></i>
-                    <span class="sidebar-text whitespace-nowrap">Settings</span>
-                </a>
+            <div class="menu-module" id="module-cms">
+                <div class="menu-module-header" onclick="toggleModule('module-cms')" role="button" aria-expanded="false" aria-controls="module-cms-items">
+                    <p class="menu-label text-xs font-semibold text-muted-foreground uppercase tracking-widest sidebar-text">
+                        CMS
+                    </p>
+                    <i class="ph ph-caret-down chevron text-xs sidebar-text"></i>
+                </div>
+                <div class="menu-module-items">
+                    <a href="{% url 'page-list' %}" class="menu-item relative flex items-center gap-3 px-4 py-3 text-sm font-medium {% if request.resolver_match.url_name == 'page-list' or request.resolver_match.url_name == 'page-create' or request.resolver_match.url_name == 'page-update' or request.resolver_match.url_name == 'page-delete' %}active{% endif %}" aria-current="{% if request.resolver_match.url_name == 'page-list' %}page{% endif %}">
+                        <div class="nav-indicator absolute left-0 top-1/2 -translate-y-1/2 h-6 bg-white"></div>
+                        <i class="ph ph-file-text text-xl flex-shrink-0"></i>
+                        <span class="sidebar-text whitespace-nowrap">Pages</span>
+                    </a>
+                    <a href="{% url 'menu-list' %}" class="menu-item relative flex items-center gap-3 px-4 py-3 text-sm font-medium {% if request.resolver_match.url_name == 'menu-list' or request.resolver_match.url_name == 'menu-create' or request.resolver_match.url_name == 'menu-update' or request.resolver_match.url_name == 'menu-delete' %}active{% endif %}" aria-current="{% if request.resolver_match.url_name == 'menu-list' %}page{% endif %}">
+                        <div class="nav-indicator absolute left-0 top-1/2 -translate-y-1/2 h-6 bg-white"></div>
+                        <i class="ph ph-list text-xl flex-shrink-0"></i>
+                        <span class="sidebar-text whitespace-nowrap">Menus</span>
+                    </a>
+                    <a href="{% url 'menuitem-list' %}" class="menu-item relative flex items-center gap-3 px-4 py-3 text-sm font-medium {% if request.resolver_match.url_name == 'menuitem-list' or request.resolver_match.url_name == 'menuitem-create' or request.resolver_match.url_name == 'menuitem-update' or request.resolver_match.url_name == 'menuitem-delete' %}active{% endif %}" aria-current="{% if request.resolver_match.url_name == 'menuitem-list' %}page{% endif %}">
+                        <div class="nav-indicator absolute left-0 top-1/2 -translate-y-1/2 h-6 bg-white"></div>
+                        <i class="ph ph-list-dashes text-xl flex-shrink-0"></i>
+                        <span class="sidebar-text whitespace-nowrap">Menu Items</span>
+                    </a>
+                    <a href="{% url 'widget-list' %}" class="menu-item relative flex items-center gap-3 px-4 py-3 text-sm font-medium {% if request.resolver_match.url_name == 'widget-list' or request.resolver_match.url_name == 'widget-create' or request.resolver_match.url_name == 'widget-update' or request.resolver_match.url_name == 'widget-delete' %}active{% endif %}" aria-current="{% if request.resolver_match.url_name == 'widget-list' %}page{% endif %}">
+                        <div class="nav-indicator absolute left-0 top-1/2 -translate-y-1/2 h-6 bg-white"></div>
+                        <i class="ph ph-wrench text-xl flex-shrink-0"></i>
+                        <span class="sidebar-text whitespace-nowrap">Widgets</span>
+                    </a>
+                    <a href="{% url 'media-list' %}" class="menu-item relative flex items-center gap-3 px-4 py-3 text-sm font-medium {% if request.resolver_match.url_name == 'media-list' or request.resolver_match.url_name == 'media-create' or request.resolver_match.url_name == 'media-update' or request.resolver_match.url_name == 'media-delete' %}active{% endif %}" aria-current="{% if request.resolver_match.url_name == 'media-list' %}page{% endif %}">
+                        <div class="nav-indicator absolute left-0 top-1/2 -translate-y-1/2 h-6 bg-white"></div>
+                        <i class="ph ph-image text-xl flex-shrink-0"></i>
+                        <span class="sidebar-text whitespace-nowrap">Media</span>
+                    </a>
+                    <a href="{% url 'setting-list' %}" class="menu-item relative flex items-center gap-3 px-4 py-3 text-sm font-medium {% if request.resolver_match.url_name == 'setting-list' or request.resolver_match.url_name == 'setting-create' or request.resolver_match.url_name == 'setting-update' or request.resolver_match.url_name == 'setting-delete' %}active{% endif %}" aria-current="{% if request.resolver_match.url_name == 'setting-list' %}page{% endif %}">
+                        <div class="nav-indicator absolute left-0 top-1/2 -translate-y-1/2 h-6 bg-white"></div>
+                        <i class="ph ph-gear text-xl flex-shrink-0"></i>
+                        <span class="sidebar-text whitespace-nowrap">Settings</span>
+                    </a>
+                </div>
             </div>
 
             <!-- Organization Menu -->
-            <div class="menu-section pt-4">
-                <p class="menu-label px-4 py-3 text-xs font-semibold text-muted-foreground uppercase tracking-widest sidebar-text">
-                    Organization
-                </p>
-                <a href="/dashboard/organization/" class="menu-item relative flex items-center gap-3 px-4 py-3 text-sm font-medium {% if '/dashboard/organization' in request.path %}active{% endif %}">
-                    <div class="nav-indicator absolute left-0 top-1/2 -translate-y-1/2 h-6 bg-white"></div>
-                    <i class="ph ph-buildings text-xl flex-shrink-0"></i>
-                    <span class="sidebar-text whitespace-nowrap">Profile</span>
-                </a>
-                <a href="/dashboard/analytics/" class="menu-item relative flex items-center gap-3 px-4 py-3 text-sm font-medium {% if '/dashboard/analytics' in request.path %}active{% endif %}">
-                    <div class="nav-indicator absolute left-0 top-1/2 -translate-y-1/2 h-6 bg-white"></div>
-                    <i class="ph ph-chart-line text-xl flex-shrink-0"></i>
-                    <span class="sidebar-text whitespace-nowrap">Analytics</span>
-                </a>
+            <div class="menu-module" id="module-organization">
+                <div class="menu-module-header" onclick="toggleModule('module-organization')" role="button" aria-expanded="false" aria-controls="module-organization-items">
+                    <p class="menu-label text-xs font-semibold text-muted-foreground uppercase tracking-widest sidebar-text">
+                        Organization
+                    </p>
+                    <i class="ph ph-caret-down chevron text-xs sidebar-text"></i>
+                </div>
+                <div class="menu-module-items">
+                    <a href="{% url 'organization-edit' %}" class="menu-item relative flex items-center gap-3 px-4 py-3 text-sm font-medium {% if request.resolver_match.url_name == 'organization-edit' %}active{% endif %}" aria-current="{% if request.resolver_match.url_name == 'organization-edit' %}page{% endif %}">
+                        <div class="nav-indicator absolute left-0 top-1/2 -translate-y-1/2 h-6 bg-white"></div>
+                        <i class="ph ph-buildings text-xl flex-shrink-0"></i>
+                        <span class="sidebar-text whitespace-nowrap">Profile</span>
+                    </a>
+                    <a href="{% url 'analytics-dashboard' %}" class="menu-item relative flex items-center gap-3 px-4 py-3 text-sm font-medium {% if request.resolver_match.url_name == 'analytics-dashboard' %}active{% endif %}" aria-current="{% if request.resolver_match.url_name == 'analytics-dashboard' %}page{% endif %}">
+                        <div class="nav-indicator absolute left-0 top-1/2 -translate-y-1/2 h-6 bg-white"></div>
+                        <i class="ph ph-chart-line text-xl flex-shrink-0"></i>
+                        <span class="sidebar-text whitespace-nowrap">Analytics</span>
+                    </a>
+                </div>
             </div>
 
             <!-- Public Site -->
-            <div class="menu-section pt-4">
-                <p class="menu-label px-4 py-3 text-xs font-semibold text-muted-foreground uppercase tracking-widest sidebar-text">
-                    Public Site
-                </p>
-                <a href="{% url 'public-videos' %}" class="menu-item relative flex items-center gap-3 px-4 py-3 text-sm font-medium" target="_blank">
-                    <div class="nav-indicator absolute left-0 top-1/2 -translate-y-1/2 h-6 bg-white"></div>
-                    <i class="ph ph-play-circle text-xl flex-shrink-0"></i>
-                    <span class="sidebar-text whitespace-nowrap">View Videos</span>
-                </a>
-                <a href="{% url 'public-blog' %}" class="menu-item relative flex items-center gap-3 px-4 py-3 text-sm font-medium" target="_blank">
-                    <div class="nav-indicator absolute left-0 top-1/2 -translate-y-1/2 h-6 bg-white"></div>
-                    <i class="ph ph-blog text-xl flex-shrink-0"></i>
-                    <span class="sidebar-text whitespace-nowrap">View Blog</span>
-                </a>
-                <a href="{% url 'donate' %}" class="menu-item relative flex items-center gap-3 px-4 py-3 text-sm font-medium" target="_blank">
-                    <div class="nav-indicator absolute left-0 top-1/2 -translate-y-1/2 h-6 bg-white"></div>
-                    <i class="ph ph-heart text-xl flex-shrink-0"></i>
-                    <span class="sidebar-text whitespace-nowrap">Donate Page</span>
-                </a>
+            <div class="menu-module" id="module-public">
+                <div class="menu-module-header" onclick="toggleModule('module-public')" role="button" aria-expanded="false" aria-controls="module-public-items">
+                    <p class="menu-label text-xs font-semibold text-muted-foreground uppercase tracking-widest sidebar-text">
+                        Public Site
+                    </p>
+                    <i class="ph ph-caret-down chevron text-xs sidebar-text"></i>
+                </div>
+                <div class="menu-module-items">
+                    <a href="{% url 'public-videos' %}" class="menu-item relative flex items-center gap-3 px-4 py-3 text-sm font-medium" target="_blank">
+                        <div class="nav-indicator absolute left-0 top-1/2 -translate-y-1/2 h-6 bg-white"></div>
+                        <i class="ph ph-play-circle text-xl flex-shrink-0"></i>
+                        <span class="sidebar-text whitespace-nowrap">View Videos</span>
+                    </a>
+                    <a href="{% url 'public-blog' %}" class="menu-item relative flex items-center gap-3 px-4 py-3 text-sm font-medium" target="_blank">
+                        <div class="nav-indicator absolute left-0 top-1/2 -translate-y-1/2 h-6 bg-white"></div>
+                        <i class="ph ph-blog text-xl flex-shrink-0"></i>
+                        <span class="sidebar-text whitespace-nowrap">View Blog</span>
+                    </a>
+                    <a href="{% url 'donate' %}" class="menu-item relative flex items-center gap-3 px-4 py-3 text-sm font-medium" target="_blank">
+                        <div class="nav-indicator absolute left-0 top-1/2 -translate-y-1/2 h-6 bg-white"></div>
+                        <i class="ph ph-heart text-xl flex-shrink-0"></i>
+                        <span class="sidebar-text whitespace-nowrap">Donate Page</span>
+                    </a>
+                </div>
             </div>
         </nav>
 
@@ -571,7 +648,7 @@
         <header class="sticky top-0 z-30 glass border-b border-gray-200/50 dark:border-gray-700/50">
             <div class="flex items-center justify-between h-16 px-6">
                 <div class="flex items-center gap-4">
-                    <button onclick="toggleSidebar()" class="lg:hidden p-2.5 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+                    <button onclick="toggleSidebar()" class="lg:hidden p-2.5 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors" aria-label="Toggle sidebar" aria-expanded="false" aria-controls="sidebar">
                         <i class="ph ph-list text-xl"></i>
                     </button>
                     <div>
@@ -580,6 +657,11 @@
                     </div>
                 </div>
                 <div class="flex items-center gap-3">
+                    <!-- Dark Mode Toggle -->
+                    <button id="theme-toggle" onclick="toggleTheme()" class="p-2.5 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors" aria-label="Toggle dark mode">
+                        <i class="ph ph-moon text-xl dark:hidden"></i>
+                        <i class="ph ph-sun text-xl hidden dark:block"></i>
+                    </button>
                     <!-- Search -->
                     <div class="relative hidden md:block">
                         <i class="ph ph-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground"></i>
@@ -601,11 +683,60 @@
 
         <!-- Page Content -->
         <main class="p-6 page-content">
+            <!-- Django Messages -->
+            {% if messages %}
+            <div class="mb-6">
+                {% for message in messages %}
+                <div class="p-4 mb-2 rounded-xl {% if message.tags == 'error' %}bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300{% elif message.tags == 'success' %}bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300{% elif message.tags == 'warning' %}bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-300{% else %}bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300{% endif %}" role="alert">
+                    <div class="flex items-center gap-2">
+                        <i class="ph {% if message.tags == 'error' %}ph-x-circle{% elif message.tags == 'success' %}ph-check-circle{% elif message.tags == 'warning' %}ph-warning{% else %}ph-info{% endif %} text-lg"></i>
+                        <span>{{ message }}</span>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <!-- Breadcrumbs -->
+            <nav class="flex items-center gap-2 text-sm text-muted-foreground mb-6" aria-label="Breadcrumb">
+                {% block breadcrumbs %}
+                    <a href="{% url 'dashboard' %}" class="hover:text-foreground transition-colors">Dashboard</a>
+                    <i class="ph ph-caret-right text-xs"></i>
+                    <span class="text-foreground">{% block page_title %}Overview{% endblock %}</span>
+                {% endblock %}
+            </nav>
+
             {% block content %}{% endblock %}
         </main>
     </div>
 
     <script>
+        // Dark mode initialization
+        function initTheme() {
+            const html = document.documentElement;
+            const savedTheme = localStorage.getItem('theme');
+            const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            
+            if (savedTheme === 'dark' || (!savedTheme && systemPrefersDark)) {
+                html.classList.add('dark');
+            } else {
+                html.classList.remove('dark');
+            }
+        }
+        
+        // Dark mode toggle function
+        function toggleTheme() {
+            const html = document.documentElement;
+            html.classList.toggle('dark');
+            
+            // Save preference to localStorage
+            if (html.classList.contains('dark')) {
+                localStorage.setItem('theme', 'dark');
+            } else {
+                localStorage.setItem('theme', 'light');
+            }
+        }
+        
         // Sidebar toggle functionality
         function toggleSidebar() {
             const sidebar = document.getElementById('sidebar');
@@ -628,15 +759,48 @@
                 overlay.classList.toggle('hidden');
             }
         }
-
+        
+        // Toggle collapsible menu module
+        function toggleModule(moduleId) {
+            const module = document.getElementById(moduleId);
+            const header = module.querySelector('.menu-module-header');
+            if (module) {
+                module.classList.toggle('collapsed');
+                
+                // Update aria-expanded
+                const isCollapsed = module.classList.contains('collapsed');
+                header.setAttribute('aria-expanded', !isCollapsed);
+                
+                // Save state to localStorage
+                localStorage.setItem('menu-' + moduleId, isCollapsed);
+            }
+        }
+        
         // Initialize sidebar state
         document.addEventListener('DOMContentLoaded', function() {
+            // Initialize dark mode
+            initTheme();
+            
             const sidebar = document.getElementById('sidebar');
             
             // Set initial state for mobile
             if (window.innerWidth < 1024) {
                 sidebar.classList.add('-translate-x-full');
             }
+            
+            // Restore menu module states from localStorage
+            const modules = ['module-content', 'module-users', 'module-marketing', 'module-finance', 'module-cms', 'module-organization', 'module-public'];
+            modules.forEach(moduleId => {
+                const module = document.getElementById(moduleId);
+                const header = module.querySelector('.menu-module-header');
+                const savedState = localStorage.getItem('menu-' + moduleId);
+                if (savedState === 'true' && module) {
+                    module.classList.add('collapsed');
+                    header.setAttribute('aria-expanded', 'false');
+                } else if (module) {
+                    header.setAttribute('aria-expanded', 'true');
+                }
+            });
         });
 
         // Handle resize

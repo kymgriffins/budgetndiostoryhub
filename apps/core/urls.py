@@ -126,8 +126,19 @@ urlpatterns = [
     
     # Accounts URLs
     path('dashboard/users/', views_crud.AccountsListView.as_view(), {'model': 'users'}, name='user-list'),
+    path('dashboard/users/create/', views_crud.UserCreateView.as_view(), name='user-create'),
+    path('dashboard/users/<uuid:pk>/edit/', views_crud.UserUpdateView.as_view(), name='user-update'),
+    path('dashboard/users/<uuid:pk>/delete/', views_crud.UserDeleteView.as_view(), name='user-delete'),
+    
     path('dashboard/donors/', views_crud.AccountsListView.as_view(), {'model': 'donors'}, name='donor-list'),
+    path('dashboard/donors/create/', views_crud.DonorCreateView.as_view(), name='donor-create'),
+    path('dashboard/donors/<int:pk>/edit/', views_crud.DonorUpdateView.as_view(), name='donor-update'),
+    path('dashboard/donors/<int:pk>/delete/', views_crud.DonorDeleteView.as_view(), name='donor-delete'),
+    
     path('dashboard/sponsors/', views_crud.AccountsListView.as_view(), {'model': 'sponsors'}, name='sponsor-list'),
+    path('dashboard/sponsors/create/', views_crud.SponsorCreateView.as_view(), name='sponsor-create'),
+    path('dashboard/sponsors/<int:pk>/edit/', views_crud.SponsorUpdateView.as_view(), name='sponsor-update'),
+    path('dashboard/sponsors/<int:pk>/delete/', views_crud.SponsorDeleteView.as_view(), name='sponsor-delete'),
     path('dashboard/partners/', views_crud.AccountsListView.as_view(), {'model': 'partners'}, name='partner-list'),
     
     # Content - Categories
