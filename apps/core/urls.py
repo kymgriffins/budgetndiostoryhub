@@ -149,8 +149,8 @@ urlpatterns = [
     # Content - Blog Posts
     path('dashboard/posts/', views_crud.BlogPostListView.as_view(), name='blogpost-list'),
     path('dashboard/posts/create/', views_crud.BlogPostCreateView.as_view(), name='blogpost-create'),
-    path('dashboard/posts/<int:pk>/edit/', views_crud.BlogPostUpdateView.as_view(), name='blogpost-update'),
-    path('dashboard/posts/<int:pk>/delete/', views_crud.BlogPostDeleteView.as_view(), name='blogpost-delete'),
+    path('dashboard/posts/<uuid:pk>/edit/', views_crud.BlogPostUpdateView.as_view(), name='blogpost-update'),
+    path('dashboard/posts/<uuid:pk>/delete/', views_crud.BlogPostDeleteView.as_view(), name='blogpost-delete'),
     
     # Content - News
     path('dashboard/news/', views_crud.NewsItemListView.as_view(), name='newsitem-list'),
@@ -232,6 +232,7 @@ urlpatterns = [
     path('videos/', views_crud.public_videos, name='public-videos'),
     path('videos/<slug:slug>/', views_crud.public_video_detail, name='public-video-detail'),
     path('blog/', views_crud.public_blog, name='public-blog'),
+    path('blogs/', views_crud.public_blog, name='public-blogs'),
     path('blog/<slug:slug>/', views_crud.public_blog_detail, name='public-blog-detail'),
     path('donate/', views_crud.public_donate, name='donate'),
     path('newsletter/', views_crud.public_newsletter, name='newsletter'),

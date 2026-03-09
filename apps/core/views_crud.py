@@ -55,25 +55,38 @@ class AccountsListView(AdminRequiredMixin, ListView):
     """List view for all account-related models"""
     template_name = 'dashboard/accounts/list.html'
     
+    def get_queryset(self):
+        model_type = self.kwargs.get('model', 'users')
+        
+        if model_type == 'users':
+            return User.objects.all()
+        elif model_type == 'donors':
+            return DonorProfile.objects.all().select_related('user')
+        elif model_type == 'sponsors':
+            return SponsorProfile.objects.all().select_related('user')
+        elif model_type == 'partners':
+            return ConsortiumPartner.objects.all()
+        return User.objects.none()
+    
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         model_type = self.kwargs.get('model', 'users')
         
         if model_type == 'users':
             context['title'] = 'Users'
-            context['items'] = User.objects.all()
+            context['items'] = context['object_list']
             context['columns'] = ['Email', 'Role', 'Verified', 'Created']
         elif model_type == 'donors':
             context['title'] = 'Donors'
-            context['items'] = DonorProfile.objects.all().select_related('user')
+            context['items'] = context['object_list']
             context['columns'] = ['User', 'Type', 'Total Donated', 'Donations']
         elif model_type == 'sponsors':
             context['title'] = 'Sponsors'
-            context['items'] = SponsorProfile.objects.all().select_related('user')
+            context['items'] = context['object_list']
             context['columns'] = ['Company', 'Level', 'Contract Value', 'Status']
         elif model_type == 'partners':
             context['title'] = 'Partners'
-            context['items'] = ConsortiumPartner.objects.all()
+            context['items'] = context['object_list']
             context['columns'] = ['Name', 'Website', 'Active', 'Joined']
         
         context['model'] = model_type

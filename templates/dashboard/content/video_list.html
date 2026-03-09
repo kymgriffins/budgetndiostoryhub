@@ -1,26 +1,25 @@
-{% extends 'base.html' %}
+{% extends 'admin_base.html' %}
 {% load static %}
 
-{% block title %}Videos - Budget Ndio Story{% endblock %}
+{% block title %}Videos - Admin Panel{% endblock %}
 
 {% block content %}
-<div class="flex justify-between items-center mb-8">
+<!-- Page Header -->
+<div class="flex items-center justify-between mb-8">
     <div>
-        <h1 class="text-3xl font-bold text-dark">Videos</h1>
-        <p class="text-gray-500 mt-1">Manage your video content library</p>
+        <h1 class="text-3xl font-bold tracking-tight">Videos</h1>
+        <p class="text-muted-foreground mt-1">Manage your video content library</p>
     </div>
-    <a href="{% url 'video-create' %}" class="px-6 py-3 bg-bns text-white rounded-lg hover:bg-bns-dark transition-colors flex items-center gap-2">
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
-        </svg>
+    <a href="{% url 'video-create' %}" class="inline-flex items-center justify-center rounded-lg bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90 transition-colors">
+        <i class="ph ph-plus mr-2"></i>
         Add Video
     </a>
 </div>
 
 <!-- Filters -->
-<div class="bg-white rounded-xl p-4 shadow-sm mb-6">
+<div class="rounded-xl border bg-card p-4 shadow-sm mb-6">
     <form method="get" class="flex flex-wrap gap-4">
-        <select name="platform" class="px-4 py-2 border border-gray-300 rounded-lg">
+        <select name="platform" class="px-4 py-2 border rounded-lg bg-background">
             <option value="">All Platforms</option>
             <option value="youtube">YouTube</option>
             <option value="tiktok">TikTok</option>
@@ -28,34 +27,36 @@
             <option value="facebook">Facebook</option>
             <option value="instagram">Instagram</option>
         </select>
-        <select name="content_type" class="px-4 py-2 border border-gray-300 rounded-lg">
+        <select name="content_type" class="px-4 py-2 border rounded-lg bg-background">
             <option value="">All Types</option>
             <option value="budget_basics">Budget Basics</option>
             <option value="finance_bill">Finance Bill</option>
             <option value="national_budget">National Budget</option>
             <option value="county_budget">County Budget</option>
         </select>
-        <button type="submit" class="px-6 py-2 bg-dark text-white rounded-lg hover:bg-dark-light">Filter</button>
+        <button type="submit" class="inline-flex items-center justify-center rounded-lg bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90">
+            Filter
+        </button>
     </form>
 </div>
 
 <!-- Videos Table -->
-<div class="bg-white rounded-xl shadow-sm overflow-hidden">
+<div class="rounded-xl border bg-card shadow-sm overflow-hidden">
     <!-- Loading State -->
     <div id="videos-loading" class="hidden">
         <div class="flex items-center justify-center p-12">
-            <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+            <i class="ph ph-spinner animate-spin text-4xl"></i>
         </div>
     </div>
     
     <!-- Error State -->
     <div id="videos-error" class="hidden">
         <div class="p-12 text-center">
-            <div class="text-red-500 mb-4">
-                <i data-lucide="alert-circle" class="w-12 h-12 mx-auto"></i>
+            <div class="text-destructive mb-4">
+                <i class="ph ph-warning-circle text-4xl mx-auto"></i>
             </div>
-            <p class="text-gray-600">Failed to load videos. Please try again.</p>
-            <button onclick="loadVideos()" class="mt-4 px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+            <p class="text-muted-foreground">Failed to load videos. Please try again.</p>
+            <button onclick="loadVideos()" class="mt-4 inline-flex items-center justify-center rounded-lg bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90">
                 Retry
             </button>
         </div>
@@ -64,11 +65,11 @@
     <!-- Empty State -->
     <div id="videos-empty" class="hidden">
         <div class="p-12 text-center">
-            <div class="text-gray-400 mb-4">
-                <i data-lucide="video" class="w-12 h-12 mx-auto"></i>
+            <div class="text-muted-foreground mb-4">
+                <i class="ph ph-video-camera text-4xl mx-auto"></i>
             </div>
-            <p class="text-gray-600">No videos found.</p>
-            <a href="{% url 'video-create' %}" class="mt-4 inline-block px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+            <p class="text-muted-foreground">No videos found.</p>
+            <a href="{% url 'video-create' %}" class="mt-4 inline-flex items-center justify-center rounded-lg bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90">
                 Add your first video
             </a>
         </div>
@@ -76,22 +77,22 @@
     
     <div class="overflow-x-auto" id="videos-content">
     <table class="w-full">
-        <thead class="bg-gray-50">
+        <thead class="bg-muted">
             <tr>
-                <th class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase">Title</th>
-                <th class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase">Platform</th>
-                <th class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase">Type</th>
-                <th class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase">Views</th>
-                <th class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase">Status</th>
-                <th class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase">Actions</th>
+                <th class="px-6 py-4 text-left text-xs font-semibold text-muted-foreground uppercase">Title</th>
+                <th class="px-6 py-4 text-left text-xs font-semibold text-muted-foreground uppercase">Platform</th>
+                <th class="px-6 py-4 text-left text-xs font-semibold text-muted-foreground uppercase">Type</th>
+                <th class="px-6 py-4 text-left text-xs font-semibold text-muted-foreground uppercase">Views</th>
+                <th class="px-6 py-4 text-left text-xs font-semibold text-muted-foreground uppercase">Status</th>
+                <th class="px-6 py-4 text-left text-xs font-semibold text-muted-foreground uppercase">Actions</th>
             </tr>
         </thead>
-        <tbody class="divide-y divide-gray-100" id="videos-tbody">
+        <tbody class="divide-y divide-border" id="videos-tbody">
             {% for video in videos %}
-            <tr class="hover:bg-gray-50" data-video-id="{{ video.pk }}">
+            <tr class="hover:bg-accent" data-video-id="{{ video.pk }}">
                 <td class="px-6 py-4">
-                    <div class="font-medium text-dark">{{ video.title }}</div>
-                    <div class="text-sm text-gray-500">{{ video.slug }}</div>
+                    <div class="font-medium">{{ video.title }}</div>
+                    <div class="text-sm text-muted-foreground">{{ video.slug }}</div>
                 </td>
                 <td class="px-6 py-4">
                     <span class="px-2 py-1 rounded text-xs font-medium
@@ -102,42 +103,38 @@
                         {{ video.get_platform_display }}
                     </span>
                 </td>
-                <td class="px-6 py-4 text-gray-600">
+                <td class="px-6 py-4 text-muted-foreground">
                     {{ video.get_content_type_display|default:"-" }}
                 </td>
-                <td class="px-6 py-4 text-gray-600">
+                <td class="px-6 py-4 text-muted-foreground">
                     {{ video.view_count|default:0 }}
                 </td>
                 <td class="px-6 py-4">
                     {% if video.is_published %}
                     <span class="px-2 py-1 bg-green-100 text-green-800 rounded text-xs font-medium">Published</span>
                     {% else %}
-                    <span class="px-2 py-1 bg-gray-100 text-gray-800 rounded text-xs font-medium">Draft</span>
+                    <span class="px-2 py-1 bg-muted text-muted-foreground rounded text-xs font-medium">Draft</span>
                     {% endif %}
                 </td>
                 <td class="px-6 py-4">
                     <div class="flex items-center gap-2">
-                        <a href="{% url 'video-update' video.pk %}" class="p-2 text-gray-500 hover:text-blue-600 transition-colors" title="Edit">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
-                            </svg>
+                        <a href="{% url 'video-update' video.pk %}" class="p-2 text-muted-foreground hover:text-primary transition-colors" title="Edit">
+                            <i class="ph ph-pencil-simple text-xl"></i>
                         </a>
                         <button 
                             data-delete-confirm="Are you sure you want to delete '{{ video.title }}'?"
                             data-delete-url="/api/v1/content/videos/{{ video.pk }}/"
-                            class="p-2 text-gray-500 hover:text-red-600 transition-colors delete-btn" 
+                            class="p-2 text-muted-foreground hover:text-destructive transition-colors delete-btn" 
                             title="Delete">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
-                            </svg>
+                            <i class="ph ph-trash text-xl"></i>
                         </button>
                     </div>
                 </td>
             </tr>
             {% empty %}
             <tr id="no-videos-row">
-                <td colspan="6" class="px-6 py-12 text-center text-gray-500">
-                    No videos found. <a href="{% url 'video-create' %}" class="text-blue-600 hover:underline">Add your first video</a>
+                <td colspan="6" class="px-6 py-12 text-center text-muted-foreground">
+                    No videos found. <a href="{% url 'video-create' %}" class="text-primary hover:underline">Add your first video</a>
                 </td>
             </tr>
             {% endfor %}

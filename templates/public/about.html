@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Budget Ndio Story</title>
+    
+    <!-- Primary Meta Tags -->
+    <meta name="title" content="About Us - Budget Ndio Story">
+    <meta name="description" content="Learn about Budget Ndio Story - Kenya's budget transparency platform for young citizens.">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="/static/css/frontend.css">
+    
+    <style>
+        :root {
+            --color-primary: #0066CC;
+            --color-primary-dark: #004c99;
+            --color-secondary: #6366f1;
+            --color-success: #10b981;
+            --bg-primary: #000000;
+            --bg-secondary: #111827;
+            --bg-tertiary: #1f2937;
+            --text-primary: #ffffff;
+            --text-secondary: #9ca3af;
+            --text-muted: #6b7280;
+            --border-color: #374151;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+        }
+        
+        a { color: var(--color-primary); text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+        
+        /* Header */
+        header {
+            background-color: var(--bg-secondary);
+            border-bottom: 1px solid var(--border-color);
+            padding: 16px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: var(--text-primary);
+        }
+        
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 18px;
+        }
+        
+        .logo-text {
+            font-size: 20px;
+            font-weight: 700;
+        }
+        
+        nav {
+            display: flex;
+            gap: 24px;
+        }
+        
+        nav a {
+            color: var(--text-secondary);
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        
+        nav a:hover {
+            color: var(--text-primary);
+            text-decoration: none;
+        }
+        
+        nav a.active {
+            color: var(--color-primary);
+        }
+        
+        /* Hero */
+        .hero {
+            padding: 100px 0;
+            text-align: center;
+            background: linear-gradient(180deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
+        }
+        
+        .hero h1 {
+            font-size: 56px;
+            font-weight: 700;
+            margin-bottom: 24px;
+            line-height: 1.1;
+        }
+        
+        .hero p {
+            font-size: 22px;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+        
+        /* Mission Section */
+        .mission {
+            padding: 80px 0;
+        }
+        
+        .mission-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            margin-top: 60px;
+        }
+        
+        .mission-card {
+            background-color: var(--bg-secondary);
+            border-radius: 16px;
+            padding: 40px;
+            border: 1px solid var(--border-color);
+            text-align: center;
+        }
+        
+        .mission-icon {
+            width: 64px;
+            height: 64px;
+            background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 24px;
+            font-size: 28px;
+        }
+        
+        .mission-card h3 {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+        
+        .mission-card p {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+        
+        /* Stats Section */
+        .stats {
+            background-color: var(--bg-secondary);
+            padding: 80px 0;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+            text-align: center;
+        }
+        
+        .stat-item h3 {
+            font-size: 48px;
+            font-weight: 700;
+            color: var(--color-primary);
+            margin-bottom: 8px;
+        }
+        
+        .stat-item p {
+            color: var(--text-secondary);
+            font-size: 16px;
+        }
+        
+        /* Team Section */
+        .team {
+            padding: 80px 0;
+        }
+        
+        .section-title {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            text-align: center;
+        }
+        
+        .section-subtitle {
+            color: var(--text-secondary);
+            font-size: 18px;
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 32px;
+        }
+        
+        .team-card {
+            background-color: var(--bg-secondary);
+            border-radius: 16px;
+            padding: 32px;
+            border: 1px solid var(--border-color);
+            text-align: center;
+        }
+        
+        .team-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            font-weight: 700;
+        }
+        
+        .team-card h4 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        
+        .team-card p {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+        
+        /* CTA */
+        .cta {
+            background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+            padding: 80px 0;
+            text-align: center;
+            border-radius: 24px;
+            margin: 80px 24px;
+        }
+        
+        .cta h2 {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+        
+        .cta p {
+            font-size: 18px;
+            opacity: 0.9;
+            margin-bottom: 32px;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            padding: 16px 40px;
+            background-color: white;
+            color: var(--color-primary);
+            font-weight: 600;
+            font-size: 16px;
+            border-radius: 12px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+            text-decoration: none;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--bg-secondary);
+            border-top: 1px solid var(--border-color);
+            padding: 40px 0;
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .footer-text {
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+        
+        .footer-links {
+            display: flex;
+            gap: 24px;
+        }
+        
+        .footer-links a {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+        
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 36px; }
+            .mission-grid { grid-template-columns: 1fr; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            nav { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <a href="/" class="logo">
+                <div class="logo-icon">B</div>
+                <span class="logo-text">Budget Ndio Story</span>
+            </a>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/blog/">Blog</a>
+                <a href="/about/" class="active">About</a>
+                <a href="/donate/">Donate</a>
+                <a href="/newsletter/">Newsletter</a>
+            </nav>
+        </div>
+    </header>
+    
+    <section class="hero">
+        <div class="container">
+            <h1>Making Kenya's Budget<br>Transparent for Everyone</h1>
+            <p>We turn national and county budgets into clear insights, practical analysis, and trackable evidence. Empowering young Kenyans to understand and engage with public finance.</p>
+        </div>
+    </section>
+    
+    <section class="mission">
+        <div class="container">
+            <h2 class="section-title">Our Mission</h2>
+            <p class="section-subtitle">Democratizing budget information for a more accountable Kenya</p>
+            
+            <div class="mission-grid">
+                <div class="mission-card">
+                    <div class="mission-icon">🔍</div>
+                    <h3>Transparency</h3>
+                    <p>We believe every Kenyan has the right to understand how public funds are allocated and spent.</p>
+                </div>
+                <div class="mission-card">
+                    <div class="mission-icon">📊</div>
+                    <h3>Education</h3>
+                    <p>We break down complex budget documents into clear, understandable insights for young citizens.</p>
+                </div>
+                <div class="mission-card">
+                    <div class="mission-icon">🎯</div>
+                    <h3>Accountability</h3>
+                    <p>We track budget implementation and help citizens hold their leaders accountable.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="stats">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <h3>47</h3>
+                    <p>County Budgets Analyzed</p>
+                </div>
+                <div class="stat-item">
+                    <h3>100K+</h3>
+                    <p>Citizens Engaged</p>
+                </div>
+                <div class="stat-item">
+                    <h3>500+</h3>
+                    <p>Budget Stories Published</p>
+                </div>
+                <div class="stat-item">
+                    <h3>50+</h3>
+                    <p>Partner Organizations</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="team">
+        <div class="container">
+            <h2 class="section-title">Our Team</h2>
+            <p class="section-subtitle">Passionate about transparency and civic engagement</p>
+            
+            <div class="team-grid">
+                <div class="team-card">
+                    <div class="team-avatar">JM</div>
+                    <h4>James Mwangi</h4>
+                    <p>Executive Director</p>
+                </div>
+                <div class="team-card">
+                    <div class="team-avatar">AW</div>
+                    <h4>Amina Wanjiku</h4>
+                    <p>Lead Researcher</p>
+                </div>
+                <div class="team-card">
+                    <div class="team-avatar">OK</div>
+                    <h4>Ombati Kigen</h4>
+                    <p>Data Analyst</p>
+                </div>
+                <div class="team-card">
+                    <div class="team-avatar">CN</div>
+                    <h4>Carol Nekesa</h4>
+                    <p>Community Manager</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <div class="cta">
+        <h2>Join Our Mission</h2>
+        <p>Help us make Kenya's budget transparent for everyone.</p>
+        <a href="/donate/" class="cta-button">Support Our Work</a>
+    </div>
+    
+    <footer>
+        <div class="container footer-content">
+            <p class="footer-text">&copy; 2024 Budget Ndio Story. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="/contact/">Contact</a>
+                <a href="/privacy/">Privacy</a>
+                <a href="/terms/">Terms</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

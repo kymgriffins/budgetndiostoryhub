@@ -9,13 +9,16 @@
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- Google Fonts - Inter -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Neue Montreal Font - Local -->
+    <link rel="stylesheet" href="{% static 'fonts/NeueMontreal.css' %}">
     
     <!-- Phosphor Icons -->
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    
+    <!-- Google Fonts - Inter (fallback) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
     <script>
         tailwind.config = {
@@ -23,7 +26,7 @@
             theme: {
                 extend: {
                     fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
+                        sans: ['Neue Montreal', 'Inter', 'sans-serif'],
                     },
                     colors: {
                         border: 'hsl(var(--border))',
@@ -59,61 +62,84 @@
                             DEFAULT: 'hsl(var(--card))',
                             foreground: 'hsl(var(--card-foreground))',
                         },
+                        apple: {
+                            blue: '#007AFF',
+                            purple: '#AF52DE',
+                            pink: '#FF2D55',
+                            orange: '#FF9500',
+                            green: '#34C759',
+                            red: '#FF3B30',
+                            gray: '#8E8E93',
+                            bg: '#F5F5F7',
+                            dark: '#1D1D1F',
+                        }
                     },
                     borderRadius: {
                         lg: 'var(--radius)',
                         md: 'calc(var(--radius) - 2px)',
                         sm: 'calc(var(--radius) - 4px)',
+                        xl: '1.5rem',
+                        '2xl': '2rem',
+                        '3xl': '3rem',
                     },
+                    boxShadow: {
+                        'apple': '0 2px 8px rgba(0, 0, 0, 0.04), 0 8px 16px rgba(0, 0, 0, 0.04)',
+                        'apple-hover': '0 4px 12px rgba(0, 0, 0, 0.06), 0 12px 24px rgba(0, 0, 0, 0.06)',
+                        'apple-lg': '0 4px 16px rgba(0, 0, 0, 0.04), 0 16px 32px rgba(0, 0, 0, 0.04)',
+                        'glass': '0 8px 32px rgba(0, 0, 0, 0.08)',
+                        'glow-blue': '0 0 40px rgba(0, 122, 255, 0.15)',
+                        'glow-purple': '0 0 40px rgba(175, 82, 222, 0.15)',
+                        'glow-green': '0 0 40px rgba(52, 199, 89, 0.15)',
+                    }
                 },
             },
         }
     </script>
     
-    <!-- shadcn/ui CSS Variables -->
+    <!-- shadcn/ui CSS Variables - Apple Style -->
     <style>
         :root {
-            --background: 0 0% 100%;
+            --background: 0 0% 98%;
             --foreground: 240 10% 3.9%;
             --card: 0 0% 100%;
             --card-foreground: 240 10% 3.9%;
             --popover: 0 0% 100%;
             --popover-foreground: 240 10% 3.9%;
             --primary: 240 5.9% 10%;
-            --primary-foreground: 0 0% 98%;
-            --secondary: 240 4.8% 95.9%;
+            --primary-foreground: 0 0% 100%;
+            --secondary: 240 4.8% 96%;
             --secondary-foreground: 240 5.9% 10%;
-            --muted: 240 4.8% 95.9%;
+            --muted: 240 4.8% 96%;
             --muted-foreground: 240 3.8% 46.1%;
-            --accent: 240 4.8% 95.9%;
+            --accent: 240 4.8% 96%;
             --accent-foreground: 240 5.9% 10%;
             --destructive: 0 84.2% 60.2%;
             --destructive-foreground: 0 0% 98%;
-            --border: 240 5.9% 90%;
+            --border: 240 5.9% 92%;
             --input: 240 5.9% 90%;
             --ring: 240 5.9% 10%;
-            --radius: 0.5rem;
+            --radius: 1rem;
         }
 
         .dark {
-            --background: 240 10% 3.9%;
+            --background: 240 10% 4%;
             --foreground: 0 0% 98%;
-            --card: 240 10% 3.9%;
+            --card: 240 10% 6%;
             --card-foreground: 0 0% 98%;
-            --popover: 240 10% 3.9%;
+            --popover: 240 10% 6%;
             --popover-foreground: 0 0% 98%;
             --primary: 0 0% 98%;
             --primary-foreground: 240 5.9% 10%;
-            --secondary: 240 3.7% 15.9%;
+            --secondary: 240 3.7% 12%;
             --secondary-foreground: 0 0% 98%;
-            --muted: 240 3.7% 15.9%;
+            --muted: 240 3.7% 12%;
             --muted-foreground: 240 5% 64.9%;
-            --accent: 240 3.7% 15.9%;
+            --accent: 240 3.7% 12%;
             --accent-foreground: 0 0% 98%;
             --destructive: 0 62.8% 30.6%;
             --destructive-foreground: 0 0% 98%;
-            --border: 240 3.7% 15.9%;
-            --input: 240 3.7% 15.9%;
+            --border: 240 3.7% 15%;
+            --input: 240 3.7% 15%;
             --ring: 240 4.9% 83.9%;
         }
 
@@ -122,14 +148,16 @@
         }
 
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Neue Montreal', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             background-color: hsl(var(--background));
             color: hsl(var(--foreground));
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
-        /* Scrollbar styling */
+        /* Apple-style scrollbar */
         .sidebar-scroll::-webkit-scrollbar {
-            width: 4px;
+            width: 6px;
         }
 
         .sidebar-scroll::-webkit-scrollbar-track {
@@ -137,51 +165,54 @@
         }
 
         .sidebar-scroll::-webkit-scrollbar-thumb {
-            background: hsl(var(--muted));
-            border-radius: 4px;
+            background: hsl(var(--muted-foreground));
+            border-radius: 3px;
+            opacity: 0.3;
         }
 
         .sidebar-scroll::-webkit-scrollbar-thumb:hover {
-            background: hsl(var(--muted-foreground));
+            background: hsl(var(--foreground));
+            opacity: 0.5;
         }
 
-        /* Sidebar transition */
+        /* Sidebar transition - Apple smooth */
         .sidebar {
-            transition: width 300ms cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 400ms cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .sidebar.collapsed {
-            width: 72px;
+            width: 80px;
         }
 
         .sidebar.expanded {
-            width: 280px;
+            width: 300px;
         }
 
         /* Main content transition */
         .main-content {
-            transition: margin-left 300ms cubic-bezier(0.4, 0, 0.2, 1);
+            transition: margin-left 400ms cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* Dropdown animation */
+        /* Apple dropdown animation */
         .dropdown-menu {
-            animation: dropdown 200ms ease-out;
+            animation: dropdown-apple 250ms cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
-        @keyframes dropdown {
+        @keyframes dropdown-apple {
             from {
                 opacity: 0;
-                transform: translateY(-8px);
+                transform: translateY(-8px) scale(0.96);
             }
             to {
                 opacity: 1;
-                transform: translateY(0);
+                transform: translateY(0) scale(1);
             }
         }
 
-        /* Menu item hover */
+        /* Menu item hover - Apple style */
         .menu-item {
-            transition: all 150ms ease;
+            transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: 0.75rem;
         }
 
         .menu-item:hover {
@@ -189,58 +220,154 @@
         }
 
         .menu-item.active {
-            background-color: hsl(var(--primary));
+            background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--primary)) 100%);
             color: hsl(var(--primary-foreground));
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
         }
 
-        .dark .menu-item:hover {
-            background-color: hsl(var(--accent));
-        }
-
-        /* Card hover effect */
+        /* Card hover effect - Apple style */
         .stat-card {
-            transition: all 200ms ease;
+            transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: 1.25rem;
         }
 
         .stat-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08), 0 16px 48px rgba(0, 0, 0, 0.04);
         }
 
-        .dark .stat-card:hover {
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        /* Glassmorphism effect */
+        .glass {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+
+        .dark .glass {
+            background: rgba(30, 30, 30, 0.8);
+        }
+
+        /* Gradient backgrounds */
+        .gradient-apple {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .gradient-blue {
+            background: linear-gradient(135deg, #007AFF 0%, #5856D6 100%);
+        }
+
+        .gradient-purple {
+            background: linear-gradient(135deg, #AF52DE 0%, #FF2D55 100%);
+        }
+
+        .gradient-green {
+            background: linear-gradient(135deg, #34C759 0%, #30D158 100%);
+        }
+
+        .gradient-orange {
+            background: linear-gradient(135deg, #FF9500 0%, #FF3B30 100%);
+        }
+
+        /* Smooth page transitions */
+        .page-content {
+            animation: page-enter 400ms cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @keyframes page-enter {
+            from {
+                opacity: 0;
+                transform: translateY(8px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Button styles - Apple */
+        .btn-apple {
+            transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: 0.75rem;
+            font-weight: 500;
+        }
+
+        .btn-apple:hover {
+            transform: scale(1.02);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-apple:active {
+            transform: scale(0.98);
+        }
+
+        /* Input styles - Apple */
+        .input-apple {
+            border-radius: 0.75rem;
+            transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .input-apple:focus {
+            box-shadow: 0 0 0 4px rgba(0, 122, 255, 0.15);
+        }
+
+        /* Table styles - Apple */
+        .table-apple {
+            border-radius: 1rem;
+            overflow: hidden;
+        }
+
+        .table-apple th {
+            background: hsl(var(--muted));
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.05em;
+        }
+
+        /* Sidebar item indicator */
+        .nav-indicator {
+            transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .menu-item.active .nav-indicator {
+            width: 4px;
+            border-radius: 2px;
         }
     </style>
     
     {% block extra_css %}{% endblock %}
 </head>
-<body class="min-h-screen bg-background font-sans antialiased">
+<body class="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 font-sans antialiased">
     <!-- Mobile Overlay -->
-    <div id="sidebar-overlay" class="fixed inset-0 z-40 bg-black/50 lg:hidden hidden" onclick="toggleSidebar()"></div>
+    <div id="sidebar-overlay" class="fixed inset-0 z-40 bg-black/30 backdrop-blur-sm lg:hidden hidden" onclick="toggleSidebar()"></div>
 
     <!-- Sidebar -->
-    <aside id="sidebar" class="sidebar fixed left-0 top-0 z-50 h-screen bg-card border-r border-border flex flex-col sidebar-expanded">
+    <aside id="sidebar" class="sidebar fixed left-0 top-0 z-50 h-screen glass border-r border-gray-200/50 dark:border-gray-700/50 flex flex-col sidebar-expanded">
         <!-- Logo Section -->
-        <div class="flex items-center justify-between h-16 px-4 border-b border-border">
+        <div class="flex items-center justify-between h-20 px-5 border-b border-gray-200/50 dark:border-gray-700/50">
             <a href="/" class="flex items-center gap-3 overflow-hidden">
-                <div class="w-9 h-9 rounded-lg bg-primary flex items-center justify-center flex-shrink-0">
-                    <i class="ph ph-squares-four text-primary-foreground text-xl"></i>
+                <div class="w-11 h-11 rounded-2xl gradient-blue flex items-center justify-center flex-shrink-0 shadow-glow-blue">
+                    <i class="ph ph-squares-four text-white text-xl"></i>
                 </div>
-                <span class="sidebar-text font-semibold text-lg whitespace-nowrap">Admin Panel</span>
+                <div class="sidebar-text">
+                    <span class="font-semibold text-lg tracking-tight">Admin</span>
+                    <p class="text-xs text-muted-foreground">Organization Hub</p>
+                </div>
             </a>
-            <button onclick="toggleSidebar()" class="lg:hidden p-2 rounded-md hover:bg-accent">
+            <button onclick="toggleSidebar()" class="lg:hidden p-2.5 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
                 <i class="ph ph-x text-xl"></i>
             </button>
         </div>
 
         <!-- Navigation -->
-        <nav class="flex-1 overflow-y-auto sidebar-scroll p-3 space-y-1">
+        <nav class="flex-1 overflow-y-auto sidebar-scroll p-4 space-y-2">
             <!-- Main Menu -->
             <div class="menu-section">
-                <p class="menu-label px-3 py-2 text-xs font-medium text-muted-foreground uppercase tracking-wider sidebar-text">
+                <p class="menu-label px-4 py-3 text-xs font-semibold text-muted-foreground uppercase tracking-widest sidebar-text">
                     Main
                 </p>
-                <a href="{% url 'dashboard' %}" class="menu-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium {% if request.path == '/dashboard/' %}active{% endif %}">
+                <a href="/dashboard/" class="menu-item relative flex items-center gap-3 px-4 py-3 text-sm font-medium {% if request.path == '/dashboard/' %}active{% endif %}">
+                    <div class="nav-indicator absolute left-0 top-1/2 -translate-y-1/2 h-6 bg-white"></div>
                     <i class="ph ph-house text-xl flex-shrink-0"></i>
                     <span class="sidebar-text whitespace-nowrap">Dashboard</span>
                 </a>
@@ -248,26 +375,31 @@
 
             <!-- Content Menu -->
             <div class="menu-section pt-4">
-                <p class="menu-label px-3 py-2 text-xs font-medium text-muted-foreground uppercase tracking-wider sidebar-text">
+                <p class="menu-label px-4 py-3 text-xs font-semibold text-muted-foreground uppercase tracking-widest sidebar-text">
                     Content
                 </p>
-                <a href="{% url 'category-list' %}" class="menu-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium">
+                <a href="/dashboard/categories/" class="menu-item relative flex items-center gap-3 px-4 py-3 text-sm font-medium {% if request.path == '/dashboard/categories/' %}active{% endif %}">
+                    <div class="nav-indicator absolute left-0 top-1/2 -translate-y-1/2 h-6 bg-white"></div>
                     <i class="ph ph-tag text-xl flex-shrink-0"></i>
                     <span class="sidebar-text whitespace-nowrap">Categories</span>
                 </a>
-                <a href="{% url 'video-list' %}" class="menu-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium">
+                <a href="/dashboard/videos/" class="menu-item relative flex items-center gap-3 px-4 py-3 text-sm font-medium {% if '/dashboard/videos' in request.path %}active{% endif %}">
+                    <div class="nav-indicator absolute left-0 top-1/2 -translate-y-1/2 h-6 bg-white"></div>
                     <i class="ph ph-video-camera text-xl flex-shrink-0"></i>
                     <span class="sidebar-text whitespace-nowrap">Videos</span>
                 </a>
-                <a href="{% url 'playlist-list' %}" class="menu-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium">
+                <a href="/dashboard/playlists/" class="menu-item relative flex items-center gap-3 px-4 py-3 text-sm font-medium {% if '/dashboard/playlists' in request.path %}active{% endif %}">
+                    <div class="nav-indicator absolute left-0 top-1/2 -translate-y-1/2 h-6 bg-white"></div>
                     <i class="ph ph-list-dashes text-xl flex-shrink-0"></i>
                     <span class="sidebar-text whitespace-nowrap">Playlists</span>
                 </a>
-                <a href="{% url 'blogpost-list' %}" class="menu-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium">
+                <a href="/dashboard/posts/" class="menu-item relative flex items-center gap-3 px-4 py-3 text-sm font-medium {% if '/dashboard/posts' in request.path %}active{% endif %}">
+                    <div class="nav-indicator absolute left-0 top-1/2 -translate-y-1/2 h-6 bg-white"></div>
                     <i class="ph ph-article text-xl flex-shrink-0"></i>
                     <span class="sidebar-text whitespace-nowrap">Blog Posts</span>
                 </a>
-                <a href="{% url 'newsitem-list' %}" class="menu-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium">
+                <a href="/dashboard/news/" class="menu-item relative flex items-center gap-3 px-4 py-3 text-sm font-medium {% if '/dashboard/news' in request.path %}active{% endif %}">
+                    <div class="nav-indicator absolute left-0 top-1/2 -translate-y-1/2 h-6 bg-white"></div>
                     <i class="ph ph-newspaper text-xl flex-shrink-0"></i>
                     <span class="sidebar-text whitespace-nowrap">News</span>
                 </a>
@@ -275,22 +407,26 @@
 
             <!-- Users Menu -->
             <div class="menu-section pt-4">
-                <p class="menu-label px-3 py-2 text-xs font-medium text-muted-foreground uppercase tracking-wider sidebar-text">
+                <p class="menu-label px-4 py-3 text-xs font-semibold text-muted-foreground uppercase tracking-widest sidebar-text">
                     Users
                 </p>
-                <a href="{% url 'user-list' %}" class="menu-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium">
+                <a href="/dashboard/users/" class="menu-item relative flex items-center gap-3 px-4 py-3 text-sm font-medium {% if '/dashboard/users' in request.path %}active{% endif %}">
+                    <div class="nav-indicator absolute left-0 top-1/2 -translate-y-1/2 h-6 bg-white"></div>
                     <i class="ph ph-users text-xl flex-shrink-0"></i>
                     <span class="sidebar-text whitespace-nowrap">Users</span>
                 </a>
-                <a href="{% url 'donor-list' %}" class="menu-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium">
+                <a href="/dashboard/donors/" class="menu-item relative flex items-center gap-3 px-4 py-3 text-sm font-medium {% if '/dashboard/donors' in request.path %}active{% endif %}">
+                    <div class="nav-indicator absolute left-0 top-1/2 -translate-y-1/2 h-6 bg-white"></div>
                     <i class="ph ph-hand-heart text-xl flex-shrink-0"></i>
                     <span class="sidebar-text whitespace-nowrap">Donors</span>
                 </a>
-                <a href="{% url 'sponsor-list' %}" class="menu-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium">
+                <a href="/dashboard/sponsors/" class="menu-item relative flex items-center gap-3 px-4 py-3 text-sm font-medium {% if '/dashboard/sponsors' in request.path %}active{% endif %}">
+                    <div class="nav-indicator absolute left-0 top-1/2 -translate-y-1/2 h-6 bg-white"></div>
                     <i class="ph ph-handshake text-xl flex-shrink-0"></i>
                     <span class="sidebar-text whitespace-nowrap">Sponsors</span>
                 </a>
-                <a href="{% url 'partner-list' %}" class="menu-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium">
+                <a href="/dashboard/partners/" class="menu-item relative flex items-center gap-3 px-4 py-3 text-sm font-medium {% if '/dashboard/partners' in request.path %}active{% endif %}">
+                    <div class="nav-indicator absolute left-0 top-1/2 -translate-y-1/2 h-6 bg-white"></div>
                     <i class="ph ph-users-three text-xl flex-shrink-0"></i>
                     <span class="sidebar-text whitespace-nowrap">Partners</span>
                 </a>
@@ -298,14 +434,16 @@
 
             <!-- Marketing Menu -->
             <div class="menu-section pt-4">
-                <p class="menu-label px-3 py-2 text-xs font-medium text-muted-foreground uppercase tracking-wider sidebar-text">
+                <p class="menu-label px-4 py-3 text-xs font-semibold text-muted-foreground uppercase tracking-widest sidebar-text">
                     Marketing
                 </p>
-                <a href="{% url 'subscriber-list' %}" class="menu-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium">
+                <a href="/dashboard/subscribers/" class="menu-item relative flex items-center gap-3 px-4 py-3 text-sm font-medium {% if '/dashboard/subscribers' in request.path %}active{% endif %}">
+                    <div class="nav-indicator absolute left-0 top-1/2 -translate-y-1/2 h-6 bg-white"></div>
                     <i class="ph ph-envelope-simple text-xl flex-shrink-0"></i>
                     <span class="sidebar-text whitespace-nowrap">Subscribers</span>
                 </a>
-                <a href="{% url 'campaign-list' %}" class="menu-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium">
+                <a href="/dashboard/campaigns/" class="menu-item relative flex items-center gap-3 px-4 py-3 text-sm font-medium {% if '/dashboard/campaigns' in request.path %}active{% endif %}">
+                    <div class="nav-indicator absolute left-0 top-1/2 -translate-y-1/2 h-6 bg-white"></div>
                     <i class="ph ph-megaphone text-xl flex-shrink-0"></i>
                     <span class="sidebar-text whitespace-nowrap">Campaigns</span>
                 </a>
@@ -313,18 +451,21 @@
 
             <!-- Finance Menu -->
             <div class="menu-section pt-4">
-                <p class="menu-label px-3 py-2 text-xs font-medium text-muted-foreground uppercase tracking-wider sidebar-text">
+                <p class="menu-label px-4 py-3 text-xs font-semibold text-muted-foreground uppercase tracking-widest sidebar-text">
                     Finance
                 </p>
-                <a href="{% url 'donation-list' %}" class="menu-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium">
+                <a href="/dashboard/donations/" class="menu-item relative flex items-center gap-3 px-4 py-3 text-sm font-medium {% if '/dashboard/donations' in request.path %}active{% endif %}">
+                    <div class="nav-indicator absolute left-0 top-1/2 -translate-y-1/2 h-6 bg-white"></div>
                     <i class="ph ph-currency-dollar text-xl flex-shrink-0"></i>
                     <span class="sidebar-text whitespace-nowrap">Donations</span>
                 </a>
-                <a href="{% url 'deliverable-list' %}" class="menu-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium">
+                <a href="/dashboard/deliverables/" class="menu-item relative flex items-center gap-3 px-4 py-3 text-sm font-medium {% if '/dashboard/deliverables' in request.path %}active{% endif %}">
+                    <div class="nav-indicator absolute left-0 top-1/2 -translate-y-1/2 h-6 bg-white"></div>
                     <i class="ph ph-check-square-offset text-xl flex-shrink-0"></i>
                     <span class="sidebar-text whitespace-nowrap">Deliverables</span>
                 </a>
-                <a href="{% url 'asset-list' %}" class="menu-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium">
+                <a href="/dashboard/assets/" class="menu-item relative flex items-center gap-3 px-4 py-3 text-sm font-medium {% if '/dashboard/assets' in request.path %}active{% endif %}">
+                    <div class="nav-indicator absolute left-0 top-1/2 -translate-y-1/2 h-6 bg-white"></div>
                     <i class="ph ph-folder-simple text-xl flex-shrink-0"></i>
                     <span class="sidebar-text whitespace-nowrap">Assets</span>
                 </a>
@@ -332,30 +473,36 @@
 
             <!-- CMS Menu -->
             <div class="menu-section pt-4">
-                <p class="menu-label px-3 py-2 text-xs font-medium text-muted-foreground uppercase tracking-wider sidebar-text">
+                <p class="menu-label px-4 py-3 text-xs font-semibold text-muted-foreground uppercase tracking-widest sidebar-text">
                     CMS
                 </p>
-                <a href="{% url 'page-list' %}" class="menu-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium">
+                <a href="/dashboard/pages/" class="menu-item relative flex items-center gap-3 px-4 py-3 text-sm font-medium {% if '/dashboard/pages' in request.path and '/dashboard/media' not in request.path %}active{% endif %}">
+                    <div class="nav-indicator absolute left-0 top-1/2 -translate-y-1/2 h-6 bg-white"></div>
                     <i class="ph ph-file-text text-xl flex-shrink-0"></i>
                     <span class="sidebar-text whitespace-nowrap">Pages</span>
                 </a>
-                <a href="{% url 'menu-list' %}" class="menu-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium">
+                <a href="/dashboard/menus/" class="menu-item relative flex items-center gap-3 px-4 py-3 text-sm font-medium {% if '/dashboard/menus' in request.path %}active{% endif %}">
+                    <div class="nav-indicator absolute left-0 top-1/2 -translate-y-1/2 h-6 bg-white"></div>
                     <i class="ph ph-list text-xl flex-shrink-0"></i>
                     <span class="sidebar-text whitespace-nowrap">Menus</span>
                 </a>
-                <a href="{% url 'menuitem-list' %}" class="menu-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium">
+                <a href="/dashboard/menu-items/" class="menu-item relative flex items-center gap-3 px-4 py-3 text-sm font-medium {% if '/dashboard/menu-items' in request.path %}active{% endif %}">
+                    <div class="nav-indicator absolute left-0 top-1/2 -translate-y-1/2 h-6 bg-white"></div>
                     <i class="ph ph-list-dashes text-xl flex-shrink-0"></i>
                     <span class="sidebar-text whitespace-nowrap">Menu Items</span>
                 </a>
-                <a href="{% url 'widget-list' %}" class="menu-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium">
+                <a href="/dashboard/widgets/" class="menu-item relative flex items-center gap-3 px-4 py-3 text-sm font-medium {% if '/dashboard/widgets' in request.path %}active{% endif %}">
+                    <div class="nav-indicator absolute left-0 top-1/2 -translate-y-1/2 h-6 bg-white"></div>
                     <i class="ph ph-wrench text-xl flex-shrink-0"></i>
                     <span class="sidebar-text whitespace-nowrap">Widgets</span>
                 </a>
-                <a href="{% url 'media-list' %}" class="menu-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium">
+                <a href="/dashboard/media/" class="menu-item relative flex items-center gap-3 px-4 py-3 text-sm font-medium {% if '/dashboard/media' in request.path %}active{% endif %}">
+                    <div class="nav-indicator absolute left-0 top-1/2 -translate-y-1/2 h-6 bg-white"></div>
                     <i class="ph ph-image text-xl flex-shrink-0"></i>
                     <span class="sidebar-text whitespace-nowrap">Media</span>
                 </a>
-                <a href="{% url 'setting-list' %}" class="menu-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium">
+                <a href="/dashboard/settings/" class="menu-item relative flex items-center gap-3 px-4 py-3 text-sm font-medium {% if '/dashboard/settings' in request.path %}active{% endif %}">
+                    <div class="nav-indicator absolute left-0 top-1/2 -translate-y-1/2 h-6 bg-white"></div>
                     <i class="ph ph-gear text-xl flex-shrink-0"></i>
                     <span class="sidebar-text whitespace-nowrap">Settings</span>
                 </a>
@@ -363,14 +510,16 @@
 
             <!-- Organization Menu -->
             <div class="menu-section pt-4">
-                <p class="menu-label px-3 py-2 text-xs font-medium text-muted-foreground uppercase tracking-wider sidebar-text">
+                <p class="menu-label px-4 py-3 text-xs font-semibold text-muted-foreground uppercase tracking-widest sidebar-text">
                     Organization
                 </p>
-                <a href="{% url 'organization-edit' %}" class="menu-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium">
+                <a href="/dashboard/organization/" class="menu-item relative flex items-center gap-3 px-4 py-3 text-sm font-medium {% if '/dashboard/organization' in request.path %}active{% endif %}">
+                    <div class="nav-indicator absolute left-0 top-1/2 -translate-y-1/2 h-6 bg-white"></div>
                     <i class="ph ph-buildings text-xl flex-shrink-0"></i>
                     <span class="sidebar-text whitespace-nowrap">Profile</span>
                 </a>
-                <a href="{% url 'analytics-dashboard' %}" class="menu-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium">
+                <a href="/dashboard/analytics/" class="menu-item relative flex items-center gap-3 px-4 py-3 text-sm font-medium {% if '/dashboard/analytics' in request.path %}active{% endif %}">
+                    <div class="nav-indicator absolute left-0 top-1/2 -translate-y-1/2 h-6 bg-white"></div>
                     <i class="ph ph-chart-line text-xl flex-shrink-0"></i>
                     <span class="sidebar-text whitespace-nowrap">Analytics</span>
                 </a>
@@ -378,18 +527,21 @@
 
             <!-- Public Site -->
             <div class="menu-section pt-4">
-                <p class="menu-label px-3 py-2 text-xs font-medium text-muted-foreground uppercase tracking-wider sidebar-text">
+                <p class="menu-label px-4 py-3 text-xs font-semibold text-muted-foreground uppercase tracking-widest sidebar-text">
                     Public Site
                 </p>
-                <a href="{% url 'public-videos' %}" class="menu-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium" target="_blank">
+                <a href="{% url 'public-videos' %}" class="menu-item relative flex items-center gap-3 px-4 py-3 text-sm font-medium" target="_blank">
+                    <div class="nav-indicator absolute left-0 top-1/2 -translate-y-1/2 h-6 bg-white"></div>
                     <i class="ph ph-play-circle text-xl flex-shrink-0"></i>
                     <span class="sidebar-text whitespace-nowrap">View Videos</span>
                 </a>
-                <a href="{% url 'public-blog' %}" class="menu-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium" target="_blank">
+                <a href="{% url 'public-blog' %}" class="menu-item relative flex items-center gap-3 px-4 py-3 text-sm font-medium" target="_blank">
+                    <div class="nav-indicator absolute left-0 top-1/2 -translate-y-1/2 h-6 bg-white"></div>
                     <i class="ph ph-blog text-xl flex-shrink-0"></i>
                     <span class="sidebar-text whitespace-nowrap">View Blog</span>
                 </a>
-                <a href="{% url 'donate' %}" class="menu-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium" target="_blank">
+                <a href="{% url 'donate' %}" class="menu-item relative flex items-center gap-3 px-4 py-3 text-sm font-medium" target="_blank">
+                    <div class="nav-indicator absolute left-0 top-1/2 -translate-y-1/2 h-6 bg-white"></div>
                     <i class="ph ph-heart text-xl flex-shrink-0"></i>
                     <span class="sidebar-text whitespace-nowrap">Donate Page</span>
                 </a>
@@ -397,319 +549,107 @@
         </nav>
 
         <!-- User Section -->
-        <div class="border-t border-border p-3">
-            <div class="flex items-center gap-3 px-3 py-2">
-                <div class="w-9 h-9 rounded-full bg-primary flex items-center justify-center flex-shrink-0">
-                    <span class="text-primary-foreground font-medium text-sm">{{ user.username|make_list|first|upper }}</span>
+        <div class="border-t border-gray-200/50 dark:border-gray-700/50 p-4">
+            <div class="flex items-center gap-3 p-3 rounded-2xl bg-gray-100/50 dark:bg-gray-800/50">
+                <div class="w-10 h-10 rounded-full gradient-blue flex items-center justify-center flex-shrink-0">
+                    <i class="ph ph-user text-white text-lg"></i>
                 </div>
-                <div class="sidebar-text overflow-hidden">
-                    <p class="text-sm font-medium truncate">{{ user.username }}</p>
-                    <p class="text-xs text-muted-foreground truncate">Admin</p>
+                <div class="flex-1 min-w-0 sidebar-text">
+                    <p class="text-sm font-semibold truncate">{% if user.is_authenticated %}{{ user.username }}{% else %}Admin{% endif %}</p>
+                    <p class="text-xs text-muted-foreground truncate">{% if user.is_authenticated and user.email %}{{ user.email }}{% else %}admin@example.com{% endif %}</p>
                 </div>
+                <button class="p-2 rounded-xl hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+                    <i class="ph ph-gear text-lg"></i>
+                </button>
             </div>
-            <a href="/admin/logout/" class="menu-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium mt-1">
-                <i class="ph ph-sign-out text-xl flex-shrink-0"></i>
-                <span class="sidebar-text whitespace-nowrap">Logout</span>
-            </a>
         </div>
     </aside>
 
     <!-- Main Content -->
-    <div id="main-content" class="main-content lg:ml-[280px]">
+    <div class="main-content lg:ml-[300px]">
         <!-- Top Header -->
-        <header class="sticky top-0 z-30 h-16 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b border-border">
-            <div class="flex items-center justify-between h-full px-4 lg:px-6">
-                <!-- Left: Menu & Search -->
+        <header class="sticky top-0 z-30 glass border-b border-gray-200/50 dark:border-gray-700/50">
+            <div class="flex items-center justify-between h-16 px-6">
                 <div class="flex items-center gap-4">
-                    <button onclick="toggleSidebar()" class="p-2 rounded-lg hover:bg-accent lg:hidden">
+                    <button onclick="toggleSidebar()" class="lg:hidden p-2.5 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
                         <i class="ph ph-list text-xl"></i>
                     </button>
-                    <button onclick="toggleSidebarDesktop()" class="p-2 rounded-lg hover:bg-accent hidden lg:flex">
-                        <i class="ph ph-list text-xl"></i>
-                    </button>
-                    
-                    <!-- Search -->
-                    <div class="relative hidden md:block">
-                        <i class="ph ph-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"></i>
-                        <input 
-                            type="search" 
-                            placeholder="Search..." 
-                            class="w-64 lg:w-80 h-10 pl-10 pr-4 rounded-lg bg-muted border-0 focus:outline-none focus:ring-2 focus:ring-primary text-sm"
-                        >
+                    <div>
+                        <h1 class="text-lg font-semibold tracking-tight">{% block header_title %}Dashboard{% endblock %}</h1>
+                        <p class="text-sm text-muted-foreground">{% block header_subtitle %}Welcome back!{% endblock %}</p>
                     </div>
                 </div>
-
-                <!-- Right: Theme Toggle & Actions -->
-                <div class="flex items-center gap-2">
-                    <!-- Theme Toggle -->
-                    <button onclick="toggleTheme()" class="p-2 rounded-lg hover:bg-accent" title="Toggle theme">
-                        <i class="ph ph-moon text-xl dark:hidden"></i>
-                        <i class="ph ph-sun text-xl hidden dark:block"></i>
-                    </button>
-
+                <div class="flex items-center gap-3">
+                    <!-- Search -->
+                    <div class="relative hidden md:block">
+                        <i class="ph ph-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground"></i>
+                        <input type="text" placeholder="Search..." class="input-apple pl-10 pr-4 py-2.5 w-64 bg-gray-100/50 dark:bg-gray-800/50 border-0 text-sm">
+                    </div>
                     <!-- Notifications -->
-                    <button class="p-2 rounded-lg hover:bg-accent relative">
+                    <button class="relative p-2.5 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
                         <i class="ph ph-bell text-xl"></i>
-                        <span class="absolute top-1 right-1 w-2 h-2 bg-destructive rounded-full"></span>
+                        <span class="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full"></span>
                     </button>
-
-                    <!-- Settings -->
-                    <a href="/admin/" class="p-2 rounded-lg hover:bg-accent">
-                        <i class="ph ph-gear text-xl"></i>
-                    </a>
+                    <!-- Quick Add -->
+                    <button class="btn-apple px-4 py-2.5 bg-primary text-primary-foreground text-sm font-medium flex items-center gap-2">
+                        <i class="ph ph-plus"></i>
+                        <span class="hidden sm:inline">New</span>
+                    </button>
                 </div>
             </div>
         </header>
 
         <!-- Page Content -->
-        <main class="p-4 lg:p-6">
-            {% if messages %}
-            <div class="mb-6 space-y-2">
-                {% for message in messages %}
-                <div class="p-4 rounded-lg {% if message.tags == 'success' %}bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400{% elif message.tags == 'error' %}bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400{% else %}bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400{% endif %}">
-                    {{ message }}
-                </div>
-                {% endfor %}
-            </div>
-            {% endif %}
-            
+        <main class="p-6 page-content">
             {% block content %}{% endblock %}
         </main>
     </div>
 
-    <!-- JavaScript -->
     <script>
-        // Theme management
-        function getTheme() {
-            return localStorage.getItem('theme') || 'light';
-        }
-
-        function setTheme(theme) {
-            localStorage.setItem('theme', theme);
-            document.documentElement.classList.toggle('dark', theme === 'dark');
-        }
-
-        function toggleTheme() {
-            const currentTheme = getTheme();
-            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-            setTheme(newTheme);
-        }
-
-        // Initialize theme on load
-        (function() {
-            const theme = getTheme();
-            setTheme(theme);
-        })();
-
-        // Sidebar management
+        // Sidebar toggle functionality
         function toggleSidebar() {
             const sidebar = document.getElementById('sidebar');
             const overlay = document.getElementById('sidebar-overlay');
             
-            sidebar.classList.toggle('hidden');
-            sidebar.classList.toggle('flex');
-            overlay.classList.toggle('hidden');
-        }
-
-        function toggleSidebarDesktop() {
-            const sidebar = document.getElementById('sidebar');
-            const mainContent = document.getElementById('main-content');
-            const sidebarTexts = document.querySelectorAll('.sidebar-text');
-            const menuLabels = document.querySelectorAll('.menu-label');
-            
-            if (sidebar.classList.contains('collapsed')) {
-                // Expand
-                sidebar.classList.remove('collapsed');
-                sidebar.classList.add('expanded');
-                sidebar.classList.remove('w-[72px]');
-                sidebar.classList.add('w-[280px]');
-                mainContent.classList.remove('ml-[72px]');
-                mainContent.classList.add('ml-[280px]');
+            if (window.innerWidth >= 1024) {
+                // Desktop: collapse/expand
+                sidebar.classList.toggle('collapsed');
+                sidebar.classList.toggle('expanded');
                 
-                // Show text
-                sidebarTexts.forEach(el => el.style.display = 'block');
-                menuLabels.forEach(el => el.style.display = 'block');
+                // Toggle text visibility
+                const texts = sidebar.querySelectorAll('.sidebar-text');
+                texts.forEach(text => {
+                    text.classList.toggle('hidden');
+                });
             } else {
-                // Collapse
-                sidebar.classList.remove('expanded');
-                sidebar.classList.add('collapsed');
-                sidebar.classList.remove('w-[280px]');
-                sidebar.classList.add('w-[72px]');
-                mainContent.classList.remove('ml-[280px]');
-                mainContent.classList.add('ml-[72px]');
-                
-                // Hide text
-                sidebarTexts.forEach(el => el.style.display = 'none');
-                menuLabels.forEach(el => el.style.display = 'none');
+                // Mobile: slide in/out
+                sidebar.classList.toggle('-translate-x-full');
+                sidebar.classList.toggle('translate-x-0');
+                overlay.classList.toggle('hidden');
             }
         }
 
         // Initialize sidebar state
-        (function() {
+        document.addEventListener('DOMContentLoaded', function() {
             const sidebar = document.getElementById('sidebar');
-            const mainContent = document.getElementById('main-content');
             
-            // Set initial state based on screen size
+            // Set initial state for mobile
             if (window.innerWidth < 1024) {
-                sidebar.classList.add('hidden');
-                sidebar.classList.remove('flex');
-                mainContent.classList.remove('ml-[280px]');
-                mainContent.classList.add('ml-0');
+                sidebar.classList.add('-translate-x-full');
             }
-        })();
+        });
 
-        // Handle window resize
+        // Handle resize
         window.addEventListener('resize', function() {
             const sidebar = document.getElementById('sidebar');
-            const mainContent = document.getElementById('main-content');
-            
             if (window.innerWidth >= 1024) {
-                sidebar.classList.remove('hidden');
-                sidebar.classList.add('flex');
-                mainContent.classList.remove('ml-0');
-                mainContent.classList.add('ml-[280px]');
+                sidebar.classList.remove('-translate-x-full');
+                sidebar.classList.add('expanded');
+                sidebar.classList.remove('collapsed');
             } else {
-                sidebar.classList.add('hidden');
-                sidebar.classList.remove('flex');
-                mainContent.classList.remove('ml-[280px]');
-                mainContent.classList.add('ml-0');
+                sidebar.classList.add('-translate-x-full');
+                sidebar.classList.remove('expanded');
             }
-        });
-    </script>
-    
-    <!-- Toast Container -->
-    <div id="toast-container" class="fixed bottom-4 right-4 z-50 space-y-2"></div>
-    
-    <script>
-        // Toast Notification Function
-        window.showToast = function(message, type = 'info') {
-            const container = document.getElementById('toast-container');
-            const toast = document.createElement('div');
-            const colors = {
-                success: 'bg-green-500 dark:bg-green-600',
-                error: 'bg-red-500 dark:bg-red-600',
-                warning: 'bg-yellow-500 dark:bg-yellow-600',
-                info: 'bg-primary'
-            };
-            
-            const icons = {
-                success: 'ph-check-circle',
-                error: 'ph-x-circle',
-                warning: 'ph-warning',
-                info: 'ph-info'
-            };
-            
-            toast.className = `${colors[type]} text-white px-6 py-3 rounded-xl shadow-2xl flex items-center gap-3 transform translate-x-full transition-transform duration-300`;
-            toast.innerHTML = `
-                <i class="ph ${icons[type]} text-xl"></i>
-                <span class="font-medium">${message}</span>
-                <button onclick="this.parentElement.remove()" class="hover:opacity-70 ml-2">
-                    <i class="ph ph-x text-lg"></i>
-                </button>
-            `;
-            
-            container.appendChild(toast);
-            
-            setTimeout(() => toast.classList.remove('translate-x-full'), 100);
-            setTimeout(() => {
-                toast.classList.add('translate-x-full');
-                setTimeout(() => toast.remove(), 300);
-            }, 5000);
-        };
-        
-        // Convert Django messages to toasts on page load
-        document.addEventListener('DOMContentLoaded', function() {
-            const messageElements = document.querySelectorAll('[class*="bg-"][class*="text-"]');
-            messageElements.forEach(function(el) {
-                const text = el.textContent.trim();
-                let type = 'info';
-                if (el.classList.contains('green') || text.includes('success')) type = 'success';
-                else if (el.classList.contains('red') || text.includes('error')) type = 'error';
-                else if (el.classList.contains('yellow') || text.includes('warning')) type = 'warning';
-                
-                if (text && !el.dataset.toastConverted) {
-                    el.dataset.toastConverted = 'true';
-                    setTimeout(() => showToast(text, type), 500);
-                }
-            });
-        });
-    </script>
-    
-    <!-- API Client -->
-    <script src="{% static 'js/api-client.js' %}"></script>
-    
-    <script>
-        // Initialize API client
-        document.addEventListener('DOMContentLoaded', function() {
-            // Handle logout button
-            const logoutBtn = document.querySelector('[data-logout]');
-            if (logoutBtn) {
-                logoutBtn.addEventListener('click', async function(e) {
-                    e.preventDefault();
-                    try {
-                        await AuthAPI.logout();
-                        window.location.href = '/accounts/login/';
-                    } catch (error) {
-                        UI.showToast('Logout failed: ' + error.message, 'error');
-                    }
-                });
-            }
-            
-            // Handle form submissions with API
-            document.querySelectorAll('[data-api-form]').forEach(form => {
-                form.addEventListener('submit', async function(e) {
-                    e.preventDefault();
-                    const formData = new FormData(form);
-                    const endpoint = form.dataset.apiEndpoint;
-                    const method = form.dataset.apiMethod || 'POST';
-                    
-                    // Convert form data to object
-                    const data = {};
-                    formData.forEach((value, key) => {
-                        data[key] = value;
-                    });
-                    
-                    UI.showLoading(form.dataset.loadingTarget || 'content');
-                    
-                    let result;
-                    if (method === 'PUT') {
-                        result = await API.put(endpoint, data);
-                    } else if (method === 'PATCH') {
-                        result = await API.patch(endpoint, data);
-                    } else if (method === 'DELETE') {
-                        result = await API.delete(endpoint);
-                    } else {
-                        result = await API.post(endpoint, data);
-                    }
-                    
-                    if (result.success) {
-                        UI.showToast(form.dataset.successMessage || 'Operation successful!', 'success');
-                        if (form.dataset.redirectOnSuccess) {
-                            window.location.href = form.dataset.redirectOnSuccess;
-                        }
-                    } else {
-                        UI.showToast(result.error || 'Operation failed', 'error');
-                    }
-                });
-            });
-            
-            // Handle delete confirmations
-            document.querySelectorAll('[data-delete-confirm]').forEach(btn => {
-                btn.addEventListener('click', async function(e) {
-                    e.preventDefault();
-                    const message = btn.dataset.deleteConfirm || 'Are you sure you want to delete this item?';
-                    if (confirm(message)) {
-                        const endpoint = btn.href;
-                        const result = await API.delete(endpoint);
-                        if (result.success) {
-                            UI.showToast('Item deleted successfully!', 'success');
-                            btn.closest('tr').remove();
-                        } else {
-                            UI.showToast(result.error || 'Delete failed', 'error');
-                        }
-                    }
-                });
-            });
         });
     </script>
     

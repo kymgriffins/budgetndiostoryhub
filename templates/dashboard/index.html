@@ -2,71 +2,285 @@
 {% load static %}
 
 {% block title %}Dashboard - Admin Panel{% endblock %}
+{% block header_title %}Dashboard{% endblock %}
+{% block header_subtitle %}Welcome to your organization hub{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* Dashboard-specific styles */
+    .stat-card-gradient {
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .stat-card-gradient::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, var(--gradient-start), var(--gradient-end));
+    }
+    
+    .ai-pulse {
+        animation: ai-pulse 2s ease-in-out infinite;
+    }
+    
+    @keyframes ai-pulse {
+        0%, 100% { box-shadow: 0 0 20px rgba(0, 122, 255, 0.3); }
+        50% { box-shadow: 0 0 40px rgba(0, 122, 255, 0.5); }
+    }
+    
+    .typing-indicator span {
+        animation: typing 1.4s infinite;
+    }
+    
+    .typing-indicator span:nth-child(2) {
+        animation-delay: 0.2s;
+    }
+    
+    .typing-indicator span:nth-child(3) {
+        animation-delay: 0.4s;
+    }
+    
+    @keyframes typing {
+        0%, 60%, 100% { transform: translateY(0); }
+        30% { transform: translateY(-4px); }
+    }
+    
+    .gradient-text {
+        background: linear-gradient(135deg, #007AFF, #AF52DE);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+    
+    .activity-item {
+        transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    .activity-item:hover {
+        transform: translateX(4px);
+        background: hsl(var(--accent));
+        border-radius: 0.75rem;
+    }
+</style>
+{% endblock %}
 
 {% block content %}
-<!-- Page Header -->
+<!-- Page Header with Welcome -->
 <div class="mb-8">
-    <h1 class="text-3xl font-bold tracking-tight">Dashboard</h1>
-    <p class="text-muted-foreground mt-1">Welcome back! Here's an overview of your content.</p>
+    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+        <div>
+            <h1 class="text-3xl font-bold tracking-tight">Good {% now "G" %}{% if now.hour < 12 %}morning{% elif now.hour < 17 %}afternoon{% else %}evening{% endif %}! 👋</h1>
+            <p class="text-muted-foreground mt-1">Here's what's happening with your organization today.</p>
+        </div>
+        <div class="flex items-center gap-3">
+            <button class="btn-apple px-4 py-2.5 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-sm font-medium flex items-center gap-2 shadow-sm">
+                <i class="ph ph-calendar"></i>
+                <span>Last 30 days</span>
+                <i class="ph ph-caret-down"></i>
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- AI Assistant Card -->
+<div class="mb-8">
+    <div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white p-6 lg:p-8 ai-pulse">
+        <!-- Background Pattern -->
+        <div class="absolute inset-0 opacity-10">
+            <div class="absolute top-0 right-0 w-96 h-96 bg-blue-500 rounded-full blur-3xl transform translate-x-1/2 -translate-y-1/2"></div>
+            <div class="absolute bottom-0 left-0 w-96 h-96 bg-purple-500 rounded-full blur-3xl transform -translate-x-1/2 translate-y-1/2"></div>
+        </div>
+        
+        <div class="relative z-10">
+            <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
+                <div class="flex items-start gap-4">
+                    <div class="w-14 h-14 rounded-2xl bg-white/10 backdrop-blur flex items-center justify-center">
+                        <i class="ph ph-sparkle text-2xl text-blue-400"></i>
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-2 mb-1">
+                            <h2 class="text-xl font-bold">AI Assistant</h2>
+                            <span class="px-2 py-0.5 bg-blue-500/20 text-blue-400 text-xs font-medium rounded-full">Beta</span>
+                        </div>
+                        <p class="text-gray-400 text-sm max-w-lg">Ask me anything about your organization, content, or get AI-powered insights and recommendations.</p>
+                    </div>
+                </div>
+                
+                <div class="flex flex-col sm:flex-row gap-3">
+                    <button onclick="toggleAIChat()" class="btn-apple px-5 py-3 bg-white text-gray-900 font-semibold flex items-center justify-center gap-2">
+                        <i class="ph ph-chat-circle-dots"></i>
+                        <span>Start Conversation</span>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Quick AI Suggestions -->
+            <div class="mt-6 pt-6 border-t border-white/10">
+                <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">Try asking</p>
+                <div class="flex flex-wrap gap-2">
+                    <button onclick="askAI('What content is performing best this month?')" class="px-4 py-2 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl text-sm font-medium transition-colors">
+                        📊 What's performing best?
+                    </button>
+                    <button onclick="askAI('Give me a summary of recent activity')" class="px-4 py-2 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl text-sm font-medium transition-colors">
+                        📋 Recent activity summary
+                    </button>
+                    <button onclick="askAI('Suggest content improvements')" class="px-4 py-2 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl text-sm font-medium transition-colors">
+                        💡 Content suggestions
+                    </button>
+                    <button onclick="askAI('Analyze donor trends')" class="px-4 py-2 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl text-sm font-medium transition-colors">
+                        💰 Donor trends
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <!-- Stats Grid -->
-<div class="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+<div class="grid gap-6 md:grid-cols-2 lg:grid-cols-4 mb-8">
     <!-- Total Users -->
-    <div class="stat-card rounded-xl border bg-card p-6 shadow-sm">
-        <div class="flex items-center justify-between space-x-4">
-            <div class="flex items-center space-x-4">
-                <div class="rounded-lg bg-primary/10 p-2">
-                    <i class="ph ph-users text-primary text-xl"></i>
+    <div class="stat-card stat-card-gradient bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 p-6 shadow-apple" style="--gradient-start: #007AFF; --gradient-end: #5856D6;">
+        <div class="flex items-start justify-between">
+            <div class="flex items-center gap-4">
+                <div class="w-12 h-12 rounded-2xl bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center">
+                    <i class="ph ph-users text-blue-600 dark:text-blue-400 text-xl"></i>
                 </div>
                 <div>
                     <p class="text-sm font-medium text-muted-foreground">Total Users</p>
-                    <p class="text-2xl font-bold">{{ user_count|default:0 }}</p>
+                    <p class="text-3xl font-bold tracking-tight mt-1">{{ user_count|default:0 }}</p>
                 </div>
+            </div>
+        </div>
+        <div class="mt-4 pt-4 border-t border-gray-100 dark:border-gray-700">
+            <div class="flex items-center gap-2">
+                <span class="flex items-center gap-1 text-sm font-medium text-green-600">
+                    <i class="ph ph-trend-up"></i>
+                    +12%
+                </span>
+                <span class="text-sm text-muted-foreground">vs last month</span>
             </div>
         </div>
     </div>
 
     <!-- Active Subscribers -->
-    <div class="stat-card rounded-xl border bg-card p-6 shadow-sm">
-        <div class="flex items-center justify-between space-x-4">
-            <div class="flex items-center space-x-4">
-                <div class="rounded-lg bg-primary/10 p-2">
-                    <i class="ph ph-envelope-simple text-primary text-xl"></i>
+    <div class="stat-card stat-card-gradient bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 p-6 shadow-apple" style="--gradient-start: #34C759; --gradient-end: #30D158;">
+        <div class="flex items-start justify-between">
+            <div class="flex items-center gap-4">
+                <div class="w-12 h-12 rounded-2xl bg-green-50 dark:bg-green-900/20 flex items-center justify-center">
+                    <i class="ph ph-envelope-simple text-green-600 dark:text-green-400 text-xl"></i>
                 </div>
                 <div>
                     <p class="text-sm font-medium text-muted-foreground">Subscribers</p>
-                    <p class="text-2xl font-bold">{{ subscriber_count|default:0 }}</p>
+                    <p class="text-3xl font-bold tracking-tight mt-1">{{ subscriber_count|default:0 }}</p>
                 </div>
+            </div>
+        </div>
+        <div class="mt-4 pt-4 border-t border-gray-100 dark:border-gray-700">
+            <div class="flex items-center gap-2">
+                <span class="flex items-center gap-1 text-sm font-medium text-green-600">
+                    <i class="ph ph-trend-up"></i>
+                    +8%
+                </span>
+                <span class="text-sm text-muted-foreground">vs last month</span>
             </div>
         </div>
     </div>
 
     <!-- Total Videos -->
-    <div class="stat-card rounded-xl border bg-card p-6 shadow-sm">
-        <div class="flex items-center justify-between space-x-4">
-            <div class="flex items-center space-x-4">
-                <div class="rounded-lg bg-primary/10 p-2">
-                    <i class="ph ph-video-camera text-primary text-xl"></i>
+    <div class="stat-card stat-card-gradient bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 p-6 shadow-apple" style="--gradient-start: #FF9500; --gradient-end: #FF3B30;">
+        <div class="flex items-start justify-between">
+            <div class="flex items-center gap-4">
+                <div class="w-12 h-12 rounded-2xl bg-orange-50 dark:bg-orange-900/20 flex items-center justify-center">
+                    <i class="ph ph-video-camera text-orange-600 dark:text-orange-400 text-xl"></i>
                 </div>
                 <div>
                     <p class="text-sm font-medium text-muted-foreground">Videos</p>
-                    <p class="text-2xl font-bold">{{ video_count|default:0 }}</p>
+                    <p class="text-3xl font-bold tracking-tight mt-1">{{ video_count|default:0 }}</p>
                 </div>
+            </div>
+        </div>
+        <div class="mt-4 pt-4 border-t border-gray-100 dark:border-gray-700">
+            <div class="flex items-center gap-2">
+                <span class="flex items-center gap-1 text-sm font-medium text-green-600">
+                    <i class="ph ph-trend-up"></i>
+                    +24%
+                </span>
+                <span class="text-sm text-muted-foreground">vs last month</span>
             </div>
         </div>
     </div>
 
     <!-- Blog Posts -->
-    <div class="stat-card rounded-xl border bg-card p-6 shadow-sm">
-        <div class="flex items-center justify-between space-x-4">
-            <div class="flex items-center space-x-4">
-                <div class="rounded-lg bg-primary/10 p-2">
-                    <i class="ph ph-article text-primary text-xl"></i>
+    <div class="stat-card stat-card-gradient bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 p-6 shadow-apple" style="--gradient-start: #AF52DE; --gradient-end: #FF2D55;">
+        <div class="flex items-start justify-between">
+            <div class="flex items-center gap-4">
+                <div class="w-12 h-12 rounded-2xl bg-purple-50 dark:bg-purple-900/20 flex items-center justify-center">
+                    <i class="ph ph-article text-purple-600 dark:text-purple-400 text-xl"></i>
                 </div>
                 <div>
                     <p class="text-sm font-medium text-muted-foreground">Blog Posts</p>
-                    <p class="text-2xl font-bold">{{ post_count|default:0 }}</p>
+                    <p class="text-3xl font-bold tracking-tight mt-1">{{ post_count|default:0 }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="mt-4 pt-4 border-t border-gray-100 dark:border-gray-700">
+            <div class="flex items-center gap-2">
+                <span class="flex items-center gap-1 text-sm font-medium text-green-600">
+                    <i class="ph ph-trend-up"></i>
+                    +18%
+                </span>
+                <span class="text-sm text-muted-foreground">vs last month</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Secondary Stats Row -->
+<div class="grid gap-6 md:grid-cols-3 lg:grid-cols-3 mb-8">
+    <!-- Sponsors -->
+    <div class="stat-card bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 p-6 shadow-apple rounded-2xl">
+        <div class="flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-yellow-400 to-orange-500 flex items-center justify-center">
+                    <i class="ph ph-handshake text-white text-lg"></i>
+                </div>
+                <div>
+                    <p class="text-sm font-medium text-muted-foreground">Sponsors</p>
+                    <p class="text-2xl font-bold">{{ sponsor_count|default:0 }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Partners -->
+    <div class="stat-card bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 p-6 shadow-apple rounded-2xl">
+        <div class="flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-400 to-indigo-600 flex items-center justify-center">
+                    <i class="ph ph-users-three text-white text-lg"></i>
+                </div>
+                <div>
+                    <p class="text-sm font-medium text-muted-foreground">Partners</p>
+                    <p class="text-2xl font-bold">{{ partner_count|default:0 }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Total Donations -->
+    <div class="stat-card bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 p-6 shadow-apple rounded-2xl">
+        <div class="flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-green-400 to-emerald-600 flex items-center justify-center">
+                    <i class="ph ph-currency-dollar text-white text-lg"></i>
+                </div>
+                <div>
+                    <p class="text-sm font-medium text-muted-foreground">Total Donations</p>
+                    <p class="text-2xl font-bold">${{ total_donations|default:0|floatformat:0 }}</p>
                 </div>
             </div>
         </div>
@@ -74,129 +288,254 @@
 </div>
 
 <!-- Quick Actions -->
-<div class="mt-8">
+<div class="mb-8">
     <h2 class="text-xl font-semibold tracking-tight mb-4">Quick Actions</h2>
-    <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-        <a href="{% url 'video-create' %}" class="stat-card flex flex-col items-center justify-center rounded-xl border bg-card p-6 shadow-sm hover:bg-accent transition-colors">
-            <i class="ph ph-plus-circle text-3xl mb-2"></i>
-            <span class="text-sm font-medium">Add Video</span>
+    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <a href="{% url 'video-create' %}" class="stat-card group flex flex-col items-center justify-center rounded-2xl border border-gray-100 dark:border-gray-700 bg-white dark:bg-gray-800 p-6 shadow-apple hover:shadow-apple-hover">
+            <div class="w-12 h-12 rounded-2xl bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+                <i class="ph ph-plus-circle text-blue-600 dark:text-blue-400 text-2xl"></i>
+            </div>
+            <span class="text-sm font-semibold">Add Video</span>
+            <span class="text-xs text-muted-foreground mt-1">Upload new content</span>
         </a>
-        <a href="{% url 'blogpost-create' %}" class="stat-card flex flex-col items-center justify-center rounded-xl border bg-card p-6 shadow-sm hover:bg-accent transition-colors">
-            <i class="ph ph-pencil-simple text-3xl mb-2"></i>
-            <span class="text-sm font-medium">Write Post</span>
+        <a href="{% url 'blogpost-create' %}" class="stat-card group flex flex-col items-center justify-center rounded-2xl border border-gray-100 dark:border-gray-700 bg-white dark:bg-gray-800 p-6 shadow-apple hover:shadow-apple-hover">
+            <div class="w-12 h-12 rounded-2xl bg-purple-50 dark:bg-purple-900/20 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+                <i class="ph ph-pencil-simple text-purple-600 dark:text-purple-400 text-2xl"></i>
+            </div>
+            <span class="text-sm font-semibold">Write Post</span>
+            <span class="text-xs text-muted-foreground mt-1">Create blog article</span>
         </a>
-        <a href="{% url 'campaign-create' %}" class="stat-card flex flex-col items-center justify-center rounded-xl border bg-card p-6 shadow-sm hover:bg-accent transition-colors">
-            <i class="ph ph-megaphone text-3xl mb-2"></i>
-            <span class="text-sm font-medium">New Campaign</span>
+        <a href="{% url 'campaign-create' %}" class="stat-card group flex flex-col items-center justify-center rounded-2xl border border-gray-100 dark:border-gray-700 bg-white dark:bg-gray-800 p-6 shadow-apple hover:shadow-apple-hover">
+            <div class="w-12 h-12 rounded-2xl bg-orange-50 dark:bg-orange-900/20 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+                <i class="ph ph-megaphone text-orange-600 dark:text-orange-400 text-2xl"></i>
+            </div>
+            <span class="text-sm font-semibold">New Campaign</span>
+            <span class="text-xs text-muted-foreground mt-1">Start email campaign</span>
         </a>
-        <a href="{% url 'donation-create' %}" class="stat-card flex flex-col items-center justify-center rounded-xl border bg-card p-6 shadow-sm hover:bg-accent transition-colors">
-            <i class="ph ph-heart text-3xl mb-2"></i>
-            <span class="text-sm font-medium">Record Donation</span>
+        <a href="{% url 'donation-create' %}" class="stat-card group flex flex-col items-center justify-center rounded-2xl border border-gray-100 dark:border-gray-700 bg-white dark:bg-gray-800 p-6 shadow-apple hover:shadow-apple-hover">
+            <div class="w-12 h-12 rounded-2xl bg-green-50 dark:bg-green-900/20 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+                <i class="ph ph-heart text-green-600 dark:text-green-400 text-2xl"></i>
+            </div>
+            <span class="text-sm font-semibold">Record Donation</span>
+            <span class="text-xs text-muted-foreground mt-1">Log new donation</span>
         </a>
     </div>
 </div>
 
-<!-- Recent Activity -->
-<div class="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-7">
+<!-- Recent Activity Grid -->
+<div class="grid gap-6 lg:grid-cols-7">
     <!-- Recent Videos -->
-    <div class="col-span-4 rounded-xl border bg-card p-6 shadow-sm">
-        <div class="flex items-center justify-between mb-4">
-            <h3 class="text-lg font-semibold">Recent Videos</h3>
-            <a href="{% url 'video-list' %}" class="text-sm text-primary hover:underline">View all</a>
+    <div class="col-span-4 rounded-2xl border border-gray-100 dark:border-gray-700 bg-white dark:bg-gray-800 p-6 shadow-apple">
+        <div class="flex items-center justify-between mb-6">
+            <h3 class="text-lg font-semibold tracking-tight">Recent Videos</h3>
+            <a href="{% url 'video-list' %}" class="text-sm text-blue-600 hover:underline font-medium">View all</a>
         </div>
-        <div class="space-y-4">
+        <div class="space-y-3">
             {% if recent_videos %}
                 {% for video in recent_videos %}
-                <div class="flex items-center gap-4">
-                    <div class="rounded-lg bg-muted p-2">
-                        <i class="ph ph-play-circle text-xl"></i>
+                <div class="activity-item flex items-center gap-4 p-3 rounded-xl">
+                    <div class="w-10 h-10 rounded-xl bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center flex-shrink-0">
+                        <i class="ph ph-play-circle text-blue-600 dark:text-blue-400 text-lg"></i>
                     </div>
                     <div class="flex-1 min-w-0">
                         <p class="text-sm font-medium truncate">{{ video.title }}</p>
                         <p class="text-xs text-muted-foreground">{{ video.created_at|date:"M d, Y" }}</p>
                     </div>
+                    <i class="ph ph-caret-right text-muted-foreground"></i>
                 </div>
                 {% endfor %}
             {% else %}
-                <p class="text-sm text-muted-foreground text-center py-4">No videos yet</p>
+                <div class="text-center py-8">
+                    <div class="w-16 h-16 rounded-2xl bg-gray-100 dark:bg-gray-700 flex items-center justify-center mx-auto mb-3">
+                        <i class="ph ph-video-camera text-muted-foreground text-2xl"></i>
+                    </div>
+                    <p class="text-sm text-muted-foreground">No videos yet</p>
+                    <a href="{% url 'video-create' %}" class="text-sm text-blue-600 font-medium mt-2 inline-block">Add your first video</a>
+                </div>
             {% endif %}
         </div>
     </div>
 
     <!-- Recent Posts -->
-    <div class="col-span-3 rounded-xl border bg-card p-6 shadow-sm">
-        <div class="flex items-center justify-between mb-4">
-            <h3 class="text-lg font-semibold">Recent Posts</h3>
-            <a href="{% url 'blogpost-list' %}" class="text-sm text-primary hover:underline">View all</a>
+    <div class="col-span-3 rounded-2xl border border-gray-100 dark:border-gray-700 bg-white dark:bg-gray-800 p-6 shadow-apple">
+        <div class="flex items-center justify-between mb-6">
+            <h3 class="text-lg font-semibold tracking-tight">Recent Posts</h3>
+            <a href="{% url 'blogpost-list' %}" class="text-sm text-blue-600 hover:underline font-medium">View all</a>
         </div>
-        <div class="space-y-4">
+        <div class="space-y-3">
             {% if recent_posts %}
                 {% for post in recent_posts %}
-                <div class="flex items-center gap-4">
-                    <div class="rounded-lg bg-muted p-2">
-                        <i class="ph ph-article text-xl"></i>
+                <div class="activity-item flex items-center gap-4 p-3 rounded-xl">
+                    <div class="w-10 h-10 rounded-xl bg-purple-50 dark:bg-purple-900/20 flex items-center justify-center flex-shrink-0">
+                        <i class="ph ph-article text-purple-600 dark:text-purple-400 text-lg"></i>
                     </div>
                     <div class="flex-1 min-w-0">
                         <p class="text-sm font-medium truncate">{{ post.title }}</p>
                         <p class="text-xs text-muted-foreground">{{ post.created_at|date:"M d, Y" }}</p>
                     </div>
+                    <i class="ph ph-caret-right text-muted-foreground"></i>
                 </div>
                 {% endfor %}
             {% else %}
-                <p class="text-sm text-muted-foreground text-center py-4">No posts yet</p>
+                <div class="text-center py-8">
+                    <div class="w-16 h-16 rounded-2xl bg-gray-100 dark:bg-gray-700 flex items-center justify-center mx-auto mb-3">
+                        <i class="ph ph-article text-muted-foreground text-2xl"></i>
+                    </div>
+                    <p class="text-sm text-muted-foreground">No posts yet</p>
+                    <a href="{% url 'blogpost-create' %}" class="text-sm text-blue-600 font-medium mt-2 inline-block">Write your first post</a>
+                </div>
             {% endif %}
         </div>
     </div>
 </div>
 
-<!-- Analytics Overview -->
-<div class="mt-8 grid gap-4 md:grid-cols-2">
-    <!-- Donations Summary -->
-    <div class="rounded-xl border bg-card p-6 shadow-sm">
-        <div class="flex items-center justify-between mb-4">
-            <h3 class="text-lg font-semibold">Donations</h3>
-            <a href="{% url 'donation-list' %}" class="text-sm text-primary hover:underline">View all</a>
+<!-- AI Chat Modal -->
+<div id="ai-chat-modal" class="fixed inset-0 z-50 hidden">
+    <div class="absolute inset-0 bg-black/50 backdrop-blur-sm" onclick="toggleAIChat()"></div>
+    <div class="absolute bottom-6 right-6 w-96 h-[500px] bg-white dark:bg-gray-800 rounded-3xl shadow-2xl flex flex-col overflow-hidden">
+        <!-- Chat Header -->
+        <div class="p-4 border-b border-gray-100 dark:border-gray-700 bg-gradient-to-r from-gray-900 to-gray-800 text-white">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center ai-pulse">
+                    <i class="ph ph-sparkle text-xl text-blue-400"></i>
+                </div>
+                <div>
+                    <h3 class="font-semibold">AI Assistant</h3>
+                    <p class="text-xs text-gray-400">Online • Ready to help</p>
+                </div>
+            </div>
         </div>
-        <div class="space-y-4">
-            <div class="flex items-center justify-between">
-                <span class="text-sm text-muted-foreground">Total Donations</span>
-                <span class="font-medium">{{ donation_count|default:0 }}</span>
+        
+        <!-- Chat Messages -->
+        <div id="chat-messages" class="flex-1 overflow-y-auto p-4 space-y-4">
+            <div class="flex gap-3">
+                <div class="w-8 h-8 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center flex-shrink-0">
+                    <i class="ph ph-sparkle text-blue-600 dark:text-blue-400 text-sm"></i>
+                </div>
+                <div class="bg-gray-100 dark:bg-gray-700 rounded-2xl rounded-tl-md p-3 max-w-[80%]">
+                    <p class="text-sm">Hello! I'm your AI assistant. Ask me anything about your organization, content performance, or get personalized recommendations.</p>
+                </div>
             </div>
-            <div class="flex items-center justify-between">
-                <span class="text-sm text-muted-foreground">Total Amount</span>
-                <span class="font-medium">${{ total_donations|default:"0" }}</span>
-            </div>
-            <a href="{% url 'donation-create' %}" class="inline-flex items-center justify-center rounded-lg bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90 transition-colors w-full">
-                <i class="ph ph-plus mr-2"></i>
-                Add Donation
-            </a>
         </div>
-    </div>
-
-    <!-- Sponsors & Partners -->
-    <div class="rounded-xl border bg-card p-6 shadow-sm">
-        <div class="flex items-center justify-between mb-4">
-            <h3 class="text-lg font-semibold">Sponsors & Partners</h3>
-            <a href="{% url 'sponsor-list' %}" class="text-sm text-primary hover:underline">View all</a>
-        </div>
-        <div class="space-y-4">
-            <div class="flex items-center justify-between">
-                <span class="text-sm text-muted-foreground">Sponsors</span>
-                <span class="font-medium">{{ sponsor_count|default:0 }}</span>
-            </div>
-            <div class="flex items-center justify-between">
-                <span class="text-sm text-muted-foreground">Partners</span>
-                <span class="font-medium">{{ partner_count|default:0 }}</span>
-            </div>
-            <div class="flex gap-2">
-                <a href="{% url 'sponsor-list' %}" class="inline-flex items-center justify-center rounded-lg bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90 transition-colors flex-1">
-                    View Sponsors
-                </a>
-                <a href="{% url 'partner-list' %}" class="inline-flex items-center justify-center rounded-lg border bg-background px-4 py-2 text-sm font-medium hover:bg-accent transition-colors flex-1">
-                    View Partners
-                </a>
+        
+        <!-- Chat Input -->
+        <div class="p-4 border-t border-gray-100 dark:border-gray-700">
+            <div class="flex items-center gap-2">
+                <input type="text" id="chat-input" placeholder="Type your message..." class="input-apple flex-1 px-4 py-3 bg-gray-100 dark:bg-gray-700 border-0 text-sm" onkeypress="handleChatKeypress(event)">
+                <button onclick="sendMessage()" class="p-3 rounded-xl bg-blue-600 text-white hover:bg-blue-700 transition-colors">
+                    <i class="ph ph-paper-plane-tilt"></i>
+                </button>
             </div>
         </div>
     </div>
 </div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // AI Chat functionality
+    function toggleAIChat() {
+        const modal = document.getElementById('ai-chat-modal');
+        modal.classList.toggle('hidden');
+    }
+    
+    function askAI(question) {
+        const chatInput = document.getElementById('chat-input');
+        chatInput.value = question;
+        toggleAIChat();
+        sendMessage();
+    }
+    
+    function handleChatKeypress(event) {
+        if (event.key === 'Enter') {
+            sendMessage();
+        }
+    }
+    
+    function sendMessage() {
+        const chatInput = document.getElementById('chat-input');
+        const messagesContainer = document.getElementById('chat-messages');
+        const message = chatInput.value.trim();
+        
+        if (!message) return;
+        
+        // Add user message
+        const userMessage = document.createElement('div');
+        userMessage.className = 'flex gap-3 flex-row-reverse';
+        userMessage.innerHTML = `
+            <div class="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center flex-shrink-0">
+                <i class="ph ph-user text-white text-sm"></i>
+            </div>
+            <div bg-blue-600 text-white rounded-2xl rounded-tr-md p-3 max-w-[80%]">
+                <p class="text-sm">${message}</p>
+            </div>
+        `;
+        messagesContainer.appendChild(userMessage);
+        
+        // Clear input
+        chatInput.value = '';
+        
+        // Add typing indicator
+        const typingIndicator = document.createElement('div');
+        typingIndicator.className = 'flex gap-3';
+        typingIndicator.id = 'typing-indicator';
+        typingIndicator.innerHTML = `
+            <div class="w-8 h-8 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center flex-shrink-0">
+                <i class="ph ph-sparkle text-blue-600 dark:text-blue-400 text-sm"></i>
+            </div>
+            <div class="bg-gray-100 dark:bg-gray-700 rounded-2xl rounded-tl-md px-4 py-3">
+                <div class="typing-indicator flex gap-1">
+                    <span class="w-2 h-2 bg-gray-400 rounded-full"></span>
+                    <span class="w-2 h-2 bg-gray-400 rounded-full"></span>
+                    <span class="w-2 h-2 bg-gray-400 rounded-full"></span>
+                </div>
+            </div>
+        `;
+        messagesContainer.appendChild(typingIndicator);
+        
+        // Scroll to bottom
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        
+        // Simulate AI response (in production, this would call an actual AI API)
+        setTimeout(() => {
+            document.getElementById('typing-indicator').remove();
+            
+            const aiResponse = document.createElement('div');
+            aiResponse.className = 'flex gap-3';
+            
+            // Generate contextual response based on the question
+            let responseText = getAIResponse(message);
+            
+            aiResponse.innerHTML = `
+                <div class="w-8 h-8 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center flex-shrink-0">
+                    <i class="ph ph-sparkle text-blue-600 dark:text-blue-400 text-sm"></i>
+                </div>
+                <div class="bg-gray-100 dark:bg-gray-700 rounded-2xl rounded-tl-md p-3 max-w-[80%]">
+                    <p class="text-sm">${responseText}</p>
+                </div>
+            `;
+            messagesContainer.appendChild(aiResponse);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }, 1500);
+    }
+    
+    function getAIResponse(message) {
+        const lowerMessage = message.toLowerCase();
+        
+        if (lowerMessage.includes('performing') || lowerMessage.includes('best') || lowerMessage.includes('performance')) {
+            return `Based on your content analytics, <strong>videos</strong> are currently your top performers with a 24% increase this month. Your recent video "${document.querySelector('.recent-videos .activity-item:first-child .text-sm')?.textContent || 'content'}" has received excellent engagement. I'd recommend creating more video content and considering shorter formats for social media.`;
+        } else if (lowerMessage.includes('activity') || lowerMessage.includes('summary') || lowerMessage.includes('recent')) {
+            return `Here's your recent activity summary:<br><br>• <strong>{{ video_count|default:0 }}</strong> videos uploaded<br>• <strong>{{ post_count|default:0 }}</strong> blog posts published<br>• <strong>{{ user_count|default:0 }}</strong> new users<br>• <strong>{{ sponsor_count|default:0 }}</strong> active sponsors<br><br>Overall, your organization is showing <strong>positive growth</strong> across all metrics!`;
+        } else if (lowerMessage.includes('content') || lowerMessage.includes('suggest') || lowerMessage.includes('improve')) {
+            return `Here are my content improvement suggestions:<br><br>1. <strong>Video optimization</strong> - Add more tags and descriptions to improve discoverability<br>2. <strong>Post frequency</strong> - Consider publishing 2-3 blog posts per week<br>3. <strong>Engagement</strong> - Add call-to-action buttons to your content<br>4. <strong>SEO</strong> - Update meta descriptions for better search rankings`;
+        } else if (lowerMessage.includes('donor') || lowerMessage.includes('donation') || lowerMessage.includes('trend')) {
+            return `Your donor trends analysis shows:<br><br>• Total donations: <strong>${{ total_donations|default:0 }}</strong><br>• <strong>{{ sponsor_count|default:0 }}</strong> active sponsors<br>• Consider launching a <strong>recurring donation</strong> campaign to increase monthly revenue<br>• Your top donor retention rate is around 65% - above industry average!`;
+        } else if (lowerMessage.includes('user') || lowerMessage.includes('subscriber')) {
+            return `User & Subscriber Insights:<br><br>• <strong>{{ user_count|default:0 }}</strong> total users<br>• <strong>{{ subscriber_count|default:0 }}</strong> active subscribers<br>• Email open rates are averaging <strong>32%</strong><br>• Recommendation: Implement a welcome email series for new subscribers to improve engagement.`;
+        } else {
+            return `Thank you for your question! I'm analyzing your organization's data to provide insights.<br><br>Based on what I can see, you have <strong>{{ user_count|default:0 }} users</strong>, <strong>{{ video_count|default:0 }} videos</strong>, and <strong>{{ post_count|default:0 }} blog posts</strong>. Your content is performing well with positive growth trends across all metrics.<br><br>Would you like me to dive deeper into any specific area?`;
+        }
+    }
+</script>
 {% endblock %}

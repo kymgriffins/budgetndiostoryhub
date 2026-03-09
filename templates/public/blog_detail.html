@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ post.title }} - Budget Ndio Story</title>
+    
+    <!-- Primary Meta Tags -->
+    <meta name="title" content="{{ post.meta_title|default:post.title }} - Budget Ndio Story">
+    <meta name="description" content="{{ post.meta_description|default:post.excerpt }}">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="{{ post.title }}">
+    <meta property="og:description" content="{{ post.excerpt }}">
+    <meta property="og:type" content="article">
+    {% if post.og_image %}
+    <meta property="og:image" content="{{ post.og_image.url }}">
+    {% elif post.featured_image %}
+    <meta property="og:image" content="{{ post.featured_image.url }}">
+    {% endif %}
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="/static/css/frontend.css">
+    
+    <style>
+        :root {
+            --color-primary: #0066CC;
+            --color-primary-dark: #004c99;
+            --color-secondary: #6366f1;
+            --bg-primary: #000000;
+            --bg-secondary: #111827;
+            --bg-tertiary: #1f2937;
+            --text-primary: #ffffff;
+            --text-secondary: #9ca3af;
+            --text-muted: #6b7280;
+            --border-color: #374151;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            line-height: 1.8;
+        }
+        
+        a { color: var(--color-primary); text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+        
+        /* Header */
+        header {
+            background-color: var(--bg-secondary);
+            border-bottom: 1px solid var(--border-color);
+            padding: 16px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: var(--text-primary);
+        }
+        
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 18px;
+        }
+        
+        .logo-text {
+            font-size: 20px;
+            font-weight: 700;
+        }
+        
+        nav {
+            display: flex;
+            gap: 24px;
+        }
+        
+        nav a {
+            color: var(--text-secondary);
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        
+        nav a:hover {
+            color: var(--text-primary);
+            text-decoration: none;
+        }
+        
+        /* Article */
+        .article {
+            padding: 60px 0;
+        }
+        
+        .article-header {
+            margin-bottom: 40px;
+            text-align: center;
+        }
+        
+        .article-category {
+            display: inline-block;
+            padding: 6px 16px;
+            background-color: var(--color-primary);
+            color: white;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+        
+        .article-title {
+            font-size: 42px;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 20px;
+        }
+        
+        .article-meta {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            color: var(--text-secondary);
+            font-size: 15px;
+        }
+        
+        .article-meta span {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .article-featured-image {
+            width: 100%;
+            max-height: 500px;
+            object-fit: cover;
+            border-radius: 16px;
+            margin-bottom: 40px;
+            background: linear-gradient(135deg, var(--bg-tertiary), var(--bg-secondary));
+        }
+        
+        .article-content {
+            font-size: 18px;
+            line-height: 1.9;
+            color: var(--text-secondary);
+        }
+        
+        .article-content p {
+            margin-bottom: 24px;
+        }
+        
+        .article-content h2 {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin: 48px 0 24px;
+        }
+        
+        .article-content h3 {
+            font-size: 22px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin: 36px 0 16px;
+        }
+        
+        .article-content blockquote {
+            border-left: 4px solid var(--color-primary);
+            padding-left: 24px;
+            margin: 32px 0;
+            font-style: italic;
+            color: var(--text-muted);
+        }
+        
+        .article-content img {
+            max-width: 100%;
+            border-radius: 12px;
+            margin: 32px 0;
+        }
+        
+        /* Share */
+        .share-section {
+            margin-top: 60px;
+            padding-top: 40px;
+            border-top: 1px solid var(--border-color);
+        }
+        
+        .share-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+        
+        .share-links {
+            display: flex;
+            gap: 16px;
+        }
+        
+        .share-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-weight: 500;
+            transition: background-color 0.2s;
+        }
+        
+        .share-link:hover {
+            background-color: var(--bg-tertiary);
+            text-decoration: none;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--bg-secondary);
+            border-top: 1px solid var(--border-color);
+            padding: 40px 0;
+            margin-top: 80px;
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .footer-text {
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+        
+        .footer-links {
+            display: flex;
+            gap: 24px;
+        }
+        
+        .footer-links a {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <a href="/" class="logo">
+                <div class="logo-icon">B</div>
+                <span class="logo-text">Budget Ndio Story</span>
+            </a>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/blog/">Blog</a>
+                <a href="/about/">About</a>
+                <a href="/donate/">Donate</a>
+                <a href="/newsletter/">Newsletter</a>
+            </nav>
+        </div>
+    </header>
+    
+    <article class="article">
+        <div class="container">
+            <header class="article-header">
+                <span class="article-category">{{ post.get_post_type_display }}</span>
+                <h1 class="article-title">{{ post.title }}</h1>
+                <div class="article-meta">
+                    <span>By {% if post.author %}{{ post.author.get_full_name|default:post.author.username }}{% else %}Staff{% endif %}</span>
+                    <span>{{ post.published_at|date:"F d, Y" }}</span>
+                    <span>{{ post.read_time_minutes }} min read</span>
+                </div>
+            </header>
+            
+            {% if post.featured_image %}
+            <img src="{{ post.featured_image.url }}" alt="{{ post.title }}" class="article-featured-image">
+            {% endif %}
+            
+            <div class="article-content">
+                {{ post.content|linebreaks }}
+            </div>
+            
+            <div class="share-section">
+                <h3 class="share-title">Share this article</h3>
+                <div class="share-links">
+                    <a href="https://twitter.com/intent/tweet?text={{ post.title|urlencode }}&url={{ request.build_absolute_uri|urlencode }}" target="_blank" class="share-link">
+                        Twitter
+                    </a>
+                    <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri|urlencode }}" target="_blank" class="share-link">
+                        Facebook
+                    </a>
+                    <a href="https://www.linkedin.com/shareArticle?mini=true&url={{ request.build_absolute_uri|urlencode }}&title={{ post.title|urlencode }}" target="_blank" class="share-link">
+                        LinkedIn
+                    </a>
+                </div>
+            </div>
+        </div>
+    </article>
+    
+    <footer>
+        <div class="container footer-content">
+            <p class="footer-text">&copy; 2024 Budget Ndio Story. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy/">Privacy</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

@@ -58,7 +58,7 @@
         <h2 class="text-lg font-semibold mb-4">Quick Stats</h2>
         <div class="space-y-4">
             <div class="flex items-center justify-between"><span class="text-sm text-muted-foreground">Page Views per Visitor</span><span class="font-medium">{% if unique_visitors and total_page_views %}{{ total_page_views|divisibleby:unique_visitors|floatformat:1 }}{% else %}0{% endif %}</span></div>
-            <div class="flex items-center justify-between"><span class="text-sm text-muted-foreground">Video Completion Rate</span><span class="font-medium">{% if video_plays and video_completes %}{{ video_completes|divisibleby:video_plays|multiply:100|floatformat:1 }}{% else %}0{% endif %}%</span></div>
+            <div class="flex items-center justify-between"><span class="text-sm text-muted-foreground">Video Completion Rate</span><span class="font-medium">{% if video_plays and video_completes %}{% widthratio video_completes video_plays 100 %}{% else %}0{% endif %}%</span></div>
         </div>
     </div>
 </div>
